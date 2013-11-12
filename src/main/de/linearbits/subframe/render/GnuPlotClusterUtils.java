@@ -71,7 +71,7 @@ class GnuPlotClusterUtils {
         // Build data
         StringBuffer buffer = new StringBuffer();
         for (int i = 0; i < header.size(); i++) {
-            buffer.append(header.get(i));
+            buffer.append("\"").append(header.get(i)).append("\"");
             if (i < header.size() - 1) buffer.append(" ");
             else buffer.append("\n");
         }
