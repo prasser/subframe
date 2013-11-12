@@ -50,7 +50,7 @@ sort an array with one million integers with merge sort:
     Sorting.mergeSort(arrays[index++], 0, size);
     
     // Run benchmark
-    benchmark.addRun(1000000, "MergeSort");
+    benchmark.addRun(size, "MergeSort");
     for (int i = 0; i < REPETITIONS; i++) {
        benchmark.startTimer(time);
        Sorting.mergeSort(arrays[index++], 0, size);
