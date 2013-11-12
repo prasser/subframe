@@ -148,7 +148,7 @@ sort an array with one million integers with merge sort:
 
 Documentation
 ------
-More examples are available in the [repository](https://github.com/prasser/subframe/tree/master/src/examples).
+More examples are available in the [repository](https://github.com/prasser/subframe/tree/master/src/example).
 
 Javadoc documentation is available [here](https://rawgithub.com/prasser/subframe/master/doc/index.html).
 
