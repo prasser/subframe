@@ -63,6 +63,14 @@ sort an array with one million integers with merge sort:
   
 ```
 
+|		|			|Time			|Time				|
+|Size	|Method		|Arithmetic Mean|Standard Deviation	|
+|:------|:----------|:--------------|:------------------|
+|100000	|MergeSort	|16871734.40	|1996647.6291153480	|
+|200000	|MergeSort	|32456968.25	|3176739.1862106794	|
+|300000	|MergeSort	|49534981.35	|1265261.8748274317	|
+|400000	|MergeSort	|72037158.90	|13137915.799871740 |
+
 Second, we plot the results. In the example, we use a lines chart:
 
 ```Java
