@@ -1,1 +1,114 @@
-A
+SUBFRAME - Java Benchmarking Library
+====
+
+Introduction
+------
+SUBFRAME is a Java framework for performing microbenchmarks, analyzing the results and plotting them graphically. 
+It support the following features: 
+
+1. Measuring several parameters, including: wall-clock time, system time, user time and different methods for measuring memory consumption in
+single- and multithreaded environments
+
+2. Analyzing the results, including: minimum, maximum, sums, geometric and arithmetic mean, standard deviation, percentiles
+
+3. Writing data to and reading data from csv-files
+
+4. Extracting and transforming data series from files
+
+5. Clustering and plotting results: line charts, histograms, stacked histograms, heatmaps
+
+For rendering, the library uses Gnuplot and LaTeX, which need to be installed separately.
+
+Examples
+------
+
+First, we perform a benchmark. In the example, we measure the wall-clock time required to
+sort an array with one million integers with merge sort: 
+
+```Java
+  
+  // Create benchmark
+  Benchmark benchmark = new Benchmark(new String[] { "Size", "Method" });
+  
+  // Register measurements
+  int time = BENCHMARK.addMeasure("Time");
+  
+  // Register analyzers
+  benchmark.addAnalyzer(time, new BufferedArithmetricMeanAnalyzer());
+  benchmark.addAnalyzer(time, new BufferedStandardDeviationAnalyzer());
+  
+  // Run benchmark for different sizes
+  int repetitions = 5;
+  for (int size=100000; size<=1000000; size+=100000) {
+  
+    // Prepare benchmark
+    int index = 0;
+    int[][] arrays = new int[repetitions + 1];
+    for (int i=0; i<=arrays.length; i++) arrays[i] = getRandomArray(size);
+    
+    // Warmup
+    Sorting.mergeSort(arrays[index++], 0, size);
+    
+    // Run benchmark
+    benchmark.addRun(1000000, "MergeSort");
+    for (int i = 0; i < REPETITIONS; i++) {
+       benchmark.startTimer(time);
+       Sorting.mergeSort(arrays[index++], 0, size);
+       benchmark.addStopTimer(time);
+    }
+  }
+  
+  // Store results
+  benchmark.getResults().write(new File("sort.csv"));
+  
+```
+
+Second, we plot the results. In the example, we use a lines chart:
+
+```Java
+  
+        // Open the file
+        CSVFile file = new CSVFile(new File("sort.csv"));
+
+        // Select rows for the series  
+        Selector<String[]> selector = file.getSelectorBuilder()
+                                          .field("Method").equals("MergeSort")
+                                          .build();
+        
+        // Build the series
+        Series3D series = new Series3D(file, selector, 
+                                       new Field("Size"),
+                                       new Field("Method"),
+                                       new Field("Time", Analyzer.ARITHMETIC_MEAN));
+                           
+        // Create a plot            
+        Plot<?> plot = new PlotLinesClustered("Sorting Arrays", 
+                                              new Labels("Size", "Execution time [ns]"),
+                                              series);
+
+        // Render the plot
+        GnuPlotParams params = new GnuPlotParams();
+        params.xticsrotate = -90;
+        params.keypos = KeyPos.TOP_LEFT;
+        params.size = 0.6d;
+        GnuPlot.plot(plot, params, "sort");
+  
+```
+
+The following image shows the results for different sorting methods:
+
+![Image](https://raw.github.com/prasser/subframe/master/doc/sorting1.png)
+
+Documentation
+------
+More examples are available in the [repository](https://github.com/prasser/subframe/tree/master/src/examples).
+
+Javadoc documentation is available [here](https://rawgithub.com/prasser/subframe/master/doc/index.html).
+
+Downloads
+------
+[Library (Version 0.1)](https://raw.github.com/prasser/subframe/master/jars/subframe-0.1-lib.jar)
+
+[API documentation (Version 0.1)](https://raw.github.com/prasser/subframe/master/jars/subframe-0.1-doc.jar)
+
+[Source (Version 0.1)](https://raw.github.com/prasser/subframe/master/jars/subframe-0.1-src.jar)
