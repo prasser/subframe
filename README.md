@@ -148,7 +148,7 @@ sort an array with one million integers with merge sort:
 
 * Further methods exist, e.g., for measuring memory consumption:
 
-```
+```Java
         benchmark.startUsedBytesGC(SIZE_JVM);
         byte[] array = new byte[size];
         for (int i=0; i<size; i++) array[i] = (byte)i;
