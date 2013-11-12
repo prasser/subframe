@@ -115,6 +115,7 @@ public class SortEvaluation {
         params.xticsrotate = -90;
         params.keypos = KeyPos.TOP_LEFT;
         params.size = 0.6d;
+        params.minY = 0d;
         return new PlotGroup("Individual execution times", plots, params, 1.0d);
     }
 
