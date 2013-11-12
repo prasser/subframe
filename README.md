@@ -22,7 +22,7 @@ For rendering, the library uses Gnuplot and LaTeX, which need to be installed se
 Examples
 ------
 
-1. First, we perform a benchmark. In the example, we measure the wall-clock time required to
+* First, we perform a benchmark. In the example, we measure the wall-clock time required to
 sort an array with one million integers with merge sort: 
 
 ```Java
@@ -63,7 +63,7 @@ sort an array with one million integers with merge sort:
   
 ```
 
-2. This results in a csv file looking similar to this: 
+* This results in a csv file looking similar to this: 
 
 <table>
 <tr><td>		</td><td>			</td><td>Time			</td><td>Time				</td></tr>
@@ -74,7 +74,7 @@ sort an array with one million integers with merge sort:
 <tr><td>400000	</td><td>MergeSort	</td><td>72037158.90	</td><td>13137915.799871740 </td></tr>
 </table>
 
-3. Second, we plot the results. In the example, we use a lines chart:
+* Second, we plot the results. In the example, we use a lines chart:
 
 ```Java
   
@@ -106,11 +106,11 @@ sort an array with one million integers with merge sort:
   
 ```
 
-4. The following image shows the results for different sorting methods:
+* The following image shows the results for different sorting methods:
 
 ![Image](https://raw.github.com/prasser/subframe/master/doc/sorting1.png)
 
-5. We can also plot a histogram with error bars for individual methods:
+* We can also plot a histogram with error bars for individual methods:
 
 ```Java
   
@@ -142,7 +142,7 @@ sort an array with one million integers with merge sort:
   
 ```
 
-6. The following image shows the result:
+* The following image shows the result:
 
 ![Image](https://raw.github.com/prasser/subframe/master/doc/sorting2.png)
 
