@@ -1,4 +1,4 @@
-SUBFRAME - Java Benchmarking Library
+Java Benchmarking Library
 ====
 
 Introduction
