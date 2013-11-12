@@ -146,6 +146,19 @@ sort an array with one million integers with merge sort:
 
 ![Image](https://raw.github.com/prasser/subframe/master/doc/sorting2.png)
 
+* Further methods exist, e.g., for measuring memory consumption:
+
+```
+        benchmark.startUsedBytesGC(SIZE_JVM);
+        byte[] array = new byte[size];
+        for (int i=0; i<size; i++) array[i] = (byte)i;
+        benchmark.addStopUsedBytesGC(SIZE_JVM);
+```
+
+* Resulting in plots like this:
+
+![Image](https://raw.github.com/prasser/subframe/master/doc/size1.png)
+
 Documentation
 ------
 More examples are available in the [repository](https://github.com/prasser/subframe/tree/master/src/example).
