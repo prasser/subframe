@@ -65,7 +65,6 @@ sort an array with one million integers with merge sort:
 <table>
 <tr><td>		</td><td>			</td><td>Time			</td><td>Time				</td></tr>
 <tr><td>Size	</td><td>Method		</td><td>Arithmetic Mean</td><td>Standard Deviation	</td></tr>
-<tr><td>:------ </td><td>:----------</td><td>:--------------</td><td>:------------------</td></tr>
 <tr><td>100000	</td><td>MergeSort	</td><td>16871734.40	</td><td>1996647.6291153480	</td></tr>
 <tr><td>200000	</td><td>MergeSort	</td><td>32456968.25	</td><td>3176739.1862106794	</td></tr>
 <tr><td>300000	</td><td>MergeSort	</td><td>49534981.35	</td><td>1265261.8748274317	</td></tr>
