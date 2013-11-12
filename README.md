@@ -62,6 +62,9 @@ sort an array with one million integers with merge sort:
   benchmark.getResults().write(new File("sort.csv"));
   
 ```
+
+This results in a csv file looking similar to this: 
+
 <table>
 <tr><td>		</td><td>			</td><td>Time			</td><td>Time				</td></tr>
 <tr><td>Size	</td><td>Method		</td><td>Arithmetic Mean</td><td>Standard Deviation	</td></tr>
@@ -70,6 +73,7 @@ sort an array with one million integers with merge sort:
 <tr><td>300000	</td><td>MergeSort	</td><td>49534981.35	</td><td>1265261.8748274317	</td></tr>
 <tr><td>400000	</td><td>MergeSort	</td><td>72037158.90	</td><td>13137915.799871740 </td></tr>
 </table>
+
 Second, we plot the results. In the example, we use a lines chart:
 
 ```Java
