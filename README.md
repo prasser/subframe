@@ -63,13 +63,13 @@ sort an array with one million integers with merge sort:
   
 ```
 <table>
-<tr>|		|			|Time			|Time				|</tr>
-<tr>|Size	|Method		|Arithmetic Mean|Standard Deviation	|</tr>
-<tr>|:------|:----------|:--------------|:------------------|</tr>
-<tr>|100000	|MergeSort	|16871734.40	|1996647.6291153480	|</tr>
-<tr>|200000	|MergeSort	|32456968.25	|3176739.1862106794	|</tr>
-<tr>|300000	|MergeSort	|49534981.35	|1265261.8748274317	|</tr>
-<tr>|400000	|MergeSort	|72037158.90	|13137915.799871740 |</tr>
+<tr><td>		</td><td>			</td><td>Time			</td><td>Time				</td></tr>
+<tr><td>Size	</td><td>Method		</td><td>Arithmetic Mean</td><td>Standard Deviation	</td></tr>
+<tr><td>:------ </td><td>:----------</td><td>:--------------</td><td>:------------------</td></tr>
+<tr><td>100000	</td><td>MergeSort	</td><td>16871734.40	</td><td>1996647.6291153480	</td></tr>
+<tr><td>200000	</td><td>MergeSort	</td><td>32456968.25	</td><td>3176739.1862106794	</td></tr>
+<tr><td>300000	</td><td>MergeSort	</td><td>49534981.35	</td><td>1265261.8748274317	</td></tr>
+<tr><td>400000	</td><td>MergeSort	</td><td>72037158.90	</td><td>13137915.799871740 </td></tr>
 </table>
 Second, we plot the results. In the example, we use a lines chart:
 
