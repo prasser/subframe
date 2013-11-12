@@ -99,6 +99,42 @@ The following image shows the results for different sorting methods:
 
 ![Image](https://raw.github.com/prasser/subframe/master/doc/sorting1.png)
 
+We can also plot a histogram with error bars for individual methods:
+
+```Java
+  
+        // Open the file
+        CSVFile file = new CSVFile(new File("sort.csv"));
+
+        // Select rows for the series  
+        Selector<String[]> selector = file.getSelectorBuilder()
+                                          .field("Method").equals("MergeSort")
+                                          .build();
+        
+        // Build the series
+        Series3D series = new Series3D(file, selector, 
+                                       new Field("Size"),
+                                       new Field("Time", Analyzer.ARITHMETIC_MEAN),
+                                       new Field("Time", Analyzer.STANDARD_DEVIATION));
+                           
+        // Create a plot            
+        Plot<?> plot = new PlotHistogram("Sorting arrays with merge sort", 
+                                         new Labels("Size", "Execution time [ns]"),
+                                         series);
+
+        // Render the plot
+        GnuPlotParams params = new GnuPlotParams();
+        params.xticsrotate = -90;
+        params.keypos = KeyPos.TOP_LEFT;
+        params.size = 0.6d;
+        GnuPlot.plot(plot, params, "sort");
+  
+```
+
+The following image shows the result:
+
+![Image](https://raw.github.com/prasser/subframe/master/doc/sorting2.png)
+
 Documentation
 ------
 More examples are available in the [repository](https://github.com/prasser/subframe/tree/master/src/examples).
