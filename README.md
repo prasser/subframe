@@ -23,7 +23,7 @@ Examples
 ------
 
 * First, we perform a benchmark. In the example, we measure the wall-clock time required to
-sort an array with one million integers with merge sort: 
+sort an array with up to one million integers with merge sort: 
 
 ```Java
   
@@ -63,7 +63,7 @@ sort an array with one million integers with merge sort:
   
 ```
 
-* This results in a csv file looking similar to this: 
+* This results in a csv file looking like this: 
 
 <table>
 <tr><td>		</td><td>			</td><td>Time			</td><td>Time				</td></tr>
@@ -74,7 +74,7 @@ sort an array with one million integers with merge sort:
 <tr><td>400000	</td><td>MergeSort	</td><td>72037158.90	</td><td>13137915.799871740 </td></tr>
 </table>
 
-* Second, we plot the results. In the example, we use a lines chart:
+* Second, we plot the results. In this example we use a lines chart:
 
 ```Java
   
@@ -155,7 +155,7 @@ sort an array with one million integers with merge sort:
         benchmark.addStopUsedBytesGC(SIZE_JVM);
 ```
 
-* Resulting in plots like this:
+* This results in plots similar to this:
 
 ![Image](https://raw.github.com/prasser/subframe/master/doc/size1.png)
 
