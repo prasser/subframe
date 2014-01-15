@@ -23,12 +23,12 @@ import de.linearbits.subframe.analyzer.Analyzer;
  * A buffered analyzer that computes the arithmetic mean
  * @author Fabian Prasser
  */
-public class BufferedArithmetricMeanAnalyzer extends BufferedAnalyzer{
+public class BufferedArithmeticMeanAnalyzer extends BufferedAnalyzer{
 
     /**
      * Constructs a default instance. Backed by an array list with size 10 and a 1.5 growth rate
      */
-    public BufferedArithmetricMeanAnalyzer(){
+    public BufferedArithmeticMeanAnalyzer(){
         super(Analyzer.ARITHMETIC_MEAN);
     }
 
@@ -36,7 +36,7 @@ public class BufferedArithmetricMeanAnalyzer extends BufferedAnalyzer{
      * Constructs an instance backed by an array list with given initial size and a 1.5 growth rate
      * @param size
      */
-    public BufferedArithmetricMeanAnalyzer(int size){
+    public BufferedArithmeticMeanAnalyzer(int size){
         super(Analyzer.ARITHMETIC_MEAN, size);
     }
 
@@ -45,7 +45,7 @@ public class BufferedArithmetricMeanAnalyzer extends BufferedAnalyzer{
      * @param initialSize
      * @param growthRate
      */
-    public BufferedArithmetricMeanAnalyzer(int initialSize, double growthRate){
+    public BufferedArithmeticMeanAnalyzer(int initialSize, double growthRate){
         super(Analyzer.ARITHMETIC_MEAN, initialSize, growthRate);
     }
     
@@ -56,7 +56,7 @@ public class BufferedArithmetricMeanAnalyzer extends BufferedAnalyzer{
      * @param count
      * @param growthRate
      */
-    public BufferedArithmetricMeanAnalyzer(String label, int size, int count, double growthRate) {
+    public BufferedArithmeticMeanAnalyzer(String label, int size, int count, double growthRate) {
         super(label, size, count, growthRate);
     }
     
@@ -72,6 +72,6 @@ public class BufferedArithmetricMeanAnalyzer extends BufferedAnalyzer{
 
     @Override
     public Analyzer newInstance() {
-        return new BufferedArithmetricMeanAnalyzer(super.getLabel(), super.values.length, super.count, super.growthRate);
+        return new BufferedArithmeticMeanAnalyzer(super.getLabel(), super.values.length, super.count, super.growthRate);
     }
 }

@@ -25,7 +25,7 @@ import org.junit.Test;
 
 import de.linearbits.objectselector.Selector;
 import de.linearbits.subframe.analyzer.Analyzer;
-import de.linearbits.subframe.analyzer.buffered.BufferedArithmetricMeanAnalyzer;
+import de.linearbits.subframe.analyzer.buffered.BufferedArithmeticMeanAnalyzer;
 import de.linearbits.subframe.analyzer.buffered.BufferedStandardDeviationAnalyzer;
 import de.linearbits.subframe.graph.Field;
 import de.linearbits.subframe.graph.Labels;
@@ -133,7 +133,7 @@ public class TestEvaluations extends TestBase {
             Series2D series = new Series2D(file, selector, 
                                            new Field("Size"), 
                                            new Field("Execution time", Analyzer.VALUE),
-                                           new BufferedArithmetricMeanAnalyzer());
+                                           new BufferedArithmeticMeanAnalyzer());
             
             PlotHistogram plot = new PlotHistogram("Sorting arrays of different sizes", 
                                                    new Labels("Size", "Execution time [ns]"),
@@ -166,7 +166,7 @@ public class TestEvaluations extends TestBase {
             Series3D series = new Series3D(file, selector, 
                                            new Field("Size"), 
                                            new Field("Execution time", Analyzer.VALUE),
-                                           new BufferedArithmetricMeanAnalyzer(),
+                                           new BufferedArithmeticMeanAnalyzer(),
                                            new BufferedStandardDeviationAnalyzer());
             
             PlotHistogram plot = new PlotHistogram("Sorting arrays of different sizes", 
@@ -200,7 +200,7 @@ public class TestEvaluations extends TestBase {
             Series2D series = new Series2D(file, selector, 
                                            new Field("Size"), 
                                            new Field("Execution time", Analyzer.VALUE),
-                                           new BufferedArithmetricMeanAnalyzer());
+                                           new BufferedArithmeticMeanAnalyzer());
             
             PlotLines plot = new PlotLines("Sorting arrays of different sizes", 
                                            new Labels("Size", "Execution time [ns]"),
@@ -232,7 +232,7 @@ public class TestEvaluations extends TestBase {
             Series3D series = new Series3D(file, selector, 
                                            new Field("Size"), 
                                            new Field("Execution time", Analyzer.VALUE),
-                                           new BufferedArithmetricMeanAnalyzer(),
+                                           new BufferedArithmeticMeanAnalyzer(),
                                            new BufferedStandardDeviationAnalyzer());
             
             PlotLines plot = new PlotLines("Sorting arrays of different sizes", 
@@ -264,7 +264,7 @@ public class TestEvaluations extends TestBase {
                                            new Field("Size"),
                                            new Field("Phase"), 
                                            new Field("Execution time", Analyzer.VALUE),
-                                           new BufferedArithmetricMeanAnalyzer());
+                                           new BufferedArithmeticMeanAnalyzer());
             
             PlotHistogramClustered plot = new PlotHistogramClustered("Creating, sorting and summing up arrays of different sizes", 
                                                                      new Labels("Size", "Execution time [ns]"),
@@ -296,7 +296,7 @@ public class TestEvaluations extends TestBase {
                                            new Field("Size"),
                                            new Field("Phase"), 
                                            new Field("Execution time", Analyzer.VALUE),
-                                           new BufferedArithmetricMeanAnalyzer());
+                                           new BufferedArithmeticMeanAnalyzer());
             
             PlotLinesClustered plot = new PlotLinesClustered("Creating, sorting and summing up arrays of different sizes", 
                                                              new Labels("Size", "Execution time [ns]"),
@@ -328,7 +328,7 @@ public class TestEvaluations extends TestBase {
                                            new Field("Size"),
                                            new Field("Phase"), 
                                            new Field("Execution time", Analyzer.VALUE),
-                                           new BufferedArithmetricMeanAnalyzer());
+                                           new BufferedArithmeticMeanAnalyzer());
             
             PlotHistogramStacked plot = new PlotHistogramStacked("Creating, sorting and summing up arrays of different sizes", 
                                                              new Labels("Size", "Execution time [ns]"),
@@ -380,7 +380,7 @@ public class TestEvaluations extends TestBase {
                                        new Field("Size"),
                                        new Field("Phase"), 
                                        new Field("Execution time", Analyzer.VALUE),
-                                       new BufferedArithmetricMeanAnalyzer());
+                                       new BufferedArithmeticMeanAnalyzer());
 
         List<Plot<?>> list = new ArrayList<Plot<?>>();
         list.add(new PlotHistogramClustered("Creating, sorting and summing up arrays of different sizes",
@@ -419,12 +419,12 @@ public class TestEvaluations extends TestBase {
         Series2D series2D = new Series2D(file, selector, 
                                        new Field("Size"), 
                                        new Field("Execution time", Analyzer.VALUE),
-                                       new BufferedArithmetricMeanAnalyzer());
+                                       new BufferedArithmeticMeanAnalyzer());
 
         Series3D series3D = new Series3D(file, selector, 
                                        new Field("Size"), 
                                        new Field("Execution time", Analyzer.VALUE),
-                                       new BufferedArithmetricMeanAnalyzer(),
+                                       new BufferedArithmeticMeanAnalyzer(),
                                        new BufferedStandardDeviationAnalyzer());
 
         List<Plot<?>> list = new ArrayList<Plot<?>>();

@@ -25,7 +25,7 @@ import java.util.Random;
 import cern.colt.Sorting;
 import cern.colt.function.IntComparator;
 import de.linearbits.subframe.Benchmark;
-import de.linearbits.subframe.analyzer.buffered.BufferedArithmetricMeanAnalyzer;
+import de.linearbits.subframe.analyzer.buffered.BufferedArithmeticMeanAnalyzer;
 import de.linearbits.subframe.analyzer.buffered.BufferedStandardDeviationAnalyzer;
 
 /**
@@ -40,7 +40,7 @@ public class SortBenchmark {
     private static final int       REPETITIONS = 20;
 
     static {
-        BENCHMARK.addAnalyzer(TIME, new BufferedArithmetricMeanAnalyzer(REPETITIONS));
+        BENCHMARK.addAnalyzer(TIME, new BufferedArithmeticMeanAnalyzer(REPETITIONS));
         BENCHMARK.addAnalyzer(TIME, new BufferedStandardDeviationAnalyzer(REPETITIONS));
     }
 

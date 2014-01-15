@@ -23,7 +23,7 @@ import java.util.Random;
 import org.junit.Test;
 
 import de.linearbits.subframe.Benchmark;
-import de.linearbits.subframe.analyzer.buffered.BufferedArithmetricMeanAnalyzer;
+import de.linearbits.subframe.analyzer.buffered.BufferedArithmeticMeanAnalyzer;
 import de.linearbits.subframe.analyzer.buffered.BufferedStandardDeviationAnalyzer;
 
 /**
@@ -41,11 +41,11 @@ public class TestBenchmark1 extends TestBase{
     public void testBenchmark1(){
         
         try {
-            benchmark.addAnalyzer(INIT, new BufferedArithmetricMeanAnalyzer());
+            benchmark.addAnalyzer(INIT, new BufferedArithmeticMeanAnalyzer());
             benchmark.addAnalyzer(INIT, new BufferedStandardDeviationAnalyzer());
-            benchmark.addAnalyzer(SORT, new BufferedArithmetricMeanAnalyzer());
+            benchmark.addAnalyzer(SORT, new BufferedArithmeticMeanAnalyzer());
             benchmark.addAnalyzer(SORT, new BufferedStandardDeviationAnalyzer());
-            benchmark.addAnalyzer(SUM, new BufferedArithmetricMeanAnalyzer());
+            benchmark.addAnalyzer(SUM, new BufferedArithmeticMeanAnalyzer());
             benchmark.addAnalyzer(SUM, new BufferedStandardDeviationAnalyzer());
 
             benchmark.addRun("Warmup");
