@@ -179,7 +179,7 @@ public abstract class GnuPlot<T extends Plot<?>> {
         // Check messages
         File eps = new File(file + ".eps");
         String errorMsg = error.getString();
-        if (p.exitValue() != 0 || (errorMsg != null && !errorMsg.equals(""))) {
+        if (p.exitValue() != 0 || (errorMsg != null && !errorMsg.equals("") && !errorMsg.startsWith("Warning:"))) {
             if (eps.exists()) eps.delete();
             throw new IOException("Error executing gnuplot. Please check the provided series. Error: " + errorMsg);
         }
