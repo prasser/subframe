@@ -70,4 +70,11 @@ public class Point3D {
         result = prime * result + ((z == null) ? 0 : z.hashCode());
         return result;
     }
+
+    @Override
+    public String toString(){
+        StringBuilder b = new StringBuilder();
+        b.append("Point3D[").append(x).append(", ").append(y).append(", ").append(z).append("]");
+        return b.toString();
+    }
 }

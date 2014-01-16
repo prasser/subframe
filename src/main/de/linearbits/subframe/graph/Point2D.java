@@ -62,4 +62,11 @@ public class Point2D {
         result = prime * result + ((y == null) ? 0 : y.hashCode());
         return result;
     }
+    
+    @Override
+    public String toString(){
+        StringBuilder b = new StringBuilder();
+        b.append("Point2D[").append(x).append(", ").append(y).append("]");
+        return b.toString();
+    }
 }

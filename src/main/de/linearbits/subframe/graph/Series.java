@@ -48,4 +48,15 @@ public abstract class Series<T> {
     public List<T> getData() {
         return data;
     }
+    
+    @Override
+    public String toString(){
+        StringBuilder b = new StringBuilder();
+        b.append("Series[\n");
+        for (T t : data){
+            b.append(t.toString()).append("\n");
+        }
+        b.append("]");
+        return b.toString();
+    }
 }
