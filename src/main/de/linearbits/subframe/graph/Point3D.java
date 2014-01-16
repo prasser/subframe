@@ -37,7 +37,7 @@ public class Point3D {
      * @param y
      * @param z
      */
-    protected Point3D(String x, String y, String z) {
+    public Point3D(String x, String y, String z) {
         this.x = x;
         this.y = y;
         this.z = z;

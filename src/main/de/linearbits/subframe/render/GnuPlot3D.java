@@ -22,6 +22,7 @@ import java.util.List;
 
 import de.linearbits.subframe.graph.Plot3D;
 import de.linearbits.subframe.graph.Point3D;
+import de.linearbits.subframe.render.GnuPlotParams.KeyPos;
 
 /**
  * GnuPlot implementation of a 3D plot
@@ -78,7 +79,12 @@ class GnuPlot3D extends GnuPlot<Plot3D> {
         gpCommands.add("set xlabel \"" + plot.getLabels().x + "\"");
         gpCommands.add("set ylabel \"" + plot.getLabels().y + "\"");
         gpCommands.add("set zlabel \"" + plot.getLabels().z + "\" rotate by 90");
-        gpCommands.add("set key "+params.keypos.toString());
+
+        if (params.keypos == KeyPos.NONE) {
+            gpCommands.add("unset key");
+        } else {
+            gpCommands.add("set key "+params.keypos.toString());
+        }
 
         if (params.minY != null && params.maxY != null) {
             gpCommands.add("set yrange[" + params.minY + ":" + params.maxY + "]");

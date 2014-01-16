@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.linearbits.subframe.graph.PlotHistogramStacked;
+import de.linearbits.subframe.render.GnuPlotParams.KeyPos;
 
 /**
  * GnuPlot implementation of a stacked histogram
@@ -61,7 +62,13 @@ class GnuPlotHistogramStacked extends GnuPlot<PlotHistogramStacked> {
         gpCommands.add("set auto x");
         gpCommands.add("set xlabel \"" + plot.getLabels().x + "\"");
         gpCommands.add("set ylabel \"" + plot.getLabels().y + "\"");
-        gpCommands.add("set key " + params.keypos.toString());
+
+        if (params.keypos == KeyPos.NONE) {
+            gpCommands.add("unset key");
+        } else {
+            gpCommands.add("set key "+params.keypos.toString());
+        }
+        
         gpCommands.add("set xtic scale 0");
         gpCommands.add("set style fill solid border -1");
 

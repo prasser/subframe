@@ -34,7 +34,7 @@ public class Point2D {
      * @param x
      * @param y
      */
-    protected Point2D(String x, String y) {
+    public Point2D(String x, String y) {
         this.x = x;
         this.y = y;
     }

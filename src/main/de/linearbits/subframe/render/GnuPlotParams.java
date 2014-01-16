@@ -39,6 +39,12 @@ public class GnuPlotParams {
         }, 
         BOTTOM_RIGHT {
             public String toString(){ return "bottom right"; }
+        }, 
+        OUTSIDE_TOP {
+            public String toString(){ return "out horiz center top"; }
+        }, 
+        NONE {
+            public String toString(){ return "none"; }
         }
     }
 

@@ -59,4 +59,14 @@ public abstract class Series<T> {
         b.append("]");
         return b.toString();
     }
+    
+    /**
+     * Applies the given function to all data points
+     * @param function
+     */
+    public void transform(Function<T> function){
+        for (int i=0; i<data.size(); i++){
+            data.set(i, function.apply(data.get(i)));
+        }
+    }
 }
