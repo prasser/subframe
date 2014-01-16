@@ -79,7 +79,7 @@ public abstract class BufferedAnalyzer extends Analyzer{
     @Override
     public void add(double val) {
         values[count++] = val;
-        if (count == values.length + 1) {
+        if (count == values.length) {
             if (growthRate != 0) {
                 grow();
             } else {
