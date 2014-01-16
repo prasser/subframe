@@ -78,7 +78,6 @@ public abstract class BufferedAnalyzer extends Analyzer{
     
     @Override
     public void add(double val) {
-        values[count++] = val;
         if (count == values.length) {
             if (growthRate != 0) {
                 grow();
@@ -86,6 +85,7 @@ public abstract class BufferedAnalyzer extends Analyzer{
                 throw new RuntimeException("Maximum number of values exceeded: "+count);
             }
         }
+        values[count++] = val;
     }
 
     /**
