@@ -27,39 +27,39 @@ sort an array with up to one million integers with merge sort:
 
 ```Java
   
-  // Create benchmark
-  Benchmark benchmark = new Benchmark(new String[] { "Size", "Method" });
+// Create benchmark
+Benchmark benchmark = new Benchmark(new String[] { "Size", "Method" });
   
-  // Register measurements
-  int time = BENCHMARK.addMeasure("Time");
+// Register measurements
+int time = benchmark.addMeasure("Time");
   
-  // Register analyzers
-  benchmark.addAnalyzer(time, new BufferedArithmetricMeanAnalyzer());
-  benchmark.addAnalyzer(time, new BufferedStandardDeviationAnalyzer());
+// Register analyzers
+benchmark.addAnalyzer(time, new BufferedArithmetricMeanAnalyzer());
+benchmark.addAnalyzer(time, new BufferedStandardDeviationAnalyzer());
   
-  // Run benchmark for different sizes
-  int repetitions = 5;
-  for (int size=100000; size<=1000000; size+=100000) {
+// Run benchmark for different sizes
+int repetitions = 5;
+for (int size=100000; size<=1000000; size+=100000) {
   
-    // Prepare benchmark
-    int index = 0;
-    int[][] arrays = new int[repetitions + 1];
-    for (int i=0; i<=arrays.length; i++) arrays[i] = getRandomArray(size);
-    
-    // Warmup
-    Sorting.mergeSort(arrays[index++], 0, size);
-    
-    // Run benchmark
-    benchmark.addRun(size, "MergeSort");
-    for (int i = 0; i < REPETITIONS; i++) {
-       benchmark.startTimer(time);
-       Sorting.mergeSort(arrays[index++], 0, size);
-       benchmark.addStopTimer(time);
-    }
+  // Prepare benchmark
+  int index = 0;
+  int[][] arrays = new int[repetitions + 1];
+  for (int i=0; i<=arrays.length; i++) arrays[i] = getRandomArray(size);
+  
+  // Warmup
+  Sorting.mergeSort(arrays[index++], 0, size);
+  
+  // Run benchmark
+  benchmark.addRun(size, "MergeSort");
+  for (int i = 0; i < REPETITIONS; i++) {
+     benchmark.startTimer(time);
+     Sorting.mergeSort(arrays[index++], 0, size);
+     benchmark.addStopTimer(time);
   }
+}
   
-  // Store results
-  benchmark.getResults().write(new File("sort.csv"));
+// Store results
+benchmark.getResults().write(new File("sort.csv"));
   
 ```
 
@@ -78,31 +78,31 @@ sort an array with up to one million integers with merge sort:
 
 ```Java
   
-        // Open the file
-        CSVFile file = new CSVFile(new File("sort.csv"));
+// Open the file
+CSVFile file = new CSVFile(new File("sort.csv"));
 
-        // Select rows for the series  
-        Selector<String[]> selector = file.getSelectorBuilder()
-                                          .field("Method").equals("MergeSort")
-                                          .build();
+// Select rows for the series  
+Selector<String[]> selector = file.getSelectorBuilder()
+                                  .field("Method").equals("MergeSort")
+                                  .build();
         
-        // Build the series
-        Series3D series = new Series3D(file, selector, 
-                                       new Field("Size"),
-                                       new Field("Method"),
-                                       new Field("Time", Analyzer.ARITHMETIC_MEAN));
+// Build the series
+Series3D series = new Series3D(file, selector, 
+                               new Field("Size"),
+                               new Field("Method"),
+                               new Field("Time", Analyzer.ARITHMETIC_MEAN));
                            
-        // Create a plot            
-        Plot<?> plot = new PlotLinesClustered("Sorting Arrays", 
-                                              new Labels("Size", "Execution time [ns]"),
-                                              series);
+// Create a plot            
+Plot<?> plot = new PlotLinesClustered("Sorting Arrays", 
+                                      new Labels("Size", "Execution time [ns]"),
+                                      series);
 
-        // Render the plot
-        GnuPlotParams params = new GnuPlotParams();
-        params.xticsrotate = -90;
-        params.keypos = KeyPos.TOP_LEFT;
-        params.size = 0.6d;
-        GnuPlot.plot(plot, params, "sort");
+// Render the plot
+GnuPlotParams params = new GnuPlotParams();
+params.xticsrotate = -90;
+params.keypos = KeyPos.TOP_LEFT;
+params.size = 0.6d;
+GnuPlot.plot(plot, params, "sort");
   
 ```
 
@@ -114,31 +114,31 @@ sort an array with up to one million integers with merge sort:
 
 ```Java
   
-        // Open the file
-        CSVFile file = new CSVFile(new File("sort.csv"));
+// Open the file
+CSVFile file = new CSVFile(new File("sort.csv"));
 
-        // Select rows for the series  
-        Selector<String[]> selector = file.getSelectorBuilder()
-                                          .field("Method").equals("MergeSort")
-                                          .build();
+// Select rows for the series  
+Selector<String[]> selector = file.getSelectorBuilder()
+                                  .field("Method").equals("MergeSort")
+                                  .build();
         
-        // Build the series
-        Series3D series = new Series3D(file, selector, 
-                                       new Field("Size"),
-                                       new Field("Time", Analyzer.ARITHMETIC_MEAN),
-                                       new Field("Time", Analyzer.STANDARD_DEVIATION));
+// Build the series
+Series3D series = new Series3D(file, selector, 
+                               new Field("Size"),
+                               new Field("Time", Analyzer.ARITHMETIC_MEAN),
+                               new Field("Time", Analyzer.STANDARD_DEVIATION));
                            
-        // Create a plot            
-        Plot<?> plot = new PlotHistogram("Sorting arrays with merge sort", 
-                                         new Labels("Size", "Execution time [ns]"),
-                                         series);
+// Create a plot            
+Plot<?> plot = new PlotHistogram("Sorting arrays with merge sort", 
+                                 new Labels("Size", "Execution time [ns]"),
+                                 series);
 
-        // Render the plot
-        GnuPlotParams params = new GnuPlotParams();
-        params.xticsrotate = -90;
-        params.keypos = KeyPos.TOP_LEFT;
-        params.size = 0.6d;
-        GnuPlot.plot(plot, params, "sort");
+// Render the plot
+GnuPlotParams params = new GnuPlotParams();
+params.xticsrotate = -90;
+params.keypos = KeyPos.TOP_LEFT;
+params.size = 0.6d;
+GnuPlot.plot(plot, params, "sort");
   
 ```
 
@@ -149,10 +149,10 @@ sort an array with up to one million integers with merge sort:
 * Further methods exist, e.g., for measuring memory consumption:
 
 ```Java
-        benchmark.startUsedBytesGC(SIZE_JVM);
-        byte[] array = new byte[size];
-        for (int i=0; i<size; i++) array[i] = (byte)i;
-        benchmark.addStopUsedBytesGC(SIZE_JVM);
+benchmark.startUsedBytesGC(SIZE_JVM);
+byte[] array = new byte[size];
+for (int i=0; i<size; i++) array[i] = (byte)i;
+benchmark.addStopUsedBytesGC(SIZE_JVM);
 ```
 
 * This results in plots similar to this:
