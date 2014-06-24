@@ -18,6 +18,8 @@
 package de.linearbits.subframe.graph;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -68,5 +70,14 @@ public abstract class Series<T> {
         for (int i=0; i<data.size(); i++){
             data.set(i, function.apply(data.get(i)));
         }
+    }
+
+    /**
+     * Sorts the series according to the given comperator
+     * 
+     * @param comparator
+     */
+    public void sort(Comparator<T> comparator) {
+        Collections.sort(data, comparator);
     }
 }
