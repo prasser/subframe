@@ -17,6 +17,7 @@
  */
 package de.linearbits.subframe.render;
 
+
 /**
  * Parameters for GnuPlot
  * @author Fabian Prasser
@@ -78,4 +79,10 @@ public class GnuPlotParams {
     public Boolean grid = true;
     /** The keypos*/
     public KeyPos keypos = KeyPos.TOP_RIGHT;
+    /** label*/
+    public Boolean printLabels = true;
+    /** gprintf format string */
+    public String labelFormatString =  "%.2f";
+    /** offset for labels */
+    public double labelOffset = +.5d;
 }
