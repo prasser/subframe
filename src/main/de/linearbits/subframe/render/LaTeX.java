@@ -61,11 +61,13 @@ public class LaTeX {
         try {
             plot(groups, filename, keepFiles, filenames, outputFolder);
         } catch (IOException e) {
-            deleteFile(filename + ".tex");
-            for (String name : filenames.values()) {
-                deleteFile(name + ".pdf");
+            if (!keepFiles) {
+                deleteFile(filename + ".tex");
+                for (String name : filenames.values()) {
+                    deleteFile(name + ".pdf");
+                }
+                deleteFile(outputFolder + "/img/");
             }
-            deleteFile(outputFolder + "/img/");
             deleteFile(filename + ".log");
             deleteFile(filename + ".aux");
             deleteFile(outputFolder + "/texput.log");
