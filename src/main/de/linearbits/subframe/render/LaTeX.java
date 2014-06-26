@@ -121,7 +121,7 @@ public class LaTeX {
 
         for (int i = 0; i < groups.size(); i++) {
             PlotGroup group = groups.get(i);
-            w.write("\t\\begin{figure*}[htb!]\n");
+            w.write("\t\\begin{figure*}[!htbp]\n");
             w.write("\t\t\\centering\n");
             for (Plot<?> plot : group.getPlots()) {
                 w.write("\t\t\\includegraphics[width=");
@@ -141,6 +141,10 @@ public class LaTeX {
             w.write(group.getCaption());
             w.write("}\n");
             w.write("\t\\end{figure*}\n");
+            
+            if (i % 18 == 0) {
+                w.write("\t\\clearpage\n");
+            }
 
         }
 
