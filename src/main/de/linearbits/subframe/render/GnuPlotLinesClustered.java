@@ -92,14 +92,15 @@ class GnuPlotLinesClustered extends GnuPlot<PlotLinesClustered> {
             gpCommands.add("set grid");
         }
         
+        
         int size = GnuPlotClusterUtils.getNumBars(this.plot);
         for (int i=0; i<size; i++){
             String command = null;
             if (i==0){
-                command = "plot '" + filename + ".dat' using 2:xtic(1) with linespoints title col";
+                command = "plot '" + filename + ".dat' using 2:xtic(1) with linespoints linecolor rgb \"#" + params.colourValues[i % params.colourValues.length] + "\" title col";
             }  
             else {
-                command = "     '' using "+(i+2)+":xtic(1) with linespoints title col";
+                command = "     '' using "+(i+2)+":xtic(1) with linespoints linecolor rgb \"#" + params.colourValues[i % params.colourValues.length] + "\" title col";
             }
             
             if (i<size-1) command += ",\\";
