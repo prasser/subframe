@@ -62,12 +62,19 @@ public class Measures {
         instrumentation = instr;
     }
 
-    /** Timestamps for different measures */
+    /** Values for different measures */
     protected long[] time;
+    /** Values for different measures */
     protected long[] threadCpuTime;
+    /** Values for different measures */
     protected long[] threadSystemTime;
+    /** Values for different measures */
     protected long[] threadUserTime;
+    /** Values for different measures */
     protected long[] bytesGC;
+    /** Values for different measures */
+    protected long[] bytesGCMX;
+    /** Values for different measures */
     protected long[] bytesMX;
     
 
@@ -204,7 +211,14 @@ public class Measures {
         return ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed() +
                ManagementFactory.getMemoryMXBean().getNonHeapMemoryUsage().getUsed();
     }
-    
+
+    /** 
+     * Stores a baseline for the currently used memory as reported after a GC from MX Management
+     */
+    public void startUsedBytesGCMX(int measure) {
+        bytesGCMX[measure] = getUsedBytesGCMX();
+    }
+
     /** 
      * Stores a baseline for the currently used memory as reported after a GC
      */
@@ -334,7 +348,15 @@ public class Measures {
     public long stopCurrentThreadUserTime(int measure) {
         return getCurrentThreadUserTime() - threadUserTime[measure];
     }
-    
+
+    /** 
+     * Returns the currently used memory as reported from MX Management after a GC compared to baseline
+     * @return size in bytes
+     */
+    public long stopUsedBytesGCMX(int measure) {
+        return getUsedBytesGCMX() - bytesGCMX[measure];
+    }
+
     /** 
      * Returns the currently used memory as reported after a GC compared to baseline
      * @return size in bytes
@@ -403,9 +425,6 @@ public class Measures {
                         for (final int l = aobj.length; j < l; j++) {
                             final Object el = aobj[j];
                             if (el != null) {
-                                // if (sizeOfObject == -1) sizeOfObject =
-                                // deepMemoryUsageOf0(instrumentation, counted,
-                                // aobj[j], filter, estimateArraySize);
                                 if (sizeOfObject == -1) {
                                     sizeOfObject = instrumentation.getObjectSize(aobj[j]);
                                 }

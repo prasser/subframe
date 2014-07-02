@@ -95,15 +95,6 @@ class GnuPlotHistogramClustered extends GnuPlot<PlotHistogramClustered> {
         }
 
         int size = GnuPlotClusterUtils.getNumBars(this.plot);
-
-        // https://stackoverflow.com/questions/12926827/gnuplot-how-to-place-y-values-above-bars-when-using-histogram-style
-        // // command for labels
-        // gpCommands.add("GAPSIZE=1");
-        // gpCommands.add("STARTCOL=2");
-        // gpCommands.add("ENDCOL=" + (size + 1));
-        // gpCommands.add("NCOL=ENDCOL-STARTCOL+1");
-        // gpCommands.add("BOXWIDTH=1./(GAPSIZE+NCOL)");
-
         int gapsize = 1;
         int endcol = size + 1;
         double boxwidth = 1.0d / (((double) gapsize) + endcol - 1);

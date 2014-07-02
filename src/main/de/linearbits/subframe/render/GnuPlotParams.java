@@ -62,8 +62,11 @@ public class GnuPlotParams {
         }
     }
 
-    /** colourValues. */
-    public String[] colourValues      = new String[] { "1D4599", "11AD34", "E62B17", "E69F17", "2F3F60", "2F6C3D", "8F463F", "8F743F", "031A49", "025214", "6D0D03", "6D4903", "7297E6", "67EB84", "F97A6D", "F9C96D", "A9BDE6", "A6EBB5", "F9B7B0", "F9E0B0" };
+	/** colourValues. */
+	public String[] colors = new String[] { "1D4599", "11AD34", "E62B17",
+											"E69F17", "2F3F60", "2F6C3D", "8F463F", "8F743F", "031A49",
+											"025214", "6D0D03", "6D4903", "7297E6", "67EB84", "F97A6D",
+											"F9C96D", "A9BDE6", "A6EBB5", "F9B7B0", "F9E0B0" };
 
     /** Logarithmic x axis */
     public Boolean          logX              = false;

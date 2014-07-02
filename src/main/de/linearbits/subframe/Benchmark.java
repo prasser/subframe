@@ -322,6 +322,15 @@ public class Benchmark {
 
     /**
      * Stops the measurement and adds its value
+     * @see Measures#stopUsedBytesGCMX()
+     * @param measure
+     */
+    public void addStopUsedBytesGCMX(int measure) {
+        this.addValue(measure, measures.stopUsedBytesGCMX(measure));
+    }
+    
+    /**
+     * Stops the measurement and adds its value
      * @see Measures#stopUsedBytesGC()
      * @param measure
      */
@@ -339,6 +348,16 @@ public class Benchmark {
         this.addValue(measure, measures.stopUsedBytesMX(measure));
     }
 
+    /**
+     * Stops the measurement and adds its value
+     * @see Measures#stopUsedBytesGCMX()
+     * @param measure
+     */
+    public void addStopAndStartUsedBytesGCMX(int measure) {
+        this.addValue(measure, measures.stopUsedBytesGCMX(measure));
+        measures.startUsedBytesGCMX(measure);
+    }
+    
     /**
      * Stops the measurement and adds its value
      * @see Measures#stopUsedBytesGC()
@@ -498,6 +517,10 @@ public class Benchmark {
 
     public void startCurrentThreadUserTime(int measure) {
         measures.startCurrentThreadUserTime(measure);
+    }
+
+    public void startUsedBytesGCMX(int measure) {
+        measures.startUsedBytesGCMX(measure);
     }
 
     public void startUsedBytesGC(int measure) {
