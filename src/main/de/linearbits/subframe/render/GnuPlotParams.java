@@ -94,13 +94,15 @@ public class GnuPlotParams {
     public Double           boxwidth          = 0.75d;
     /** Rotation of the xtics in degrees */
     public Integer          xticsrotate       = null;
+    /** X-ticks are categorial */
+    public Boolean          categorialX       = false;
     /** Grid */
     public Boolean          grid              = true;
     /** The keypos */
     public KeyPos           keypos            = KeyPos.TOP_RIGHT;
     /** label */
     public Boolean          printValues       = true;
-    /** gprintf format string */
+    /** printf format string */
     public String           labelFormatString = "%.2f";
     /** offset for labels */
     public double           labelOffset       = +.5d;
