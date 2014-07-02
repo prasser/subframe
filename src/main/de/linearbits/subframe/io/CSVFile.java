@@ -51,9 +51,8 @@ public class CSVFile {
      * @param label
      */
     public static void checkFieldValue(String label) {
-        if (label.contains(";") || label.contains(".") || label.contains("\n")) { throw new IllegalArgumentException("Label/value '" +
-                label +
-                "' must not contain ';' or '.' or linebreaks"); }
+        if (label.contains(String.valueOf(SEPERATOR)) || label.contains(NEWLINE)) { throw new IllegalArgumentException("Label/value '" +
+            label + "' must not contain ';' or linebreaks"); }
     }
 
     /**
