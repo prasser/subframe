@@ -102,6 +102,12 @@ public class BenchmarkSynchronized extends Benchmark {
     }
 
     @Override
+    public void addFreeBytesGCMX(int measure) {
+        locks[measure].take();
+        benchmark.addFreeBytesGCMX(measure);
+        locks[measure].release();
+    }
+    @Override
     public void addFreeBytesGC(int measure) {
         locks[measure].take();
         benchmark.addFreeBytesGC(measure);

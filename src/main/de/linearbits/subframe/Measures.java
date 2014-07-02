@@ -168,6 +168,16 @@ public class Measures {
     }
 
     /** 
+     * Returns the currently used memory as reported by MX Management after a light GC
+     * @return size in bytes 
+     */
+    public long getUsedBytesGCMX() {
+    	System.gc();
+        return ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed() +
+               ManagementFactory.getMemoryMXBean().getNonHeapMemoryUsage().getUsed();
+    }
+    
+    /** 
      * Returns the currently used memory as reported after a GC
      * @return size in bytes
      */

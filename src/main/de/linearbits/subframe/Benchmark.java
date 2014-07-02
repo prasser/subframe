@@ -138,6 +138,15 @@ public class Benchmark {
     }
 
     /**
+     * Adds the free bytes as reported by MX management after a light gc
+     * @see Measures#getUsedBytesGC()
+     * @param measure
+     */
+    public void addFreeBytesGCMX(int measure) {
+        this.addValue(measure, measures.getUsedBytesGCMX());
+    }
+
+    /**
      * Adds the free bytes after a gc
      * @see Measures#getUsedBytesGC()
      * @param measure
