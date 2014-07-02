@@ -19,63 +19,86 @@ package de.linearbits.subframe.render;
 
 /**
  * Parameters for GnuPlot
+ * 
  * @author Fabian Prasser
  */
 public class GnuPlotParams {
-    
+
     /**
      * The position of the key
+     * 
      * @author Fabian Prasser
      */
     public static enum KeyPos {
         TOP_LEFT {
-            public String toString(){ return "top left"; }
+            public String toString() {
+                return "top left";
+            }
         },
         TOP_RIGHT {
-            public String toString(){ return "top right"; }
+            public String toString() {
+                return "top right";
+            }
         },
         BOTTOM_LEFT {
-            public String toString(){ return "bottom left"; }
-        }, 
+            public String toString() {
+                return "bottom left";
+            }
+        },
         BOTTOM_RIGHT {
-            public String toString(){ return "bottom right"; }
-        }, 
+            public String toString() {
+                return "bottom right";
+            }
+        },
         OUTSIDE_TOP {
-            public String toString(){ return "out horiz center top"; }
-        }, 
+            public String toString() {
+                return "out horiz center top";
+            }
+        },
         NONE {
-            public String toString(){ return "none"; }
+            public String toString() {
+                return "none";
+            }
         }
     }
 
-    /** Logarithmic x axis*/
-    public Boolean logX = false;
-    /** Logarithmic y axis*/
-    public Boolean logY = false;
-    /** Logarithmic z axis*/
-    public Boolean logZ = false;
-    /** Minimum value on the x axis*/
-    public Double minX = null;
-    /** Minimum value on the y axis*/
-    public Double minY = null;
-    /** Minimum value on the z axis*/
-    public Double minZ = null;
-    /** Maximum value on the x axis*/
-    public Double maxX = null;
-    /** Maximum value on the y axis*/
-    public Double maxY = null;
-    /** Maximum value on the z axis*/
-    public Double maxZ = null;
-    /** The size*/
-    public Double size = 0.6d;
-    /** The width/height ratio of the plot*/
-    public Double ratio = null;
-    /** The width of the box*/
-    public Double boxwidth = 0.75d;
-    /** Rotation of the xtics in degrees*/
-    public Integer xticsrotate = null;
-    /** Grid*/
-    public Boolean grid = true;
-    /** The keypos*/
-    public KeyPos keypos = KeyPos.TOP_RIGHT;
+    /** colourValues. */
+    public String[] colourValues      = new String[] { "1D4599", "11AD34", "E62B17", "E69F17", "2F3F60", "2F6C3D", "8F463F", "8F743F", "031A49", "025214", "6D0D03", "6D4903", "7297E6", "67EB84", "F97A6D", "F9C96D", "A9BDE6", "A6EBB5", "F9B7B0", "F9E0B0" };
+
+    /** Logarithmic x axis */
+    public Boolean          logX              = false;
+    /** Logarithmic y axis */
+    public Boolean          logY              = false;
+    /** Logarithmic z axis */
+    public Boolean          logZ              = false;
+    /** Minimum value on the x axis */
+    public Double           minX              = null;
+    /** Minimum value on the y axis */
+    public Double           minY              = null;
+    /** Minimum value on the z axis */
+    public Double           minZ              = null;
+    /** Maximum value on the x axis */
+    public Double           maxX              = null;
+    /** Maximum value on the y axis */
+    public Double           maxY              = null;
+    /** Maximum value on the z axis */
+    public Double           maxZ              = null;
+    /** The size */
+    public Double           size              = 0.6d;
+    /** The width/height ratio of the plot */
+    public Double           ratio             = null;
+    /** The width of the box */
+    public Double           boxwidth          = 0.75d;
+    /** Rotation of the xtics in degrees */
+    public Integer          xticsrotate       = null;
+    /** Grid */
+    public Boolean          grid              = true;
+    /** The keypos */
+    public KeyPos           keypos            = KeyPos.TOP_RIGHT;
+    /** label */
+    public Boolean          printLabels       = true;
+    /** gprintf format string */
+    public String           labelFormatString = "%.2f";
+    /** offset for labels */
+    public double           labelOffset       = +.5d;
 }

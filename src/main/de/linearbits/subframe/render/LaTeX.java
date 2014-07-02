@@ -33,59 +33,64 @@ import de.linearbits.subframe.graph.Plot;
  * @author Fabian Prasser
  */
 public class LaTeX {
-    
+
     /**
-     * Render the given list of plots 
+     * Render the given list of plots
+     * 
      * @param groups
      * @param filename
      * @throws IOException
      */
-    public static void plot(List<PlotGroup> groups, String filename) throws IOException{
+    public static void plot(List<PlotGroup> groups, String filename) throws IOException {
         plot(groups, filename, false);
     }
-    
+
     /**
      * Render the given list of plots. Allows keeping the source files.
+     * 
      * @param groups
      * @param filename
      * @param keepFiles
      * @throws IOException
      */
-    public static void plot(List<PlotGroup> groups, String filename, boolean keepFiles) throws IOException{
-    	
-    	String outputFolder = new File(new File(".").getAbsolutePath()+"/"+new File(filename + ".tex").getParent()).getAbsolutePath();
-    	Map<Plot<?>, String> filenames = new HashMap<Plot<?>, String>();
-    	
-    	try {
-    		plot(groups, filename, keepFiles, filenames, outputFolder);
-    	} catch (IOException e){
-            deleteFile(filename + ".tex");
-            for (String name : filenames.values()) {
-                deleteFile(name + ".pdf");
+    public static void plot(List<PlotGroup> groups, String filename, boolean keepFiles) throws IOException {
+
+        String outputFolder = new File(new File(".").getAbsolutePath() + "/" + new File(filename + ".tex").getParent()).getAbsolutePath();
+        Map<Plot<?>, String> filenames = new HashMap<Plot<?>, String>();
+
+        try {
+            plot(groups, filename, keepFiles, filenames, outputFolder);
+        } catch (IOException e) {
+            if (!keepFiles) {
+                deleteFile(filename + ".tex");
+                for (String name : filenames.values()) {
+                    deleteFile(name + ".pdf");
+                }
+                deleteFile(outputFolder + "/img/");
             }
-            deleteFile(outputFolder+"/img/");
             deleteFile(filename + ".log");
             deleteFile(filename + ".aux");
             deleteFile(outputFolder + "/texput.log");
-    		throw(e);
-    	}
-    	
+            throw (e);
+        }
+
         // delete temp files
-        if (!keepFiles){
+        if (!keepFiles) {
             deleteFile(filename + ".tex");
             for (String name : filenames.values()) {
                 deleteFile(name + ".pdf");
             }
-            deleteFile(outputFolder+"/img/");
+            deleteFile(outputFolder + "/img/");
         }
         deleteFile(filename + ".log");
         deleteFile(filename + ".aux");
         deleteFile(outputFolder + "/texput.log");
-        
+
     }
-    
+
     /**
      * Executes pdflatex
+     * 
      * @param groups
      * @param filename
      * @param keepFiles
@@ -93,20 +98,19 @@ public class LaTeX {
      * @param outputFolder
      * @throws IOException
      */
-    private static void plot(List<PlotGroup> groups, String filename, boolean keepFiles, Map<Plot<?>, String> filenames, String outputFolder) throws IOException{
-        
-        new File(outputFolder+"/img/").mkdir();
-        
+    private static void plot(List<PlotGroup> groups, String filename, boolean keepFiles, Map<Plot<?>, String> filenames, String outputFolder) throws IOException {
+
+        new File(outputFolder + "/img/").mkdir();
+
         int index = 0;
-        for (int i=0; i<groups.size(); i++){
+        for (int i = 0; i < groups.size(); i++) {
             PlotGroup group = groups.get(i);
             for (Plot<?> plot : group.getPlots()) {
-                String name = new File(outputFolder+"/img/" + "image_"+(index++)).getAbsolutePath();
+                String name = new File(outputFolder + "/img/" + "image_" + (index++)).getAbsolutePath();
                 GnuPlot.plot(plot, group.getParams(), name, keepFiles);
                 filenames.put(plot, name);
             }
         }
-        
 
         BufferedWriter w = new BufferedWriter(new FileWriter(new File(filename + ".tex")));
 
@@ -115,9 +119,9 @@ public class LaTeX {
         w.write("\\pagestyle{empty}\n");
         w.write("\\begin{document}\n");
 
-        for (int i=0; i<groups.size(); i++){
+        for (int i = 0; i < groups.size(); i++) {
             PlotGroup group = groups.get(i);
-            w.write("\t\\begin{figure*}[htb!]\n");
+            w.write("\t\\begin{figure*}[!htbp]\n");
             w.write("\t\t\\centering\n");
             for (Plot<?> plot : group.getPlots()) {
                 w.write("\t\t\\includegraphics[width=");
@@ -125,21 +129,25 @@ public class LaTeX {
                 w.write("\\textwidth]");
                 w.write("{");
                 String imgFilename = filenames.get(plot);
-                if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0){
-                	imgFilename = imgFilename.replaceAll("\\\\", "/");
+                if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
+                    imgFilename = imgFilename.replaceAll("\\\\", "/");
                 }
                 w.write(imgFilename);
                 w.write(".pdf");
                 w.write("}\n");
-                
+
             }
             w.write("\t\t\\caption{");
             w.write(group.getCaption());
             w.write("}\n");
             w.write("\t\\end{figure*}\n");
+            
+            if (i % 18 == 0) {
+                w.write("\t\\clearpage\n");
+            }
 
         }
-                
+
         w.write("\\end{document}\n");
 
         w.flush();
@@ -147,9 +155,9 @@ public class LaTeX {
 
         ProcessBuilder b = new ProcessBuilder();
         Process p;
-        
+
         if (new File(filename + ".tex").exists()) {
-            b.command("pdflatex", "-interaction=errorstopmode", "-quiet", "-output-directory="+outputFolder, filename + ".tex");
+            b.command("pdflatex", "-interaction=errorstopmode", "-quiet", "-output-directory=" + outputFolder, filename + ".tex");
             p = b.start();
             StreamReader output = new StreamReader(p.getInputStream());
             StreamReader error = new StreamReader(p.getErrorStream());
@@ -160,15 +168,16 @@ public class LaTeX {
             } catch (final InterruptedException e) {
                 throw new IOException(e);
             }
-            
-            if (p.exitValue() != 0){
-            	throw new IOException("Error executing pdflatex: "+error.getString());
+
+            if (p.exitValue() != 0) {
+                throw new IOException("Error executing pdflatex: " + error.getString() + System.lineSeparator() + output.getString());
             }
         }
     }
 
     /**
      * Deletes a file
+     * 
      * @param path
      */
     private static void deleteFile(String path) {

@@ -25,12 +25,14 @@ import de.linearbits.subframe.render.GnuPlotParams.KeyPos;
 
 /**
  * GnuPlot implementation of a clustered histogram
+ * 
  * @author Fabian Prasser
  */
 class GnuPlotHistogramClustered extends GnuPlot<PlotHistogramClustered> {
 
     /**
      * Creates a new plot
+     * 
      * @param plot
      * @param params
      */
@@ -51,7 +53,7 @@ class GnuPlotHistogramClustered extends GnuPlot<PlotHistogramClustered> {
         gpCommands.add("set output \"" + filename + ".eps\"");
 
         gpCommands.add("set size " + params.size);
-        if (params.ratio != null){
+        if (params.ratio != null) {
             gpCommands.add("set size ratio " + params.ratio);
         }
 
@@ -66,9 +68,9 @@ class GnuPlotHistogramClustered extends GnuPlot<PlotHistogramClustered> {
         if (params.keypos == KeyPos.NONE) {
             gpCommands.add("unset key");
         } else {
-            gpCommands.add("set key "+params.keypos.toString());
+            gpCommands.add("set key " + params.keypos.toString());
         }
-        
+
         gpCommands.add("set xtic scale 0");
         gpCommands.add("set style fill solid border -1");
 
@@ -93,18 +95,38 @@ class GnuPlotHistogramClustered extends GnuPlot<PlotHistogramClustered> {
         }
 
         int size = GnuPlotClusterUtils.getNumBars(this.plot);
+
+        // https://stackoverflow.com/questions/12926827/gnuplot-how-to-place-y-values-above-bars-when-using-histogram-style
+        // // command for labels
+        // gpCommands.add("GAPSIZE=1");
+        // gpCommands.add("STARTCOL=2");
+        // gpCommands.add("ENDCOL=" + (size + 1));
+        // gpCommands.add("NCOL=ENDCOL-STARTCOL+1");
+        // gpCommands.add("BOXWIDTH=1./(GAPSIZE+NCOL)");
+
+        int gapsize = 1;
+        int endcol = size + 1;
+        double boxwidth = 1.0d / (((double) gapsize) + endcol - 1);
+
+        int end = (params.printLabels) ? size : (size - 1);
+
         for (int i = 0; i < size; i++) {
             String command = null;
             String color = GnuPlotClusterUtils.getColor(i, size);
+
             if (i == 0) {
-                command = "plot '" + filename + ".dat' using 2:xtic(1) title col linetype 1 linecolor rgb \"" + color +
-                          "\"";
+                command = "plot '" + filename + ".dat' using 2:xtic(1) title col linetype 1 linecolor rgb \"" + color + "\"";
             } else {
                 command = "     '' using " + (i + 2) + ":xtic(1) title col linetype 1 linecolor rgb \"" + color + "\"";
             }
-
-            if (i < size - 1) command += ",\\";
+            if (i < end) command += ",\\";
             gpCommands.add(command);
+
+            if (params.printLabels) {
+                command = "     '' u (column(0)-1+" + boxwidth + "*(" + (i + 2) + "-2+" + gapsize + "/2+1)-0.5):"+(i + 2)+":(gprintf(\""+params.labelFormatString+"\",$" + (i + 2) + ")) notitle w labels offset 0," + params.labelOffset + " rotate left";
+                if (i < size - 1) command += ",\\";
+                gpCommands.add(command);
+            }
         }
 
         StringBuffer buffer = new StringBuffer();
