@@ -99,7 +99,7 @@ public class GnuPlotParams {
     /** The keypos */
     public KeyPos           keypos            = KeyPos.TOP_RIGHT;
     /** label */
-    public Boolean          printLabels       = true;
+    public Boolean          printValues       = true;
     /** gprintf format string */
     public String           labelFormatString = "%.2f";
     /** offset for labels */

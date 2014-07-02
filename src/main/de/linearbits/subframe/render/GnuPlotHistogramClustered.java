@@ -99,7 +99,7 @@ class GnuPlotHistogramClustered extends GnuPlot<PlotHistogramClustered> {
         int endcol = size + 1;
         double boxwidth = 1.0d / (((double) gapsize) + endcol - 1);
 
-        int end = (params.printLabels) ? size : (size - 1);
+        int end = (params.printValues) ? size : (size - 1);
 
         for (int i = 0; i < size; i++) {
             String command = null;
@@ -113,7 +113,7 @@ class GnuPlotHistogramClustered extends GnuPlot<PlotHistogramClustered> {
             if (i < end) command += ",\\";
             gpCommands.add(command);
 
-            if (params.printLabels) {
+            if (params.printValues) {
                 command = "     '' u (column(0)-1+" + boxwidth + "*(" + (i + 2) + "-2+" + gapsize + "/2+1)-0.5):"+(i + 2)+":(gprintf(\""+params.labelFormatString+"\",$" + (i + 2) + ")) notitle w labels offset 0," + params.labelOffset + " rotate left";
                 if (i < size - 1) command += ",\\";
                 gpCommands.add(command);
