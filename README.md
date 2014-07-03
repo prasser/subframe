@@ -4,7 +4,7 @@ Java Benchmarking Library
 Introduction
 ------
 SUBFRAME is a Java framework for performing microbenchmarks, analyzing the results and plotting them graphically. 
-It support the following features: 
+It supports the following features: 
 
 1. Measuring several parameters, including: wall-clock time, system time, user time and different methods for measuring memory consumption in
 single- and multithreaded environments
