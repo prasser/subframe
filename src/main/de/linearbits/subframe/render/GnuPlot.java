@@ -20,6 +20,8 @@ package de.linearbits.subframe.render;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.linearbits.subframe.graph.Plot;
 import de.linearbits.subframe.graph.PlotHistogram;
@@ -27,6 +29,7 @@ import de.linearbits.subframe.graph.PlotHistogramClustered;
 import de.linearbits.subframe.graph.PlotHistogramStacked;
 import de.linearbits.subframe.graph.PlotLines;
 import de.linearbits.subframe.graph.PlotLinesClustered;
+import de.linearbits.subframe.render.GnuPlotParams.KeyPos;
 
 /**
  * Static class for rendering plots with GnuPlot
@@ -267,4 +270,64 @@ public abstract class GnuPlot<T extends Plot<?>> {
 
     /** Returns the GnuPlot source code*/
     protected abstract String getSource(String filename);
+    
+    /**
+     * Returns a list of generic gnuplot commands, which are similar for all plots
+     * @param filename
+     * @param plot
+     * @return
+     */
+    protected List<String> getGenericCommands(String filename, Plot<?> plot) {
+        
+        List<String> gpCommands = new ArrayList<String>();
+        
+        gpCommands.add("set terminal postscript eps enhanced "+
+                       (params.colorize ? "color" : "monochrome") +
+                       " size " + params.width + "," + params.height +  
+                       (params.font != null ? " font '" +params.font + "'" : ""));
+        gpCommands.add("set output \"" + filename + ".eps\"");
+        
+        if (params.size != null) {
+            gpCommands.add("set size " + params.size);
+        }
+        
+        if (params.ratio != null) {
+            gpCommands.add("set size ratio " + params.ratio);
+        }
+        
+        gpCommands.add("set offsets " + params.offsetLeft + " , " + params.offsetRight + ", " + params.offsetTop + ", " + params.offsetBottom + " ");
+
+        gpCommands.add("set title \"" + plot.getTitle() + "\"");
+        gpCommands.add("set xlabel \"" + plot.getLabels().x + "\"");
+        gpCommands.add("set ylabel \"" + plot.getLabels().y + "\"");
+
+        if (params.keypos == KeyPos.NONE) {
+            gpCommands.add("unset key");
+        } else {
+            gpCommands.add("set key " + params.keypos.toString());
+        }
+
+        if (params.minY != null && params.maxY != null) {
+            gpCommands.add("set yrange[" + params.minY + ":" + params.maxY + "]");
+        }
+
+        if (params.minY != null && params.maxY == null) {
+            gpCommands.add("set yrange[" + params.minY + ":]");
+        }
+
+        if (params.logY) {
+            gpCommands.add("set logscale y");
+        }
+
+        if (params.grid) {
+            gpCommands.add("set grid");
+        }
+
+        if (params.rotateXTicks != null) {
+            gpCommands.add("set xtics rotate by " + params.rotateXTicks);
+        }
+        gpCommands.add("set xtic scale 0");
+
+        return gpCommands;
+    }
 }

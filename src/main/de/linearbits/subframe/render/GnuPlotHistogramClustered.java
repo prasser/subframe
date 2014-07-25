@@ -17,11 +17,9 @@
  */
 package de.linearbits.subframe.render;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.linearbits.subframe.graph.PlotHistogramClustered;
-import de.linearbits.subframe.render.GnuPlotParams.KeyPos;
 
 /**
  * GnuPlot implementation of a clustered histogram
@@ -48,50 +46,15 @@ class GnuPlotHistogramClustered extends GnuPlot<PlotHistogramClustered> {
     @Override
     protected String getSource(String filename) {
 
-        final List<String> gpCommands = new ArrayList<String>();
-        gpCommands.add("set terminal postscript eps enhanced monochrome");
-        gpCommands.add("set output \"" + filename + ".eps\"");
+        List<String> gpCommands = getGenericCommands(filename, plot);
 
-        gpCommands.add("set size " + params.size);
-        if (params.ratio != null) {
-            gpCommands.add("set size ratio " + params.ratio);
-        }
-
-        gpCommands.add("set boxwidth " + params.boxwidth + " absolute");
-        gpCommands.add("set title \"" + plot.getTitle() + "\"");
         gpCommands.add("set style data histogram");
         gpCommands.add("set style histogram cluster gap 1");
         gpCommands.add("set auto x");
-        gpCommands.add("set xlabel \"" + plot.getLabels().x + "\"");
-        gpCommands.add("set ylabel \"" + plot.getLabels().y + "\"");
-
-        if (params.keypos == KeyPos.NONE) {
-            gpCommands.add("unset key");
-        } else {
-            gpCommands.add("set key " + params.keypos.toString());
-        }
-
-        gpCommands.add("set xtic scale 0");
         gpCommands.add("set style fill solid border -1");
 
-        if (params.minY != null && params.maxY != null) {
-            gpCommands.add("set yrange[" + params.minY + ":" + params.maxY + "]");
-        }
-
-        if (params.minY != null && params.maxY == null) {
-            gpCommands.add("set yrange[" + params.minY + ":]");
-        }
-
-        if (params.rotateXTicks != null) {
-            gpCommands.add("set xtics rotate by " + params.rotateXTicks);
-        }
-
-        if (params.logY) {
-            gpCommands.add("set logscale y");
-        }
-
-        if (params.grid) {
-            gpCommands.add("set grid");
+        if (params.boxwidth != null) {
+            gpCommands.add("set boxwidth " + params.boxwidth + " relative");
         }
 
         int size = GnuPlotClusterUtils.getNumBars(this.plot);
@@ -103,7 +66,12 @@ class GnuPlotHistogramClustered extends GnuPlot<PlotHistogramClustered> {
 
         for (int i = 0; i < size; i++) {
             String command = null;
-            String color = GnuPlotClusterUtils.getColor(i, size);
+            String color = null;
+            if (params.colorize) {
+                color = "#" + params.colors[i % params.colors.length];
+            } else {
+                color = GnuPlotClusterUtils.getColor(i, size);
+            }
 
             if (i == 0) {
                 command = "plot '" + filename + ".dat' using 2:xtic(1) title col linetype 1 linecolor rgb \"" + color + "\"";
@@ -114,7 +82,7 @@ class GnuPlotHistogramClustered extends GnuPlot<PlotHistogramClustered> {
             gpCommands.add(command);
 
             if (params.printValues) {
-                command = "     '' u (column(0)-1+" + boxwidth + "*(" + (i + 2) + "-2+" + gapsize + "/2+1)-0.5):"+(i + 2)+":(gprintf(\""+params.printValuesFormatString+"\",$" + (i + 2) + ")) notitle w labels offset 0," + params.printValuesOffset + " rotate left";
+                command = "     '' u (column(0)-1+" + boxwidth + "*(" + (i + 2) + "-2+" + gapsize + "/2+1)-0.5):" + (i + 2) + ":(gprintf(\"" + params.printValuesFormatString + "\",$" + (i + 2) + ")) notitle w labels offset 0," + params.printValuesOffset + " rotate left";
                 if (i < size - 1) command += ",\\";
                 gpCommands.add(command);
             }

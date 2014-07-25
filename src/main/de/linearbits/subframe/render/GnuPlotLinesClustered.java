@@ -17,20 +17,20 @@
  */
 package de.linearbits.subframe.render;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.linearbits.subframe.graph.PlotLinesClustered;
-import de.linearbits.subframe.render.GnuPlotParams.KeyPos;
 
 /**
  * GnuPlot implementation of a clustered lines plot
+ * 
  * @author Fabian Prasser
  */
 class GnuPlotLinesClustered extends GnuPlot<PlotLinesClustered> {
 
     /**
      * Creates a new plot
+     * 
      * @param plot
      * @param params
      */
@@ -46,75 +46,36 @@ class GnuPlotLinesClustered extends GnuPlot<PlotLinesClustered> {
     @Override
     protected String getSource(String filename) {
 
-        final List<String> gpCommands = new ArrayList<String>();
-        gpCommands.add("set terminal postscript eps enhanced monochrome");
-        gpCommands.add("set output \"" + filename + ".eps\"");
-        
-        gpCommands.add("set size " + params.size);
-        if (params.ratio != null){
-            gpCommands.add("set size ratio " + params.ratio);
-        }
-        
-        gpCommands.add("set boxwidth " +params.boxwidth + " absolute");
-        gpCommands.add("set title \"" + plot.getTitle() + "\"");
-        gpCommands.add("set xlabel \"" + plot.getLabels().x + "\"");
-        gpCommands.add("set ylabel \"" + plot.getLabels().y + "\"");
+        List<String> gpCommands = getGenericCommands(filename, plot);
 
-        if (params.keypos == KeyPos.NONE) {
-            gpCommands.add("unset key");
-        } else {
-            gpCommands.add("set key "+params.keypos.toString());
-        }
-        
-        gpCommands.add("set xtic scale 0");
         gpCommands.add("set style fill solid border -1");
-        
-        if (params.minY != null && params.maxY != null) {
-            gpCommands.add("set yrange[" + params.minY + ":" + params.maxY + "]");
-        }
 
-        if (params.minY != null && params.maxY == null) {
-            gpCommands.add("set yrange[" + params.minY + ":]");
-        }
         if (params.minX != null && params.maxX == null) {
             gpCommands.add("set xrange[" + params.minX + ":]");
         }
 
-        if (params.logY) {
-            gpCommands.add("set logscale y");
-        }
-        
-        if (params.rotateXTicks != null) {
-            gpCommands.add("set xtics rotate by " + params.rotateXTicks);
-        }
-        
-        if (params.grid) {
-            gpCommands.add("set grid");
-        }
-        
-        
         int size = GnuPlotClusterUtils.getNumBars(this.plot);
-        for (int i=0; i<size; i++){
+        for (int i = 0; i < size; i++) {
             String command = null;
-            if (i==0){
-            	if (params.categorialX) {
-            		command = "plot '" + filename + ".dat' using 2:xtic(1) with linespoints linecolor rgb \"#" + params.colors[i % params.colors.length] + "\" title col";
-            	} else {
-            		command = "plot '" + filename + ".dat' using 1:2 with linespoints linecolor rgb \"#" + params.colors[i % params.colors.length] + "\" title col";
-            	}
-            }  
-            else {
-            	if (params.categorialX) {
-            		command = "     '' using "+(i+2)+":xtic(1) with linespoints linecolor rgb \"#" + params.colors[i % params.colors.length] + "\" title col";
-            	} else {
-            		command = "     '' using 1:"+(i+2)+" with linespoints linecolor rgb \"#" + params.colors[i % params.colors.length] + "\" title col";
-            	}
+            String color = params.colorize ? "linecolor rgb \"#" + params.colors[i % params.colors.length] + "\" " : "";
+            if (i == 0) {
+                if (params.categorialX) {
+                    command = "plot '" + filename + ".dat' using 2:xtic(1) with linespoints "+color+"title col";
+                } else {
+                    command = "plot '" + filename + ".dat' using 1:2 with linespoints "+color+"title col";
+                }
+            } else {
+                if (params.categorialX) {
+                    command = "     '' using " + (i + 2) + ":xtic(1) with linespoints "+color+"title col";
+                } else {
+                    command = "     '' using 1:" + (i + 2) + " with linespoints "+color+"title col";
+                }
             }
-            
-            if (i<size-1) command += ",\\";
+
+            if (i < size - 1) command += ",\\";
             gpCommands.add(command);
         }
-        
+
         StringBuffer buffer = new StringBuffer();
         for (String line : gpCommands) {
             buffer.append(line).append("\n");

@@ -17,7 +17,6 @@
  */
 package de.linearbits.subframe.render;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.linearbits.subframe.graph.PlotLines;
@@ -26,12 +25,14 @@ import de.linearbits.subframe.graph.Point3D;
 
 /**
  * GnuPlot implementation of a lines plot
+ * 
  * @author Fabian Prasser
  */
 class GnuPlotLines extends GnuPlot<PlotLines> {
 
     /**
      * Creates a new plot
+     * 
      * @param plot
      * @param params
      */
@@ -67,50 +68,18 @@ class GnuPlotLines extends GnuPlot<PlotLines> {
     @Override
     protected String getSource(String filename) {
 
-        final List<String> gpCommands = new ArrayList<String>();
-        gpCommands.add("set terminal postscript eps enhanced monochrome");
-        gpCommands.add("set output \"" + filename + ".eps\"");
+        List<String> gpCommands = getGenericCommands(filename, plot);
 
-        gpCommands.add("set size " + params.size);
-        if (params.ratio != null){
-            gpCommands.add("set size ratio " + params.ratio);
-        }
-
-        gpCommands.add("set boxwidth " + params.boxwidth + " absolute");
-        gpCommands.add("set title \"" + plot.getTitle() + "\"");
-
-        if (params.rotateXTicks != null) {
-            gpCommands.add("set xtics rotate by " + params.rotateXTicks);
-        }
-
-        gpCommands.add("set xlabel \"" + plot.getLabels().x + "\"");
-        gpCommands.add("set ylabel \"" + plot.getLabels().y + "\"");
-        gpCommands.add("set key right top");
-        gpCommands.add("set xtic scale 0");
-
-        if (params.minY != null && params.maxY != null) {
-            gpCommands.add("set yrange[" + params.minY + ":" + params.maxY + "]");
-        }
         if (params.minX != null && params.maxX != null) {
             gpCommands.add("set xrange[" + params.minX + ":" + params.maxX + "]");
         }
 
-        if (params.minY != null && params.maxY == null) {
-            gpCommands.add("set yrange[" + params.minY + ":]");
-        }
         if (params.minX != null && params.maxX == null) {
             gpCommands.add("set xrange[" + params.minX + ":]");
         }
 
-        if (params.logY) {
-            gpCommands.add("set logscale y");
-        }
         if (params.logX) {
             gpCommands.add("set logscale x");
-        }
-
-        if (params.grid) {
-            gpCommands.add("set grid");
         }
 
         if (plot.isErrorBars()) {

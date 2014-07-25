@@ -96,10 +96,10 @@ public class GnuPlotParams {
     public Double   size                    = 0.6d;
     /** The width/height ratio of the plot */
     public Double   ratio                   = null;
-    /** Width of the plot*/
-    public Double   width                   = null;
-    /** Height of the plot*/
-    public Double   height                  = null;
+    /** The width of the output (inches) */
+    public double   width                   = 5d;
+    /** The height of the output (inches) */
+    public double   height                  = 3.5d;
 
     /** Offset*/
     public double   offsetLeft              = 0;
@@ -114,14 +114,14 @@ public class GnuPlotParams {
     public Double   boxwidth                = 0.75d;
     /** Rotation of the xtics in degrees */
     public Integer  rotateXTicks            = null;
-    /** X-ticks are categorial */
+    /** X-ticks are categorical */
     public Boolean  categorialX             = false;
     /** Grid */
     public Boolean  grid                    = true;
     /** The keypos */
     public KeyPos   keypos                  = KeyPos.TOP_RIGHT;
     /** Print the actual values into the plot*/
-    public Boolean  printValues             = true;
+    public Boolean  printValues             = false;
     /** Format string for values in the plot */
     public String   printValuesFormatString = "%.2f";
     /** Offset for labels in the plot */
