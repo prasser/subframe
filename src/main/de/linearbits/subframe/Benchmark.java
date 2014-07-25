@@ -401,7 +401,6 @@ public class Benchmark {
                 try {
                     ((Analyzer<Object>)analyzers[i]).add(value);
                 } catch (ClassCastException e) {
-                    e.printStackTrace();
                     throw new RuntimeException("Incompatible analyzer for value of type 'object'");
                 }
             }
