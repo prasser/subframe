@@ -401,17 +401,34 @@ public class Benchmark {
                 try {
                     ((Analyzer<Object>)analyzers[i]).add(value);
                 } catch (ClassCastException e) {
+                    e.printStackTrace();
                     throw new RuntimeException("Incompatible analyzer for value of type 'object'");
                 }
             }
     }
-    
+    /**
+     * Adds the given value
+     * @param measure
+     * @param value
+     */
+    public void addValue(int measure, Float value) {
+        addValue(measure, Double.valueOf(value));
+    }
     /**
      * Adds the given value
      * @param measure
      * @param value
      */
     public void addValue(int measure, float value) {
+        addValue(measure, Double.valueOf(value));
+    }
+
+    /**
+     * Adds the given value
+     * @param measure
+     * @param value
+     */
+    public void addValue(int measure, Long value) {
         addValue(measure, Double.valueOf(value));
     }
     
@@ -421,6 +438,33 @@ public class Benchmark {
      * @param value
      */
     public void addValue(int measure, long value) {
+        addValue(measure, Double.valueOf(value));
+    }
+
+    /**
+     * Adds the given value
+     * @param measure
+     * @param value
+     */
+    public void addValue(int measure, Character value) {
+        addValue(measure, Double.valueOf(value));
+    }
+    
+    /**
+     * Adds the given value
+     * @param measure
+     * @param value
+     */
+    public void addValue(int measure, char value) {
+        addValue(measure, Double.valueOf(value));
+    }
+    
+    /**
+     * Adds the given value
+     * @param measure
+     * @param value
+     */
+    public void addValue(int measure, Integer value) {
         addValue(measure, Double.valueOf(value));
     }
     
