@@ -79,8 +79,8 @@ class GnuPlotLines extends GnuPlot<PlotLines> {
         gpCommands.add("set boxwidth " + params.boxwidth + " absolute");
         gpCommands.add("set title \"" + plot.getTitle() + "\"");
 
-        if (params.xticsrotate != null) {
-            gpCommands.add("set xtics rotate by " + params.xticsrotate);
+        if (params.rotateXTicks != null) {
+            gpCommands.add("set xtics rotate by " + params.rotateXTicks);
         }
 
         gpCommands.add("set xlabel \"" + plot.getLabels().x + "\"");

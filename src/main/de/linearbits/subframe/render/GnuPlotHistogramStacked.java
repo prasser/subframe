@@ -80,8 +80,8 @@ class GnuPlotHistogramStacked extends GnuPlot<PlotHistogramStacked> {
             gpCommands.add("set yrange[" + params.minY + ":]");
         }
 
-        if (params.xticsrotate != null) {
-            gpCommands.add("set xtics rotate by " + params.xticsrotate);
+        if (params.rotateXTicks != null) {
+            gpCommands.add("set xtics rotate by " + params.rotateXTicks);
         }
 
         if (params.logY) {

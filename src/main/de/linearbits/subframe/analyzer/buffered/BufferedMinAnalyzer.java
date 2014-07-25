@@ -61,17 +61,17 @@ public class BufferedMinAnalyzer extends BufferedAnalyzer{
     }
     
     @Override
-    public double getValue() {
+    public String getValue() {
         if (count==0) throw new RuntimeException("No values specified!");
         double result = Double.MAX_VALUE;
         for (int i=0; i<count; i++){
             result = Math.min(result, values[i]);
         }
-        return result;
+        return String.valueOf(result);
     }
 
     @Override
-    public Analyzer newInstance() {
+    public Analyzer<Double> newInstance() {
         return new BufferedMinAnalyzer(super.getLabel(), super.values.length, super.count, super.growthRate);
     }
 }

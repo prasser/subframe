@@ -61,13 +61,13 @@ public class BufferedCountAnalyzer extends BufferedAnalyzer{
     }
     
     @Override
-    public double getValue() {
+    public String getValue() {
         if (count==0) throw new RuntimeException("No values specified!");
-        return count;
+        return String.valueOf(count);
     }
 
     @Override
-    public Analyzer newInstance() {
+    public Analyzer<Double> newInstance() {
         return new BufferedCountAnalyzer(super.getLabel(), super.values.length, super.count, super.growthRate);
     }
 }

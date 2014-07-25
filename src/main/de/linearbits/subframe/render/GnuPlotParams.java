@@ -68,42 +68,65 @@ public class GnuPlotParams {
 											"025214", "6D0D03", "6D4903", "7297E6", "67EB84", "F97A6D",
 											"F9C96D", "A9BDE6", "A6EBB5", "F9B7B0", "F9E0B0" };
 
+    /** Should the plot be colorized*/
+    public boolean  colorize                = false;
+
     /** Logarithmic x axis */
-    public Boolean          logX              = false;
+    public Boolean  logX                    = false;
     /** Logarithmic y axis */
-    public Boolean          logY              = false;
+    public Boolean  logY                    = false;
     /** Logarithmic z axis */
-    public Boolean          logZ              = false;
+    public Boolean  logZ                    = false;
+
     /** Minimum value on the x axis */
-    public Double           minX              = null;
+    public Double   minX                    = null;
     /** Minimum value on the y axis */
-    public Double           minY              = null;
+    public Double   minY                    = null;
     /** Minimum value on the z axis */
-    public Double           minZ              = null;
+    public Double   minZ                    = null;
+
     /** Maximum value on the x axis */
-    public Double           maxX              = null;
+    public Double   maxX                    = null;
     /** Maximum value on the y axis */
-    public Double           maxY              = null;
+    public Double   maxY                    = null;
     /** Maximum value on the z axis */
-    public Double           maxZ              = null;
+    public Double   maxZ                    = null;
+
     /** The size */
-    public Double           size              = 0.6d;
+    public Double   size                    = 0.6d;
     /** The width/height ratio of the plot */
-    public Double           ratio             = null;
+    public Double   ratio                   = null;
+    /** Width of the plot*/
+    public Double   width                   = null;
+    /** Height of the plot*/
+    public Double   height                  = null;
+
+    /** Offset*/
+    public double   offsetLeft              = 0;
+    /** Offset*/
+    public double   offsetRight             = 0;
+    /** Offset*/
+    public double   offsetBottom            = 0;
+    /** Offset*/
+    public double   offsetTop               = 0;
+
     /** The width of the box */
-    public Double           boxwidth          = 0.75d;
+    public Double   boxwidth                = 0.75d;
     /** Rotation of the xtics in degrees */
-    public Integer          xticsrotate       = null;
+    public Integer  rotateXTicks            = null;
     /** X-ticks are categorial */
-    public Boolean          categorialX       = false;
+    public Boolean  categorialX             = false;
     /** Grid */
-    public Boolean          grid              = true;
+    public Boolean  grid                    = true;
     /** The keypos */
-    public KeyPos           keypos            = KeyPos.TOP_RIGHT;
-    /** label */
-    public Boolean          printValues       = true;
-    /** printf format string */
-    public String           labelFormatString = "%.2f";
-    /** offset for labels */
-    public double           labelOffset       = +.5d;
+    public KeyPos   keypos                  = KeyPos.TOP_RIGHT;
+    /** Print the actual values into the plot*/
+    public Boolean  printValues             = true;
+    /** Format string for values in the plot */
+    public String   printValuesFormatString = "%.2f";
+    /** Offset for labels in the plot */
+    public double   printValuesOffset       = +0.5d;
+
+    /** Font specification*/
+    public String   font                    = null;
 }

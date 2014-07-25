@@ -34,12 +34,12 @@ public class StreamMaxAnalyzer extends StreamAnalyzer{
     }
 
     @Override
-    public void add(double val) {
+    public void add(Double val) {
         value = Math.max(value, val);
     }
 
     @Override
-    public Analyzer newInstance() {
+    public Analyzer<Double> newInstance() {
         return new StreamMaxAnalyzer();
     }
 }

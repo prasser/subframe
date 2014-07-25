@@ -85,7 +85,7 @@ public class BoxingEvaluation {
                                          series));
              
         GnuPlotParams params = new GnuPlotParams();
-        params.xticsrotate = -90;
+        params.rotateXTicks = -90;
         params.keypos = KeyPos.TOP_LEFT;
         params.size = 0.6d;
         params.minY = 0d;
@@ -133,7 +133,7 @@ public class BoxingEvaluation {
                                          series));
         
         GnuPlotParams params = new GnuPlotParams();
-        params.xticsrotate = -90;
+        params.rotateXTicks = -90;
         params.keypos = KeyPos.TOP_LEFT;
         params.size = 0.6d;
         params.minY = 0d;

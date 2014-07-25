@@ -61,17 +61,17 @@ public class BufferedSumAnalyzer extends BufferedAnalyzer{
     }
     
     @Override
-    public double getValue() {
+    public String getValue() {
         if (count==0) throw new RuntimeException("No values specified!");
         double result = 0d;
         for (int i=0; i<count; i++){
             result += values[i];
         }
-        return result;
+        return String.valueOf(result);
     }
 
     @Override
-    public Analyzer newInstance() {
+    public Analyzer<Double> newInstance() {
         return new BufferedSumAnalyzer(super.getLabel(), super.values.length, super.count, super.growthRate);
     }
 }

@@ -84,8 +84,8 @@ class GnuPlotLinesClustered extends GnuPlot<PlotLinesClustered> {
             gpCommands.add("set logscale y");
         }
         
-        if (params.xticsrotate != null) {
-            gpCommands.add("set xtics rotate by " + params.xticsrotate);
+        if (params.rotateXTicks != null) {
+            gpCommands.add("set xtics rotate by " + params.rotateXTicks);
         }
         
         if (params.grid) {

@@ -23,7 +23,7 @@ import de.linearbits.subframe.analyzer.Analyzer;
  * Base class for analyzers that buffer all values and compute the result afterwards
  * @author Fabian Prasser
  */
-public abstract class BufferedAnalyzer extends Analyzer{
+public abstract class BufferedAnalyzer extends Analyzer<Double>{
 
 	/** Current number of values*/
     protected int count = 0;
@@ -77,7 +77,7 @@ public abstract class BufferedAnalyzer extends Analyzer{
     }
     
     @Override
-    public void add(double val) {
+    public void add(Double val) {
         if (count == values.length) {
             if (growthRate != 0) {
                 grow();

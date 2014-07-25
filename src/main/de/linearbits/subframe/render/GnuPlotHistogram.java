@@ -86,8 +86,8 @@ class GnuPlotHistogram extends GnuPlot<PlotHistogram> {
             gpCommands.add("set style data histogram");
         }
 
-        if (params.xticsrotate != null) {
-            gpCommands.add("set xtics rotate by " + params.xticsrotate);
+        if (params.rotateXTicks != null) {
+            gpCommands.add("set xtics rotate by " + params.rotateXTicks);
         }
 
         gpCommands.add("set xlabel \"" + plot.getLabels().x + "\"");

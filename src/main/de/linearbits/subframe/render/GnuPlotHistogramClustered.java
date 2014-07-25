@@ -82,8 +82,8 @@ class GnuPlotHistogramClustered extends GnuPlot<PlotHistogramClustered> {
             gpCommands.add("set yrange[" + params.minY + ":]");
         }
 
-        if (params.xticsrotate != null) {
-            gpCommands.add("set xtics rotate by " + params.xticsrotate);
+        if (params.rotateXTicks != null) {
+            gpCommands.add("set xtics rotate by " + params.rotateXTicks);
         }
 
         if (params.logY) {
@@ -114,7 +114,7 @@ class GnuPlotHistogramClustered extends GnuPlot<PlotHistogramClustered> {
             gpCommands.add(command);
 
             if (params.printValues) {
-                command = "     '' u (column(0)-1+" + boxwidth + "*(" + (i + 2) + "-2+" + gapsize + "/2+1)-0.5):"+(i + 2)+":(gprintf(\""+params.labelFormatString+"\",$" + (i + 2) + ")) notitle w labels offset 0," + params.labelOffset + " rotate left";
+                command = "     '' u (column(0)-1+" + boxwidth + "*(" + (i + 2) + "-2+" + gapsize + "/2+1)-0.5):"+(i + 2)+":(gprintf(\""+params.printValuesFormatString+"\",$" + (i + 2) + ")) notitle w labels offset 0," + params.printValuesOffset + " rotate left";
                 if (i < size - 1) command += ",\\";
                 gpCommands.add(command);
             }

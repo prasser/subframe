@@ -22,7 +22,7 @@ package de.linearbits.subframe.analyzer;
  * 
  * @author Fabian Prasser
  */
-public abstract class Analyzer {
+public abstract class Analyzer<T> {
     
     /** Label for analyzed values */
     public static final String VALUE              = "Value";
@@ -40,7 +40,10 @@ public abstract class Analyzer {
     public static final String STANDARD_DEVIATION = "Standard Deviation";
     /** Label for analyzed values */
     public static final String ARITHMETIC_MEAN    = "Arithmetic Mean";
-    
+    /** Label for analyzed values */
+    public static final String PERCENTILE(double percentile) {
+        return percentile + " - Percentile";
+    }
     
     /** The label*/
     private String label;
@@ -57,7 +60,7 @@ public abstract class Analyzer {
      * Adds a value
      * @param val
      */
-    public abstract void add(double val);
+    public abstract void add(T val);
     
     /**
      * Returns the label
@@ -71,16 +74,11 @@ public abstract class Analyzer {
      * Returns the computed value
      * @return
      */
-    public abstract double getValue();
+    public abstract String getValue();
     
     /** 
      * Creates a new instance
      * @return
      */
-    public abstract Analyzer newInstance();
-
-    /** Label for analyzed values */
-    public static final String PERCENTILE(double percentile) {
-        return percentile + " - Percentile";
-    }
+    public abstract Analyzer<T> newInstance();
 }

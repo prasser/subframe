@@ -23,10 +23,10 @@ package de.linearbits.subframe.analyzer;
  * 
  * @author Fabian Prasser
  */
-public class ValueBuffer extends Analyzer{
+public class ValueBuffer extends Analyzer<Object>{
 
     /** The value*/
-    private double value;
+    private Object value;
     
     /**
      * Constructs a new instance
@@ -36,16 +36,16 @@ public class ValueBuffer extends Analyzer{
     }
 
     @Override
-    public void add(double val) {
+    public void add(Object val) {
         this.value = val;
     }
     @Override
-    public double getValue() {
-        return value;
+    public String getValue() {
+        return value.toString();
     }
 
     @Override
-    public Analyzer newInstance() {
+    public Analyzer<Object> newInstance() {
         return new ValueBuffer();
     }
 }

@@ -79,7 +79,7 @@ public class SortEvaluation {
                                          series));
         
         GnuPlotParams params = new GnuPlotParams();
-        params.xticsrotate = -90;
+        params.rotateXTicks = -90;
         params.keypos = KeyPos.TOP_LEFT;
         params.size = 0.6d;
         return new PlotGroup("Comparison of algorithms", plots, params, 1.0d);
@@ -112,7 +112,7 @@ public class SortEvaluation {
                                     series));
         
         GnuPlotParams params = new GnuPlotParams();
-        params.xticsrotate = -90;
+        params.rotateXTicks = -90;
         params.keypos = KeyPos.TOP_LEFT;
         params.size = 0.6d;
         params.minY = 0d;

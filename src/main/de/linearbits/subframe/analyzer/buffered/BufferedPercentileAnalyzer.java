@@ -80,16 +80,16 @@ public class BufferedPercentileAnalyzer extends BufferedAnalyzer{
     }
 
     @Override
-    public double getValue() {
+    public String getValue() {
         if (count==0) throw new RuntimeException("No values specified!");
         Arrays.sort(values, 0, count);
         int offset = (int)Math.ceil(percentile * (double)count);
         if (offset>count-1) offset = count-1;
-        return values[offset];
+        return String.valueOf(values[offset]);
     }
     
     @Override
-    public Analyzer newInstance() {
+    public Analyzer<Double> newInstance() {
         return new BufferedPercentileAnalyzer(super.getLabel(), this.percentile, super.values.length, super.count, super.growthRate);
     }
 

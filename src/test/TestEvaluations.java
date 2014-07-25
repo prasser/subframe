@@ -141,7 +141,7 @@ public class TestEvaluations extends TestBase {
             
             GnuPlotParams params = new GnuPlotParams();
             params.logY = true;
-            params.xticsrotate = -90;
+            params.rotateXTicks = -90;
             GnuPlot.plot(plot, params, "src/test/test2_1");
             checkAndDelete("src/test/test2_1.pdf");
             
@@ -175,7 +175,7 @@ public class TestEvaluations extends TestBase {
             
             GnuPlotParams params = new GnuPlotParams();
             params.logY = true;
-            params.xticsrotate = -90;
+            params.rotateXTicks = -90;
             GnuPlot.plot(plot, params, "src/test/test2_2");
             checkAndDelete("src/test/test2_2.pdf");
             
@@ -207,7 +207,7 @@ public class TestEvaluations extends TestBase {
                                            series);
 
             GnuPlotParams params = new GnuPlotParams();
-            params.xticsrotate = -90;
+            params.rotateXTicks = -90;
             GnuPlot.plot(plot, params, "src/test/test2_3");
             checkAndDelete("src/test/test2_3.pdf");
             
@@ -240,7 +240,7 @@ public class TestEvaluations extends TestBase {
                                            series);
             
             GnuPlotParams params = new GnuPlotParams();
-            params.xticsrotate = -90;
+            params.rotateXTicks = -90;
             GnuPlot.plot(plot, params, "src/test/test2_4");
             checkAndDelete("src/test/test2_4.pdf");
             
@@ -271,7 +271,7 @@ public class TestEvaluations extends TestBase {
                                                                      series);
             
             GnuPlotParams params = new GnuPlotParams();
-            params.xticsrotate = -90;
+            params.rotateXTicks = -90;
             params.keypos = KeyPos.TOP_LEFT;
             GnuPlot.plot(plot, params, "src/test/test2_5");
             checkAndDelete("src/test/test2_5.pdf");
@@ -303,7 +303,7 @@ public class TestEvaluations extends TestBase {
                                                              series);
             
             GnuPlotParams params = new GnuPlotParams();
-            params.xticsrotate = -90;
+            params.rotateXTicks = -90;
             params.keypos = KeyPos.TOP_LEFT;
             GnuPlot.plot(plot, params, "src/test/test2_6");
             checkAndDelete("src/test/test2_6.pdf");
@@ -335,7 +335,7 @@ public class TestEvaluations extends TestBase {
                                                              series);
             
             GnuPlotParams params = new GnuPlotParams();
-            params.xticsrotate = -90;
+            params.rotateXTicks = -90;
             params.keypos = KeyPos.TOP_LEFT;
             GnuPlot.plot(plot, params, "src/test/test2_7");
             checkAndDelete("src/test/test2_7.pdf");
@@ -396,7 +396,7 @@ public class TestEvaluations extends TestBase {
                                          series));
         
         GnuPlotParams params = new GnuPlotParams();
-        params.xticsrotate = -90;
+        params.rotateXTicks = -90;
         params.keypos = KeyPos.TOP_LEFT;
         params.size = 0.6d;
         return new PlotGroup("Clustered plots", list, params, 0.5d);
@@ -445,7 +445,7 @@ public class TestEvaluations extends TestBase {
                                 series3D));
 
         GnuPlotParams params = new GnuPlotParams();
-        params.xticsrotate = -90;
+        params.rotateXTicks = -90;
         params.keypos = KeyPos.TOP_LEFT;
         params.size = 0.6d;
         return new PlotGroup("Non-clustered plots", list, params, 0.5d);

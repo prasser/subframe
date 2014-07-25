@@ -37,14 +37,14 @@ public class Benchmark {
     private Map<Integer, String>         measureToString = new HashMap<Integer, String>();
     /** Label to id*/
     private Map<String, Integer>         stringToMeasure = new HashMap<String, Integer>();
-    /** Analyzers for each measurement*/
-    private Map<Integer, List<Analyzer>> analyzers       = new HashMap<Integer, List<Analyzer>>();
+    /** Analyzer<?>s for each measurement*/
+    private Map<Integer, List<Analyzer<?>>> analyzers       = new HashMap<Integer, List<Analyzer<?>>>();
     /** All analyzers for each run*/
-    private List<Analyzer[][]>           runs            = new ArrayList<Analyzer[][]>();
+    private List<Analyzer<?>[][]>           runs            = new ArrayList<Analyzer<?>[][]>();
     /** Data for each run*/
     private List<String[]>               runData         = new ArrayList<String[]>();
     /** The current run*/
-    private Analyzer[][]                 currentRun      = null;
+    private Analyzer<?>[][]                 currentRun      = null;
     /** The measures*/
     protected Measures                   measures;
     /** Labels for run data*/
@@ -70,10 +70,10 @@ public class Benchmark {
      * @param measure
      * @param analyzer
      */
-    public synchronized void addAnalyzer(int measure, Analyzer analyzer) {
-        List<Analyzer> list = analyzers.get(measure);
+    public synchronized void addAnalyzer(int measure, Analyzer<?> analyzer) {
+        List<Analyzer<?>> list = analyzers.get(measure);
         if (list == null) {
-            list = new ArrayList<Analyzer>();
+            list = new ArrayList<Analyzer<?>>();
             analyzers.put(measure, list);
         }
         list.add(analyzer);
@@ -212,12 +212,12 @@ public class Benchmark {
         }
         runData.add(data);
         if (data.length != runHeader.length) { throw new RuntimeException("Invalid run data"); }
-        Analyzer[][] run = new Analyzer[analyzers.size()][];
+        Analyzer<?>[][] run = new Analyzer<?>[analyzers.size()][];
         for (int i : analyzers.keySet()) {
-            List<Analyzer> list = analyzers.get(i);
-            run[i] = new Analyzer[list.size()];
+            List<Analyzer<?>> list = analyzers.get(i);
+            run[i] = new Analyzer<?>[list.size()];
             int index = 0;
-            for (Analyzer a : list) {
+            for (Analyzer<?> a : list) {
                 run[i][index++] = a.newInstance();
             }
         }
@@ -393,10 +393,68 @@ public class Benchmark {
      * @param measure
      * @param value
      */
+    public void addValue(int measure, Object value) {
+        try {
+            @SuppressWarnings("unchecked")
+            Analyzer<Object>[] analyzers = (Analyzer<Object>[])currentRun[measure];
+            for (int i = 0; i < analyzers.length; i++) {
+                analyzers[i].add(value);
+            }
+        } catch (ClassCastException e){
+            throw new RuntimeException("Incompatible analyzer for value of type 'object'");
+        }
+    }
+    
+    /**
+     * Adds the given value
+     * @param measure
+     * @param value
+     */
+    public void addValue(int measure, float value) {
+        addValue(measure, Double.valueOf(value));
+    }
+    
+    /**
+     * Adds the given value
+     * @param measure
+     * @param value
+     */
+    public void addValue(int measure, long value) {
+        addValue(measure, Double.valueOf(value));
+    }
+    
+    /**
+     * Adds the given value
+     * @param measure
+     * @param value
+     */
+    public void addValue(int measure, int value) {
+        addValue(measure, Double.valueOf(value));
+    }
+    
+    /**
+     * Adds the given value
+     * @param measure
+     * @param value
+     */
     public void addValue(int measure, double value) {
-        Analyzer[] analyzers = currentRun[measure];
-        for (int i = 0; i < analyzers.length; i++) {
-            analyzers[i].add(value);
+        addValue(measure, Double.valueOf(value));
+    }
+    
+    /**
+     * Adds the given value
+     * @param measure
+     * @param value
+     */
+    public void addValue(int measure, Double value) {
+        try {
+            @SuppressWarnings("unchecked")
+            Analyzer<Double>[] analyzers = (Analyzer<Double>[])currentRun[measure];
+            for (int i = 0; i < analyzers.length; i++) {
+                analyzers[i].add(value);
+            }
+        } catch (ClassCastException e){
+            throw new RuntimeException("Incompatible analyzer for value of type 'double'");
         }
     }
     
@@ -444,10 +502,10 @@ public class Benchmark {
 
         // Create header
         for (int i = 0; i < runs.size(); i++) {
-            Analyzer[][] analyzers = runs.get(i);
+            Analyzer<?>[][] analyzers = runs.get(i);
             for (int j = 0; j < measureToString.size(); j++) {
                 String measure = measureToString.get(j);
-                for (Analyzer a : analyzers[j]) {
+                for (Analyzer<?> a : analyzers[j]) {
                     String label = a.getLabel();
                     int index = getIndex(map, measure, label);
                     if (index == -1) {
@@ -468,14 +526,14 @@ public class Benchmark {
             for (int j = 0; j < runData.get(i).length; j++) {
                 line[j] = runData.get(i)[j];
             }
-            Analyzer[][] analyzers = runs.get(i);
+            Analyzer<?>[][] analyzers = runs.get(i);
             for (int j = 0; j < measureToString.size(); j++) {
                 String measure = measureToString.get(j);
-                for (Analyzer a : analyzers[j]) {
+                for (Analyzer<?> a : analyzers[j]) {
                     String label = a.getLabel();
                     int index = getIndex(map, measure, label);
                     if (index == -1) { throw new RuntimeException("Invalid index"); }
-                    line[index] = String.valueOf(a.getValue());
+                    line[index] = a.getValue();
                 }
             }
             csv.addLine(line);
@@ -547,10 +605,10 @@ public class Benchmark {
                 }
             }
 
-            Analyzer[][] analyzers = runs.get(i);
+            Analyzer<?>[][] analyzers = runs.get(i);
             for (int j = 0; j < measureToString.size(); j++) {
                 b.append(" ").append(measureToString.get(j)).append("\n");
-                for (Analyzer a : analyzers[j]) {
+                for (Analyzer<?> a : analyzers[j]) {
                     b.append("  ").append(a.getLabel()).append(": ").append(a.getValue()).append("\n");
                 }
             }

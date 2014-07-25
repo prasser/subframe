@@ -61,17 +61,17 @@ public class BufferedGeometricMeanAnalyzer extends BufferedAnalyzer{
     }
     
     @Override
-    public double getValue() {
+    public String getValue() {
         if (count==0) throw new RuntimeException("No values specified!");
         double result = 1.0d;
         for (int i=0; i<count; i++) {
             result *= Math.pow(values[i], 1.0d / (double)count);
         }
-        return result;
+        return String.valueOf(result);
     }
 
     @Override
-    public Analyzer newInstance() {
+    public Analyzer<Double> newInstance() {
         return new BufferedGeometricMeanAnalyzer(super.getLabel(), super.values.length, super.count, super.growthRate);
     }
 }

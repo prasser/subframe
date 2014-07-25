@@ -23,7 +23,7 @@ import de.linearbits.subframe.analyzer.Analyzer;
  * Base class for analyzers that compute the result incrementally, based on incoming values
  * @author Fabian Prasser
  */
-public abstract class StreamAnalyzer extends Analyzer{
+public abstract class StreamAnalyzer extends Analyzer<Double>{
 
     protected double value = 0xDEADBEEF;
     
@@ -36,10 +36,10 @@ public abstract class StreamAnalyzer extends Analyzer{
     }
 
     @Override
-    public double getValue() {
+    public String getValue() {
         if (value == 0XDEADBEEF) {
             throw new RuntimeException("No values specified!");
         }
-        return value;
+        return String.valueOf(value);
     }
 }

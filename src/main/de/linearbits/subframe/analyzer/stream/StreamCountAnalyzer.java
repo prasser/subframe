@@ -34,12 +34,12 @@ public class StreamCountAnalyzer extends StreamAnalyzer{
     }
 
     @Override
-    public void add(double val) {
+    public void add(Double val) {
         value ++;
     }
 
     @Override
-    public Analyzer newInstance() {
+    public Analyzer<Double> newInstance() {
         return new StreamCountAnalyzer();
     }
 }
