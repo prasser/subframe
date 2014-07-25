@@ -33,22 +33,22 @@ import de.linearbits.subframe.io.CSVFile;
  */
 public class Benchmark {
 
-    /** Id to label*/
-    private Map<Integer, String>         measureToString = new HashMap<Integer, String>();
-    /** Label to id*/
-    private Map<String, Integer>         stringToMeasure = new HashMap<String, Integer>();
-    /** Analyzer<?>s for each measurement*/
+    /** Id to label */
+    private Map<Integer, String>            measureToString = new HashMap<Integer, String>();
+    /** Label to id */
+    private Map<String, Integer>            stringToMeasure = new HashMap<String, Integer>();
+    /** Analyzer<?>s for each measurement */
     private Map<Integer, List<Analyzer<?>>> analyzers       = new HashMap<Integer, List<Analyzer<?>>>();
-    /** All analyzers for each run*/
+    /** All analyzers for each run */
     private List<Analyzer<?>[][]>           runs            = new ArrayList<Analyzer<?>[][]>();
-    /** Data for each run*/
-    private List<String[]>               runData         = new ArrayList<String[]>();
-    /** The current run*/
+    /** Data for each run */
+    private List<String[]>                  runData         = new ArrayList<String[]>();
+    /** The current run */
     private Analyzer<?>[][]                 currentRun      = null;
-    /** The measures*/
-    protected Measures                   measures;
-    /** Labels for run data*/
-    private final String[]               runHeader;
+    /** The measures */
+    protected Measures                      measures;
+    /** Labels for run data */
+    private final String[]                  runHeader;
 
     /**
      * Creates a new benchmark, with an additional column called "Run" for run data
@@ -393,16 +393,17 @@ public class Benchmark {
      * @param measure
      * @param value
      */
+    @SuppressWarnings("unchecked")
     public void addValue(int measure, Object value) {
-        try {
-            @SuppressWarnings("unchecked")
-            Analyzer<Object>[] analyzers = (Analyzer<Object>[])currentRun[measure];
+        
+            Analyzer<?>[] analyzers = currentRun[measure];
             for (int i = 0; i < analyzers.length; i++) {
-                analyzers[i].add(value);
+                try {
+                    ((Analyzer<Object>)analyzers[i]).add(value);
+                } catch (ClassCastException e) {
+                    throw new RuntimeException("Incompatible analyzer for value of type 'object'");
+                }
             }
-        } catch (ClassCastException e){
-            throw new RuntimeException("Incompatible analyzer for value of type 'object'");
-        }
     }
     
     /**
@@ -446,15 +447,16 @@ public class Benchmark {
      * @param measure
      * @param value
      */
+    @SuppressWarnings("unchecked")
     public void addValue(int measure, Double value) {
-        try {
-            @SuppressWarnings("unchecked")
-            Analyzer<Double>[] analyzers = (Analyzer<Double>[])currentRun[measure];
-            for (int i = 0; i < analyzers.length; i++) {
-                analyzers[i].add(value);
+        
+        Analyzer<?>[] analyzers = currentRun[measure];
+        for (int i = 0; i < analyzers.length; i++) {
+            try {
+                ((Analyzer<Double>)analyzers[i]).add(value);
+            } catch (ClassCastException e) {
+                throw new RuntimeException("Incompatible analyzer for value of type 'double'");
             }
-        } catch (ClassCastException e){
-            throw new RuntimeException("Incompatible analyzer for value of type 'double'");
         }
     }
     
