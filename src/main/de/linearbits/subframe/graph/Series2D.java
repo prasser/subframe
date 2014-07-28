@@ -74,9 +74,9 @@ public class Series2D extends Series<Point2D> {
                     Selector<String[]> selector, 
                     Field xField, 
                     Field yField, 
-                    Analyzer analyzer){
+                    Analyzer<Double> analyzer){
         
-        Map<String, Analyzer> analyzers = new LinkedHashMap<String, Analyzer>();
+        Map<String, Analyzer<Double>> analyzers = new LinkedHashMap<String, Analyzer<Double>>();
 
         Iterator<CSVLine> iter = file.iterator();
         while (iter.hasNext()) {
@@ -91,7 +91,7 @@ public class Series2D extends Series<Point2D> {
             }
         }
 
-        for (Entry<String, Analyzer> entry : analyzers.entrySet()){
+        for (Entry<String, Analyzer<Double>> entry : analyzers.entrySet()){
             data.add(new Point2D(entry.getKey(), String.valueOf(entry.getValue().getValue())));
         }
     }
@@ -152,9 +152,9 @@ public class Series2D extends Series<Point2D> {
                     Field xField,
                     Selector<String[]> ySelector,
                     Field yField, 
-                    Analyzer analyzer){
+                    Analyzer<Double> analyzer){
 
-        Map<String, Analyzer> analyzers = new LinkedHashMap<String, Analyzer>();
+        Map<String, Analyzer<Double>> analyzers = new LinkedHashMap<String, Analyzer<Double>>();
 
         String x = null;
         String y = null;
@@ -181,7 +181,7 @@ public class Series2D extends Series<Point2D> {
             }
         }
         
-        for (Entry<String, Analyzer> entry : analyzers.entrySet()){
+        for (Entry<String, Analyzer<Double>> entry : analyzers.entrySet()){
             data.add(new Point2D(entry.getKey(), String.valueOf(entry.getValue().getValue())));
         }
     }
@@ -226,9 +226,9 @@ public class Series2D extends Series<Point2D> {
                     Selector<String[]> selector, 
                     String xLabel, 
                     Field yField, 
-                    Analyzer analyzer){
+                    Analyzer<Double> analyzer){
 
-        Map<String, Analyzer> analyzers = new LinkedHashMap<String, Analyzer>();
+        Map<String, Analyzer<Double>> analyzers = new LinkedHashMap<String, Analyzer<Double>>();
 
         Iterator<CSVLine> iter = file.iterator();
         while (iter.hasNext()) {
@@ -243,7 +243,7 @@ public class Series2D extends Series<Point2D> {
             }
         }
 
-        for (Entry<String, Analyzer> entry : analyzers.entrySet()){
+        for (Entry<String, Analyzer<Double>> entry : analyzers.entrySet()){
             data.add(new Point2D(entry.getKey(), String.valueOf(entry.getValue().getValue())));
         }
     }

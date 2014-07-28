@@ -51,11 +51,11 @@ public class Series3D extends Series<Point3D>{
                     Selector<String[]> selector, 
                     Field xField, 
                     Field yField, 
-                    Analyzer yAnalyzer, 
-                    Analyzer zAnalyzer){
+                    Analyzer<Double> yAnalyzer, 
+                    Analyzer<Double> zAnalyzer){
 
-        Map<String, Analyzer> yAnalyzers = new LinkedHashMap<String, Analyzer>();
-        Map<String, Analyzer> zAnalyzers = new LinkedHashMap<String, Analyzer>();
+        Map<String, Analyzer<Double>> yAnalyzers = new LinkedHashMap<String, Analyzer<Double>>();
+        Map<String, Analyzer<Double>> zAnalyzers = new LinkedHashMap<String, Analyzer<Double>>();
 
         Iterator<CSVLine> iter = file.iterator();
         while (iter.hasNext()) {
@@ -75,8 +75,8 @@ public class Series3D extends Series<Point3D>{
             }
         }
         for (String x : yAnalyzers.keySet()) {
-            Analyzer y = yAnalyzers.get(x);
-            Analyzer z = zAnalyzers.get(x);
+            Analyzer<?> y = yAnalyzers.get(x);
+            Analyzer<?> z = zAnalyzers.get(x);
             data.add(new Point3D(x, 
                                  String.valueOf(y.getValue()), 
                                  String.valueOf(z.getValue())));
@@ -157,9 +157,9 @@ public class Series3D extends Series<Point3D>{
                     Field xField, 
                     Field yField, 
                     Field zField, 
-                    Analyzer analyzer){
+                    Analyzer<Double> analyzer){
 
-        Map<Point2D, Analyzer> analyzers = new LinkedHashMap<Point2D, Analyzer>();
+        Map<Point2D, Analyzer<Double>> analyzers = new LinkedHashMap<Point2D, Analyzer<Double>>();
 
         Iterator<CSVLine> iter = file.iterator();
         while (iter.hasNext()) {
@@ -177,7 +177,7 @@ public class Series3D extends Series<Point3D>{
             }
         }
 
-        for (Entry<Point2D, Analyzer> entry : analyzers.entrySet()){
+        for (Entry<Point2D, Analyzer<Double>> entry : analyzers.entrySet()){
             data.add(new Point3D(entry.getKey().x, 
                                  entry.getKey().y, 
                                  String.valueOf(entry.getValue().getValue())));
@@ -201,11 +201,11 @@ public class Series3D extends Series<Point3D>{
                     Selector<String[]> selector, 
                     String xLabel, 
                     Field yField, 
-                    Analyzer yAnalyzer, 
-                    Analyzer zAnalyzer){
+                    Analyzer<Double> yAnalyzer, 
+                    Analyzer<Double> zAnalyzer){
 
-        Map<String, Analyzer> yAnalyzers = new LinkedHashMap<String, Analyzer>();
-        Map<String, Analyzer> zAnalyzers = new LinkedHashMap<String, Analyzer>();
+        Map<String, Analyzer<Double>> yAnalyzers = new LinkedHashMap<String, Analyzer<Double>>();
+        Map<String, Analyzer<Double>> zAnalyzers = new LinkedHashMap<String, Analyzer<Double>>();
 
         Iterator<CSVLine> iter = file.iterator();
         while (iter.hasNext()) {
@@ -225,8 +225,8 @@ public class Series3D extends Series<Point3D>{
             }
         }
         for (String x : yAnalyzers.keySet()) {
-            Analyzer y = yAnalyzers.get(x);
-            Analyzer z = zAnalyzers.get(x);
+            Analyzer<?> y = yAnalyzers.get(x);
+            Analyzer<?> z = zAnalyzers.get(x);
             data.add(new Point3D(x, 
                                  String.valueOf(y.getValue()), 
                                  String.valueOf(z.getValue())));
@@ -277,9 +277,9 @@ public class Series3D extends Series<Point3D>{
                     String xLabel, 
                     Field yField, 
                     Field zField, 
-                    Analyzer analyzer){
+                    Analyzer<Double> analyzer){
 
-        Map<Point2D, Analyzer> analyzers = new LinkedHashMap<Point2D, Analyzer>();
+        Map<Point2D, Analyzer<Double>> analyzers = new LinkedHashMap<Point2D, Analyzer<Double>>();
 
         Iterator<CSVLine> iter = file.iterator();
         while (iter.hasNext()) {
@@ -297,7 +297,7 @@ public class Series3D extends Series<Point3D>{
             }
         }
 
-        for (Entry<Point2D, Analyzer> entry : analyzers.entrySet()){
+        for (Entry<Point2D, Analyzer<Double>> entry : analyzers.entrySet()){
             data.add(new Point3D(entry.getKey().x, 
                                  entry.getKey().y, 
                                  String.valueOf(entry.getValue().getValue())));
