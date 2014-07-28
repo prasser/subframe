@@ -143,7 +143,7 @@ public class Series3D extends Series<Point3D>{
 
     /**
      * Creates a series by selecting rows, 
-     * grouping by y and applying the analyzer to z 
+     * grouping by x and y and applying the analyzer to z 
      * 
      * @param file
      * @param selector
