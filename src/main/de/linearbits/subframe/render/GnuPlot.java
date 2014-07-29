@@ -120,8 +120,10 @@ public abstract class GnuPlot<T extends Plot<?>> {
         try {
             plot(filename);
         } catch (IOException e) {
-            new File(filename + ".gp").delete();
-            new File(filename + ".dat").delete();
+            if (!keepSources){
+                new File(filename + ".gp").delete();
+                new File(filename + ".dat").delete();
+            }
             new File(filename + ".eps").delete();
             new File(filename + ".pdf").delete();
             throw (e);
