@@ -44,6 +44,14 @@ public abstract class Analyzer<T> {
     public static final String PERCENTILE(double percentile) {
         return percentile + " - Percentile";
     }
+    /** Label for analyzed values */
+    public static final String ARITHMETIC_MEAN_WITHOUT_OUTLIERS(int numOutliers) {
+        return "Arithmetic Mean ("+numOutliers+")";
+    }
+    /** Label for analyzed values */
+    public static final String STANDARD_DEVIATION_WITHOUT_OUTLIERS(int numOutliers) {
+        return "Standard Deviation ("+numOutliers+")";
+    }
     
     /** The label*/
     private String label;

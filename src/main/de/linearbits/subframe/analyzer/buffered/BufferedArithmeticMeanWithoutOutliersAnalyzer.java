@@ -17,27 +17,33 @@
  */
 package de.linearbits.subframe.analyzer.buffered;
 
+import java.util.Arrays;
+
 import de.linearbits.subframe.analyzer.Analyzer;
 
 /**
- * A buffered analyzer that computes the standard deviation
+ * A buffered analyzer that computes the arithmetic mean after removing outliers
  * @author Fabian Prasser
  */
-public class BufferedStandardDeviationAnalyzer extends BufferedAnalyzer{
+public class BufferedArithmeticMeanWithoutOutliersAnalyzer extends BufferedAnalyzer{
 
+    private final int numOutliers;
+    
     /**
      * Constructs a default instance. Backed by an array list with size 10 and a 1.5 growth rate
      */
-    public BufferedStandardDeviationAnalyzer(){
-        super(Analyzer.STANDARD_DEVIATION);
+    public BufferedArithmeticMeanWithoutOutliersAnalyzer(int numOutliers){
+        super(Analyzer.ARITHMETIC_MEAN_WITHOUT_OUTLIERS(numOutliers));
+        this.numOutliers = numOutliers;
     }
 
     /**
      * Constructs an instance backed by an array list with given initial size and a 1.5 growth rate
      * @param size
      */
-    public BufferedStandardDeviationAnalyzer(int size){
-        super(Analyzer.STANDARD_DEVIATION, size);
+    public BufferedArithmeticMeanWithoutOutliersAnalyzer(int size, int numOutliers){
+        super(Analyzer.ARITHMETIC_MEAN_WITHOUT_OUTLIERS(numOutliers), size);
+        this.numOutliers = numOutliers;
     }
 
     /**
@@ -45,8 +51,9 @@ public class BufferedStandardDeviationAnalyzer extends BufferedAnalyzer{
      * @param initialSize
      * @param growthRate
      */
-    public BufferedStandardDeviationAnalyzer(int initialSize, double growthRate){
-        super(Analyzer.STANDARD_DEVIATION, initialSize, growthRate);
+    public BufferedArithmeticMeanWithoutOutliersAnalyzer(int initialSize, double growthRate, int numOutliers){
+        super(Analyzer.ARITHMETIC_MEAN_WITHOUT_OUTLIERS(numOutliers), initialSize, growthRate);
+        this.numOutliers = numOutliers;
     }
     
     /**
@@ -56,30 +63,26 @@ public class BufferedStandardDeviationAnalyzer extends BufferedAnalyzer{
      * @param count
      * @param growthRate
      */
-    public BufferedStandardDeviationAnalyzer(String label, int size, int count, double growthRate) {
+    public BufferedArithmeticMeanWithoutOutliersAnalyzer(String label, int size, int count, double growthRate, int numOutliers) {
         super(label, size, count, growthRate);
+        this.numOutliers = numOutliers;
     }
     
     @Override
     public String getValue() {
-        if (count==0) throw new RuntimeException("No values specified!");
+        if (count==0) throw new RuntimeException("No values specified");
+        if (count<=numOutliers*2) throw new RuntimeException("Need to specify more than ("+numOutliers*2+") values");
         
-        double mean = 0d;
-        for (int i=0; i<count; i++){
-            mean += values[i];
+        Arrays.sort(values, 0, count);
+        BufferedArithmeticMeanAnalyzer analyzer = new BufferedArithmeticMeanAnalyzer();
+        for (int i=numOutliers; i<count-numOutliers; i++) {
+           analyzer.add(values[i]);
         }
-        mean /= (double)count;
-        
-        double dev = 0;
-        for (int i=0; i<count; i++){
-            dev += Math.pow(values[i] - mean, 2.0d);
-        }
-        
-        return String.valueOf(Math.sqrt(dev / (double)(count-1)));
+        return analyzer.getValue();
     }
 
     @Override
     public Analyzer<Double> newInstance() {
-        return new BufferedStandardDeviationAnalyzer(super.getLabel(), super.values.length, super.count, super.growthRate);
+        return new BufferedArithmeticMeanWithoutOutliersAnalyzer(super.getLabel(), super.values.length, super.count, super.growthRate, numOutliers);
     }
 }
