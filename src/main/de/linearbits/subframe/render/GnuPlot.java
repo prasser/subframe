@@ -312,13 +312,31 @@ public abstract class GnuPlot<T extends Plot<?>> {
         if (params.minY != null && params.maxY != null) {
             gpCommands.add("set yrange[" + params.minY + ":" + params.maxY + "]");
         }
-
+        if (params.minX != null && params.maxX != null) {
+            gpCommands.add("set xrange[" + params.minX + ":" + params.maxX + "]");
+        }
+        if (params.minZ != null && params.maxZ != null) {
+            gpCommands.add("set zrange[" + params.minZ + ":" + params.maxZ + "]");
+        }
+        
         if (params.minY != null && params.maxY == null) {
             gpCommands.add("set yrange[" + params.minY + ":]");
         }
+        if (params.minX != null && params.maxX == null) {
+            gpCommands.add("set xrange[" + params.minX + ":]");
+        }
+        if (params.minZ != null && params.maxZ == null) {
+            gpCommands.add("set zrange[" + params.minZ + ":]");
+        }
 
+        if (params.logX) {
+            gpCommands.add("set logscale x");
+        }
         if (params.logY) {
             gpCommands.add("set logscale y");
+        }
+        if (params.logZ) {
+            gpCommands.add("set logscale z");
         }
 
         if (params.grid) {

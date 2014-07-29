@@ -50,10 +50,6 @@ class GnuPlotLinesClustered extends GnuPlot<PlotLinesClustered> {
 
         gpCommands.add("set style fill solid border -1");
 
-        if (params.minX != null && params.maxX == null) {
-            gpCommands.add("set xrange[" + params.minX + ":]");
-        }
-
         int size = GnuPlotClusterUtils.getNumBars(this.plot);
         for (int i = 0; i < size; i++) {
             String command = null;

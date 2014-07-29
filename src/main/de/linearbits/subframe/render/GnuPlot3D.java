@@ -17,7 +17,6 @@
  */
 package de.linearbits.subframe.render;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.linearbits.subframe.graph.Plot3D;
@@ -59,14 +58,7 @@ class GnuPlot3D extends GnuPlot<Plot3D> {
     @Override
     protected String getSource(String filename) {
 
-        final List<String> gpCommands = new ArrayList<String>();
-        gpCommands.add("set terminal postscript eps enhanced monochrome");
-        gpCommands.add("set output \"" + filename + ".eps\"");
-        
-        gpCommands.add("set size " + params.size);
-        if (params.ratio != null){
-            gpCommands.add("set size ratio " + params.ratio);
-        }
+        final List<String> gpCommands = getGenericCommands(filename, plot);
         
         gpCommands.add("set boxwidth " +params.boxwidth + " absolute");
         gpCommands.add("set title \"" + plot.getTitle() + "\"");
@@ -76,44 +68,12 @@ class GnuPlot3D extends GnuPlot<Plot3D> {
         gpCommands.add("set hidden3d");
         gpCommands.add("set pm3d ");
 
-        gpCommands.add("set xlabel \"" + plot.getLabels().x + "\"");
-        gpCommands.add("set ylabel \"" + plot.getLabels().y + "\"");
         gpCommands.add("set zlabel \"" + plot.getLabels().z + "\" rotate by 90");
 
         if (params.keypos == KeyPos.NONE) {
             gpCommands.add("unset key");
         } else {
             gpCommands.add("set key "+params.keypos.toString());
-        }
-
-        if (params.minY != null && params.maxY != null) {
-            gpCommands.add("set yrange[" + params.minY + ":" + params.maxY + "]");
-        }
-        if (params.minX != null && params.maxX != null) {
-            gpCommands.add("set xrange[" + params.minX + ":" + params.maxX + "]");
-        }
-        if (params.minZ != null && params.maxZ != null) {
-            gpCommands.add("set zrange[" + params.minZ + ":" + params.maxZ + "]");
-        }
-        
-        if (params.minY != null && params.maxY == null) {
-            gpCommands.add("set yrange[" + params.minY + ":]");
-        }
-        if (params.minX != null && params.maxX == null) {
-            gpCommands.add("set xrange[" + params.minX + ":]");
-        }
-        if (params.minZ != null && params.maxZ == null) {
-            gpCommands.add("set zrange[" + params.minZ + ":]");
-        }
-
-        if (params.logX) {
-            gpCommands.add("set logscale x");
-        }
-        if (params.logY) {
-            gpCommands.add("set logscale y");
-        }
-        if (params.logZ) {
-            gpCommands.add("set logscale z");
         }
 
         gpCommands.add("splot '" + filename + ".dat'");

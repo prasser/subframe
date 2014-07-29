@@ -70,18 +70,6 @@ class GnuPlotLines extends GnuPlot<PlotLines> {
 
         List<String> gpCommands = getGenericCommands(filename, plot);
 
-        if (params.minX != null && params.maxX != null) {
-            gpCommands.add("set xrange[" + params.minX + ":" + params.maxX + "]");
-        }
-
-        if (params.minX != null && params.maxX == null) {
-            gpCommands.add("set xrange[" + params.minX + ":]");
-        }
-
-        if (params.logX) {
-            gpCommands.add("set logscale x");
-        }
-
         if (plot.isErrorBars()) {
             gpCommands.add("plot '" + filename + ".dat' using 1:2 with lines lw 1.5 t \"\", \\");
             gpCommands.add("'' using 1:2:3 with errorbars t \"\"");
