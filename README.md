@@ -169,8 +169,8 @@ Javadoc documentation is available [here](https://rawgithub.com/prasser/subframe
 
 Downloads
 ------
-[Library (Version 0.1)](https://raw.github.com/prasser/subframe/master/jars/subframe-0.2-lib.jar)
+[Library (Version 0.2)](https://raw.github.com/prasser/subframe/master/jars/subframe-0.2-lib.jar)
 
-[API documentation (Version 0.1)](https://raw.github.com/prasser/subframe/master/jars/subframe-0.2-doc.jar)
+[API documentation (Version 0.2)](https://raw.github.com/prasser/subframe/master/jars/subframe-0.2-doc.jar)
 
-[Source (Version 0.1)](https://raw.github.com/prasser/subframe/master/jars/subframe-0.2-src.jar)
+[Source (Version 0.2)](https://raw.github.com/prasser/subframe/master/jars/subframe-0.2-src.jar)
