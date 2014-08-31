@@ -29,36 +29,35 @@ public class GnuPlotParams {
      * 
      * @author Fabian Prasser
      */
-    public static enum KeyPos {
-        TOP_LEFT {
-            public String toString() {
-                return "top left";
-            }
-        },
-        TOP_RIGHT {
-            public String toString() {
-                return "top right";
-            }
-        },
-        BOTTOM_LEFT {
-            public String toString() {
-                return "bottom left";
-            }
-        },
-        BOTTOM_RIGHT {
-            public String toString() {
-                return "bottom right";
-            }
-        },
-        OUTSIDE_TOP {
-            public String toString() {
-                return "out horiz center top";
-            }
-        },
-        NONE {
-            public String toString() {
-                return "none";
-            }
+    public static class KeyPos {
+        
+        /** The position string*/
+        private final String position;
+        
+        /**
+         * Creates a new instance
+         * @param position
+         */
+        private KeyPos(String position) {
+            this.position = position;
+        }
+        
+        @Override
+        public String toString(){
+            return this.position;
+        }
+        
+        public static final KeyPos TOP_LEFT = new KeyPos("top left");
+        public static final KeyPos TOP_RIGHT = new KeyPos("top right");
+        public static final KeyPos BOTTOM_LEFT = new KeyPos("bottom left");
+        public static final KeyPos BOTTOM_RIGHT = new KeyPos("bottom right");
+        public static final KeyPos OUTSIDE_TOP = new KeyPos("out horiz center top");
+        public static final KeyPos NONE = new KeyPos("none");
+        public static final KeyPos AT(double x, double y) {
+            return new KeyPos("at "+x+","+y);
+        }
+        public static final KeyPos AT(double x, double y, String anchor) {
+            return new KeyPos("at "+x+","+y+" "+anchor);
         }
     }
 

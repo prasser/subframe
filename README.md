@@ -163,12 +163,14 @@ Documentation
 ------
 More examples are available in the [repository](https://github.com/prasser/subframe/tree/master/src/example).
 
+To see SUBFRAME in action you might also want to have a look at [anonbench](https://github.com/arx-deidentifier/anonbench).
+
 Javadoc documentation is available [here](https://rawgithub.com/prasser/subframe/master/doc/index.html).
 
 Downloads
 ------
-[Library (Version 0.1)](https://raw.github.com/prasser/subframe/master/jars/subframe-0.1-lib.jar)
+[Library (Version 0.1)](https://raw.github.com/prasser/subframe/master/jars/subframe-0.2-lib.jar)
 
-[API documentation (Version 0.1)](https://raw.github.com/prasser/subframe/master/jars/subframe-0.1-doc.jar)
+[API documentation (Version 0.1)](https://raw.github.com/prasser/subframe/master/jars/subframe-0.2-doc.jar)
 
-[Source (Version 0.1)](https://raw.github.com/prasser/subframe/master/jars/subframe-0.1-src.jar)
+[Source (Version 0.1)](https://raw.github.com/prasser/subframe/master/jars/subframe-0.2-src.jar)
