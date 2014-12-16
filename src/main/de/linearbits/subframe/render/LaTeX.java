@@ -141,11 +141,6 @@ public class LaTeX {
             w.write(group.getCaption());
             w.write("}\n");
             w.write("\t\\end{figure*}\n");
-            
-            if (i % 18 == 0) {
-                w.write("\t\\clearpage\n");
-            }
-
         }
 
         w.write("\\end{document}\n");
