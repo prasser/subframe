@@ -41,9 +41,9 @@ import de.linearbits.objectselector.util.ArrayAccessor;
  */
 public class CSVFile {
 
-    /** The separatpr*/
+    /** The separatpr */
     private static final char   SEPERATOR = ';';
-    /** The newline*/
+    /** The newline */
     private static final String NEWLINE   = "\n";
 
     /**
@@ -51,8 +51,10 @@ public class CSVFile {
      * @param label
      */
     public static void checkFieldValue(String label) {
-        if (label.contains(String.valueOf(SEPERATOR)) || label.contains(NEWLINE)) { throw new IllegalArgumentException("Label/value '" +
-            label + "' must not contain ';' or linebreaks"); }
+        if (label.contains(String.valueOf(SEPERATOR)) || label.contains(NEWLINE)) {
+            throw new IllegalArgumentException("Label/value '" +
+                                               label + "' must not contain ';' or linebreaks");
+        }
     }
 
     /**
@@ -72,13 +74,13 @@ public class CSVFile {
         }
     }
 
-    /** The lines in the file*/
+    /** The lines in the file */
     private List<CSVLine>                     lines     = new ArrayList<CSVLine>();
-    /** Mapping labels to indices*/
+    /** Mapping labels to indices */
     private Map<String, Map<String, Integer>> headermap = new HashMap<String, Map<String, Integer>>();
-    /** The first header*/
+    /** The first header */
     private String[]                          header1   = null;
-    /** The second header*/
+    /** The second header */
     private String[]                          header2   = null;
 
     /**
@@ -108,6 +110,32 @@ public class CSVFile {
         this.header1 = header1;
         this.header2 = header2;
         this.buildHeaderMap();
+    }
+
+    /**
+     * Adds a column to header1
+     * @param value
+     */
+    public void addHeader1Column(String value) {
+        String[] newHeader1 = new String[header1.length + 1];
+        for (int i = 0; i < header1.length; i++) {
+            newHeader1[i] = header1[i];
+        }
+        newHeader1[newHeader1.length - 1] = value;
+        header1 = newHeader1;
+    }
+
+    /**
+     * Adds a column to header2
+     * @param value
+     */
+    public void addHeader2Column(String value) {
+        String[] newHeader2 = new String[header2.length + 1];
+        for (int i = 0; i < header2.length; i++) {
+            newHeader2[i] = header2[i];
+        }
+        newHeader2[newHeader2.length - 1] = value;
+        header2 = newHeader2;
     }
 
     /**
