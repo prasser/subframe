@@ -82,10 +82,8 @@ class GnuPlotClusterUtils {
                 data[indexes.get(value.getKey())] = value.getValue();
             }
             for (int i = 0; i < data.length; i++) {
-                if (data[i] == null) { throw new RuntimeException("Missing value for (" + entry.getKey() + ")"); }
-                buffer.append(data[i]);
-                if (i < data.length - 1) buffer.append(" ");
-                else buffer.append("\n");
+                buffer.append(data[i] != null ? data[i] : "-");
+                buffer.append(i < data.length - 1 ? " " : "\n");
             }
         }
 

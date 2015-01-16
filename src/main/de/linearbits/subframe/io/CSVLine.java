@@ -35,7 +35,7 @@ public class CSVLine {
     /**
      * Instantiates a new CSV line.
      * 
-     * @param line   the line
+     * @param line the line
      * @param header the header
      */
     public CSVLine(final String[] line, final Map<String, Map<String, Integer>> header) {
@@ -69,4 +69,18 @@ public class CSVLine {
     public String[] getData() {
         return line;
     }
+
+    /**
+     * Adds a column with {@link value} to the line
+     * @param value
+     */
+    public void addColumn(String value) {
+        String[] newLine = new String[line.length + 1];
+        for (int i = 0; i < line.length; i++) {
+            newLine[i] = line[i];
+        }
+        newLine[newLine.length - 1] = value;
+        line = newLine;
+    }
+
 }

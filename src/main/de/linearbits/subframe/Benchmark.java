@@ -687,4 +687,11 @@ public class Benchmark {
         }
         map.get(key1).put(key2, index);
     }
+    
+    /**
+     * @return map containing Analyzer<?>s for each measurement
+     */
+    public Map<Integer, List<Analyzer<?>>> getAnalyzers() {
+        return analyzers;
+    }
 }
