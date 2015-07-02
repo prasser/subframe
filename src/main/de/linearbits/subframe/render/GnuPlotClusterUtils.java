@@ -79,7 +79,11 @@ class GnuPlotClusterUtils {
             buffer.append(entry.getKey()).append(" ");
             String[] data = new String[indexes.size()];
             for (Entry<String, String> value : entry.getValue().entrySet()) {
-                data[indexes.get(value.getKey())] = value.getValue();
+                Integer i = indexes.get(value.getKey());
+                if (i == null) {
+                    throw new IllegalArgumentException("No index found for value: " + value.getKey() + ". Some data needed for clustering seems to be missing.");
+                }
+                data[i] = value.getValue();
             }
             for (int i = 0; i < data.length; i++) {
                 if (data[i] == null) { throw new RuntimeException("Missing value for (" + entry.getKey() + ")"); }
@@ -114,8 +118,9 @@ class GnuPlotClusterUtils {
             if (!map.containsKey(point.x)) {
                 map.put(point.x, new LinkedHashMap<String, String>());
             }
-            if (map.get(point.x).containsKey(point.y)) { throw new RuntimeException("Duplicate value for (" + point.x +
-                                                                                    ", " + point.y + ")"); }
+            if (map.get(point.x).containsKey(point.y)) { 
+                throw new RuntimeException("Duplicate value for (" + point.x + ", " + point.y + ")"); 
+            }
             map.get(point.x).put(point.y, point.z);
         }
 
