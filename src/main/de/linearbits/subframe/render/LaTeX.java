@@ -55,7 +55,9 @@ public class LaTeX {
      */
     public static void plot(List<PlotGroup> groups, String filename, boolean keepFiles) throws IOException {
 
-        String outputFolder = new File(new File(".").getAbsolutePath() + "/" + new File(filename + ".tex").getParent()).getAbsolutePath();
+        String outputFolder = new File(new File(".").getAbsolutePath() + "/" +
+                                       new File("./" + filename + ".tex").getParent()).getAbsolutePath();
+        
         Map<Plot<?>, String> filenames = new HashMap<Plot<?>, String>();
 
         try {
