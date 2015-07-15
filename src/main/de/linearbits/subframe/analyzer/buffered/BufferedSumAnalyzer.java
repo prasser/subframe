@@ -72,6 +72,6 @@ public class BufferedSumAnalyzer extends BufferedAnalyzer{
 
     @Override
     public Analyzer<Double> newInstance() {
-        return new BufferedSumAnalyzer(super.getLabel(), super.values.length, super.count, super.growthRate);
+        return new BufferedSumAnalyzer(super.getLabel(), super.values.length, 0, super.growthRate);
     }
 }

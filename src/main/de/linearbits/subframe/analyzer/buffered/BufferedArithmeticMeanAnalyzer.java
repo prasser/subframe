@@ -72,6 +72,6 @@ public class BufferedArithmeticMeanAnalyzer extends BufferedAnalyzer{
 
     @Override
     public Analyzer<Double> newInstance() {
-        return new BufferedArithmeticMeanAnalyzer(super.getLabel(), super.values.length, super.count, super.growthRate);
+        return new BufferedArithmeticMeanAnalyzer(super.getLabel(), super.values.length, 0, super.growthRate);
     }
 }

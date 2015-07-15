@@ -68,6 +68,6 @@ public class BufferedCountAnalyzer extends BufferedAnalyzer{
 
     @Override
     public Analyzer<Double> newInstance() {
-        return new BufferedCountAnalyzer(super.getLabel(), super.values.length, super.count, super.growthRate);
+        return new BufferedCountAnalyzer(super.getLabel(), super.values.length, 0, super.growthRate);
     }
 }

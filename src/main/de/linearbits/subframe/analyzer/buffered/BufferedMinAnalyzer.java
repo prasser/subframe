@@ -72,6 +72,6 @@ public class BufferedMinAnalyzer extends BufferedAnalyzer{
 
     @Override
     public Analyzer<Double> newInstance() {
-        return new BufferedMinAnalyzer(super.getLabel(), super.values.length, super.count, super.growthRate);
+        return new BufferedMinAnalyzer(super.getLabel(), super.values.length, 0, super.growthRate);
     }
 }

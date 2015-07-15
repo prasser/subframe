@@ -72,6 +72,7 @@ public class BufferedStandardDeviationWithoutOutliersAnalyzer extends BufferedAn
     public String getValue() {
         if (count==0) throw new RuntimeException("No values specified");
         if (count<=numOutliers*2) throw new RuntimeException("Need to specify more than ("+numOutliers*2+") values");
+        if (count==1) return String.valueOf(0d);
         
         Arrays.sort(values, 0, count);
         BufferedStandardDeviationAnalyzer analyzer = new BufferedStandardDeviationAnalyzer();
@@ -83,6 +84,6 @@ public class BufferedStandardDeviationWithoutOutliersAnalyzer extends BufferedAn
 
     @Override
     public Analyzer<Double> newInstance() {
-        return new BufferedStandardDeviationWithoutOutliersAnalyzer(super.getLabel(), super.values.length, super.count, super.growthRate, numOutliers);
+        return new BufferedStandardDeviationWithoutOutliersAnalyzer(super.getLabel(), super.values.length, 0, super.growthRate, numOutliers);
     }
 }

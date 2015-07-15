@@ -90,7 +90,7 @@ public class BufferedPercentileAnalyzer extends BufferedAnalyzer{
     
     @Override
     public Analyzer<Double> newInstance() {
-        return new BufferedPercentileAnalyzer(super.getLabel(), this.percentile, super.values.length, super.count, super.growthRate);
+        return new BufferedPercentileAnalyzer(super.getLabel(), this.percentile, super.values.length, 0, super.growthRate);
     }
 
     private void check(){

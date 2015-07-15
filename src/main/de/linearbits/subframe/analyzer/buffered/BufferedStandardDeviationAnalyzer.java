@@ -63,6 +63,7 @@ public class BufferedStandardDeviationAnalyzer extends BufferedAnalyzer{
     @Override
     public String getValue() {
         if (count==0) throw new RuntimeException("No values specified!");
+        if (count==1) return String.valueOf(0d);
         
         double mean = 0d;
         for (int i=0; i<count; i++){
@@ -80,6 +81,6 @@ public class BufferedStandardDeviationAnalyzer extends BufferedAnalyzer{
 
     @Override
     public Analyzer<Double> newInstance() {
-        return new BufferedStandardDeviationAnalyzer(super.getLabel(), super.values.length, super.count, super.growthRate);
+        return new BufferedStandardDeviationAnalyzer(super.getLabel(), super.values.length, 0, super.growthRate);
     }
 }

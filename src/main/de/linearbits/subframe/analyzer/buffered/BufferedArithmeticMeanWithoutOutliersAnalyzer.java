@@ -83,6 +83,6 @@ public class BufferedArithmeticMeanWithoutOutliersAnalyzer extends BufferedAnaly
 
     @Override
     public Analyzer<Double> newInstance() {
-        return new BufferedArithmeticMeanWithoutOutliersAnalyzer(super.getLabel(), super.values.length, super.count, super.growthRate, numOutliers);
+        return new BufferedArithmeticMeanWithoutOutliersAnalyzer(super.getLabel(), super.values.length, 0, super.growthRate, numOutliers);
     }
 }
