@@ -25,6 +25,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -116,6 +117,19 @@ public class CSVFile {
      */
     public void addLine(String[] line) {
         this.lines.add(new CSVLine(line, headermap));
+    }
+    
+    /**
+     * Appends a second file
+     * @param other
+     */
+    public void append(CSVFile other) {
+        if (!Arrays.equals(this.header1, other.header1) || !Arrays.equals(this.header2, other.header2)) {
+            throw new IllegalArgumentException("Incompatible headers. Please make sure that the files have the same format.");
+        }
+        for (CSVLine line : other.lines) {
+            this.lines.add(line);
+        }
     }
 
     /**

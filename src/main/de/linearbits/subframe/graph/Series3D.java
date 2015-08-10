@@ -36,6 +36,13 @@ import de.linearbits.subframe.io.CSVLine;
 public class Series3D extends Series<Point3D>{
 
     /**
+     * Creates an empty series
+     */
+    public Series3D() {
+        // Empty by design
+    }
+    
+    /**
      * Creates a series by selecting rows, 
      * grouping by x and applying two analyzers to y,
      * the results of which will become y and z values 

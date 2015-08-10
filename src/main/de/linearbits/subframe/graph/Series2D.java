@@ -34,6 +34,13 @@ import de.linearbits.subframe.io.CSVLine;
  * @author Fabian Prasser
  */
 public class Series2D extends Series<Point2D> {
+
+    /**
+     * Creates an empty series
+     */
+    public Series2D() {
+        // Empty by design
+    }
     
     /**
      * Creates a series by selecting rows and taking two values
