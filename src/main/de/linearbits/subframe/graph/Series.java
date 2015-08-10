@@ -22,6 +22,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import de.linearbits.objectselector.Selector;
+
 /**
  * An abstract series
  * 
@@ -31,7 +33,20 @@ import java.util.List;
  */
 public abstract class Series<T> {
 
-	/** The data*/
+	/**
+     * Returns a default selector
+     * @return
+     */
+    static Selector<String[]> getDefaultSelector() {
+        return new Selector<String[]> (null){
+            @Override
+            public boolean isSelected(String[] arg0) {
+                return true;
+            }
+        };
+    }
+
+    /** The data*/
     protected List<T> data = new ArrayList<T>();
 
     /** 
@@ -42,7 +57,7 @@ public abstract class Series<T> {
     public void append(Series<T> series) {
         this.data.addAll(series.data);
     }
-
+    
     /**
      * Returns the data
      * @return
@@ -51,6 +66,15 @@ public abstract class Series<T> {
         return data;
     }
     
+    /**
+     * Sorts the series according to the given comperator
+     * 
+     * @param comparator
+     */
+    public void sort(Comparator<T> comparator) {
+        Collections.sort(data, comparator);
+    }
+
     @Override
     public String toString(){
         StringBuilder b = new StringBuilder();
@@ -61,7 +85,7 @@ public abstract class Series<T> {
         b.append("]");
         return b.toString();
     }
-    
+
     /**
      * Applies the given function to all data points
      * @param function
@@ -72,12 +96,4 @@ public abstract class Series<T> {
         }
     }
 
-    /**
-     * Sorts the series according to the given comperator
-     * 
-     * @param comparator
-     */
-    public void sort(Comparator<T> comparator) {
-        Collections.sort(data, comparator);
-    }
 }

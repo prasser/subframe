@@ -48,6 +48,80 @@ public class Series3D extends Series<Point3D>{
      * the results of which will become y and z values 
      * 
      * @param file
+     * @param xField
+     * @param yField
+     * @param yAnalyzer
+     * @param zAnalyzer
+     */
+    public Series3D(CSVFile file, 
+                    Field xField, 
+                    Field yField, 
+                    Analyzer<Double> yAnalyzer, 
+                    Analyzer<Double> zAnalyzer){
+        
+        this(file, getDefaultSelector(), xField, yField, yAnalyzer, zAnalyzer);
+    }
+    
+    /**
+     * Creates a series by selecting rows and taking three values
+     * 
+     * @param file
+     * @param xField
+     * @param yField
+     * @param zField
+     */
+    public Series3D(CSVFile file, 
+                    Field xField, 
+                    Field yField, 
+                    Field zField){
+
+        this(file, getDefaultSelector(), xField, yField, zField);
+    }
+    
+
+    /**
+     * Creates a series by selecting rows, 
+     * grouping by x and y and applying the analyzer to z 
+     * 
+     * @param file
+     * @param xField
+     * @param yField
+     * @param zField
+     * @param analyzer
+     */
+    public Series3D(CSVFile file, 
+                    Field xField, 
+                    Field yField, 
+                    Field zField, 
+                    Analyzer<Double> analyzer){
+
+        this(file, getDefaultSelector(), xField, yField, zField, analyzer);
+    }
+    
+
+    /**
+     * Creates a series by selecting rows and taking two values plus a constant y-value
+     * 
+     * @param file
+     * @param xField
+     * @param yLabel
+     * @param zField
+     */
+    public Series3D(CSVFile file, 
+                    Field xField, 
+                    String yLabel, 
+                    Field zField){
+
+        this(file, getDefaultSelector(), xField, yLabel, zField);
+    }
+    
+
+    /**
+     * Creates a series by selecting rows, 
+     * grouping by x and applying two analyzers to y,
+     * the results of which will become y and z values 
+     * 
+     * @param file
      * @param selector
      * @param xField
      * @param yField
@@ -120,35 +194,6 @@ public class Series3D extends Series<Point3D>{
     
 
     /**
-     * Creates a series by selecting rows and taking two values plus a constant y-value
-     * 
-     * @param file
-     * @param selector
-     * @param xField
-     * @param yLabel
-     * @param zField
-     */
-    public Series3D(CSVFile file, 
-                    Selector<String[]> selector, 
-                    Field xField, 
-                    String yLabel, 
-                    Field zField){
-
-        Iterator<CSVLine> iter = file.iterator();
-        while (iter.hasNext()) {
-            CSVLine csvline = iter.next();
-            String[] line = csvline.getData();
-            if (selector.isSelected(line)) {
-                String x = csvline.get(xField.category, xField.measure);
-                String y = yLabel;
-                String z = csvline.get(zField.category, zField.measure);
-                data.add(new Point3D(x, y, z));
-            }
-        }
-    }
-    
-
-    /**
      * Creates a series by selecting rows, 
      * grouping by x and y and applying the analyzer to z 
      * 
@@ -191,7 +236,58 @@ public class Series3D extends Series<Point3D>{
         }
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
+    /**
+     * Creates a series by selecting rows and taking two values plus a constant y-value
+     * 
+     * @param file
+     * @param selector
+     * @param xField
+     * @param yLabel
+     * @param zField
+     */
+    public Series3D(CSVFile file, 
+                    Selector<String[]> selector, 
+                    Field xField, 
+                    String yLabel, 
+                    Field zField){
+
+        Iterator<CSVLine> iter = file.iterator();
+        while (iter.hasNext()) {
+            CSVLine csvline = iter.next();
+            String[] line = csvline.getData();
+            if (selector.isSelected(line)) {
+                String x = csvline.get(xField.category, xField.measure);
+                String y = yLabel;
+                String z = csvline.get(zField.category, zField.measure);
+                data.add(new Point3D(x, y, z));
+            }
+        }
+    }
+    
     /**
      * Creates a series by selecting rows, 
      * grouping by a constant x and applying two analyzers to y,
@@ -240,6 +336,7 @@ public class Series3D extends Series<Point3D>{
         }
     }
     
+
     /**
      * Creates a series by selecting rows and taking a constant and two values
      * 
@@ -309,5 +406,62 @@ public class Series3D extends Series<Point3D>{
                                  entry.getKey().y, 
                                  String.valueOf(entry.getValue().getValue())));
         }
+    }
+    
+
+    /**
+     * Creates a series by selecting rows, 
+     * grouping by a constant x and applying two analyzers to y,
+     * the results of which will become y and z values 
+     * 
+     * @param file
+     * @param xLabel
+     * @param yField
+     * @param yAnalyzer
+     * @param zAnalyzer
+     */
+    public Series3D(CSVFile file, 
+                    String xLabel, 
+                    Field yField, 
+                    Analyzer<Double> yAnalyzer, 
+                    Analyzer<Double> zAnalyzer){
+
+        this(file, getDefaultSelector(), xLabel, yField, yAnalyzer, zAnalyzer);
+    }
+    
+    /**
+     * Creates a series by selecting rows and taking a constant and two values
+     * 
+     * @param file
+     * @param xLabel
+     * @param yField
+     * @param zField
+     */
+    public Series3D(CSVFile file, 
+                    String xLabel, 
+                    Field yField, 
+                    Field zField){
+
+        this(file, getDefaultSelector(), xLabel, yField, zField);
+    }
+    
+
+    /**
+     * Creates a series by selecting rows, taking a constant x 
+     * grouping by y and applying the analyzer to z 
+     * 
+     * @param file
+     * @param xLabel
+     * @param yField
+     * @param zField
+     * @param analyzer
+     */
+    public Series3D(CSVFile file, 
+                    String xLabel, 
+                    Field yField, 
+                    Field zField, 
+                    Analyzer<Double> analyzer){
+
+        this(file, getDefaultSelector(), xLabel, yField, zField, analyzer);
     }
 }

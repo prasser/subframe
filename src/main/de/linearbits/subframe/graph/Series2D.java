@@ -22,7 +22,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-
 import de.linearbits.objectselector.Selector;
 import de.linearbits.subframe.analyzer.Analyzer;
 import de.linearbits.subframe.io.CSVFile;
@@ -42,6 +41,36 @@ public class Series2D extends Series<Point2D> {
         // Empty by design
     }
     
+    /**
+     * Creates a series by selecting rows and taking two values
+     * 
+     * @param file
+     * @param xField
+     * @param yField
+     */
+    public Series2D(CSVFile file, 
+                    Field xField, 
+                    Field yField){
+        this(file, getDefaultSelector(), xField, yField);
+    }
+    
+    /**
+     * Creates a series by selecting rows, 
+     * grouping by x and applying the analyzer to y 
+     * 
+     * @param file
+     * @param xLabel
+     * @param yLabel
+     * @param analyzer
+     */
+    public Series2D(CSVFile file, 
+                    Field xField, 
+                    Field yField, 
+                    Analyzer<Double> analyzer){
+        this(file, getDefaultSelector(), xField, yField, analyzer);
+    }
+    
+
     /**
      * Creates a series by selecting rows and taking two values
      * 
@@ -67,6 +96,7 @@ public class Series2D extends Series<Point2D> {
         }
     }
     
+
     /**
      * Creates a series by selecting rows, 
      * grouping by x and applying the analyzer to y 
@@ -103,7 +133,7 @@ public class Series2D extends Series<Point2D> {
         }
     }
     
-
+    
     /**
      * Creates a series by selecting different rows and taking different values
      * 
@@ -142,7 +172,6 @@ public class Series2D extends Series<Point2D> {
         }
     }
     
-
     /**
      * Creates a series by selecting different rows and taking different values, 
      * grouping by x and applying the analyzer to y 
@@ -194,6 +223,34 @@ public class Series2D extends Series<Point2D> {
     }
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
     /**
      * Creates a series by selecting rows and taking a constant and one value
      * 
@@ -253,5 +310,36 @@ public class Series2D extends Series<Point2D> {
         for (Entry<String, Analyzer<Double>> entry : analyzers.entrySet()){
             data.add(new Point2D(entry.getKey(), String.valueOf(entry.getValue().getValue())));
         }
+    }
+    
+    /**
+     * Creates a series by selecting rows and taking a constant and one value
+     * 
+     * @param file
+     * @param xLabel
+     * @param yField
+     */
+    public Series2D(CSVFile file, 
+                    String xLabel, 
+                    Field yField){
+        
+        this(file, getDefaultSelector(), xLabel, yField);
+    }
+    
+    /**
+     * Creates a series by selecting rows, 
+     * grouping by constant x and applying the analyzer to y 
+     * 
+     * @param file
+     * @param xLabel
+     * @param yField
+     * @param analyzer
+     */
+    public Series2D(CSVFile file, 
+                    String xLabel, 
+                    Field yField, 
+                    Analyzer<Double> analyzer){
+
+        this(file, getDefaultSelector(), xLabel, yField, analyzer);
     }
 }
