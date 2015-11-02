@@ -101,7 +101,7 @@ public abstract class GnuPlot<T extends Plot<?>> {
         }
 
         // Write gnuplot file
-        String gpFilename = filename;
+        String gpFilename = ".\\" + new File(filename).getName();
         if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
             gpFilename = gpFilename.replaceAll("\\\\", "\\\\\\\\");
         }
@@ -169,6 +169,7 @@ public abstract class GnuPlot<T extends Plot<?>> {
 
         // Run gnuplot
         ProcessBuilder b = new ProcessBuilder();
+        b.directory(new File(file).getParentFile());
         b.command("gnuplot", file + ".gp");
         Process p = b.start();
         StreamReader in = new StreamReader(p.getInputStream());
