@@ -65,9 +65,9 @@ public class BufferedGeometricMeanAnalyzer extends BufferedAnalyzer{
         if (count==0) throw new RuntimeException("No values specified!");
         double result = 1.0d;
         for (int i=0; i<count; i++) {
-            result *= Math.pow(values[i], 1.0d / (double)count);
+            result *= Math.pow(values[i] + 1d, 1.0d / (double)count);
         }
-        return String.valueOf(result);
+        return String.valueOf(result - 1d);
     }
 
     @Override
