@@ -101,7 +101,7 @@ public abstract class GnuPlot<T extends Plot<?>> {
         }
 
         // Write gnuplot file
-        String gpFilename = ".\\" + new File(filename).getName();
+        String gpFilename = "." + System.getProperty("file.separator") + new File(filename).getName();
         if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
             gpFilename = gpFilename.replaceAll("\\\\", "\\\\\\\\");
         }
