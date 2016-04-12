@@ -53,7 +53,7 @@ import de.linearbits.subframe.analyzer.buffered.BufferedSumAnalyzer;
  */
 public class CSVFile {
     
-    /** The separatpr */
+    /** The separator */
     private static final char   SEPERATOR = ';';
     /** The newline */
     private static final String NEWLINE   = "\n";
