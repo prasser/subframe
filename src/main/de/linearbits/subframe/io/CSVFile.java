@@ -42,6 +42,7 @@ import de.linearbits.subframe.analyzer.buffered.BufferedArithmeticMeanAnalyzer;
 import de.linearbits.subframe.analyzer.buffered.BufferedCountAnalyzer;
 import de.linearbits.subframe.analyzer.buffered.BufferedGeometricMeanAnalyzer;
 import de.linearbits.subframe.analyzer.buffered.BufferedMaxAnalyzer;
+import de.linearbits.subframe.analyzer.buffered.BufferedMedianAnalyzer;
 import de.linearbits.subframe.analyzer.buffered.BufferedMinAnalyzer;
 import de.linearbits.subframe.analyzer.buffered.BufferedStandardDeviationAnalyzer;
 import de.linearbits.subframe.analyzer.buffered.BufferedSumAnalyzer;
@@ -148,8 +149,8 @@ public class CSVFile {
             bucket2Values.get(bucket).add(y);
         }
         
-        String[] header1 = new String[] { x1, y1, y1, y1, y1, y1, y1, y1 };
-        String[] header2 = new String[] { Analyzer.VALUE, Analyzer.MINIMUM, Analyzer.MAXIMUM, Analyzer.COUNT, Analyzer.SUM, Analyzer.GEOMETRIC_MEAN, Analyzer.ARITHMETIC_MEAN, Analyzer.STANDARD_DEVIATION };
+        String[] header1 = new String[] { x1, y1, y1, y1, y1, y1, y1, y1, y1 };
+        String[] header2 = new String[] { Analyzer.VALUE, Analyzer.MINIMUM, Analyzer.MAXIMUM, Analyzer.COUNT, Analyzer.SUM, Analyzer.GEOMETRIC_MEAN, Analyzer.ARITHMETIC_MEAN, Analyzer.MEDIAN, Analyzer.STANDARD_DEVIATION };
         CSVFile result = new CSVFile(header1, header2);
         
         // Calculate aggregates for each bucket
@@ -162,6 +163,7 @@ public class CSVFile {
             BufferedSumAnalyzer sum = new BufferedSumAnalyzer();
             BufferedGeometricMeanAnalyzer gm = new BufferedGeometricMeanAnalyzer();
             BufferedArithmeticMeanAnalyzer am = new BufferedArithmeticMeanAnalyzer();
+            BufferedMedianAnalyzer me = new BufferedMedianAnalyzer();
             BufferedStandardDeviationAnalyzer dev = new BufferedStandardDeviationAnalyzer();
             
             for (double value : bucket2Values.get(bucket)) {
@@ -171,9 +173,10 @@ public class CSVFile {
                 sum.add(value);
                 gm.add(value);
                 am.add(value);
+                me.add(value);
                 dev.add(value);
             }
-            result.addLine(new String[] { bucket, min.getValue(), max.getValue(), count.getValue(), sum.getValue(), gm.getValue(), am.getValue(), dev.getValue() });
+            result.addLine(new String[] { bucket, min.getValue(), max.getValue(), count.getValue(), sum.getValue(), gm.getValue(), am.getValue(), me.getValue(), dev.getValue() });
         }
         
         return result;
