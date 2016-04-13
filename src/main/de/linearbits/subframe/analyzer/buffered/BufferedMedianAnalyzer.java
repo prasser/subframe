@@ -17,9 +17,7 @@
  */
 package de.linearbits.subframe.analyzer.buffered;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Arrays;
 
 import de.linearbits.subframe.analyzer.Analyzer;
 
@@ -67,18 +65,14 @@ public class BufferedMedianAnalyzer extends BufferedAnalyzer {
     @Override
     public String getValue() {
         if (count == 0) throw new RuntimeException("No values specified!");
-        List<Double> list = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            list.add(values[i]);
-        }
-        Collections.sort(list);
+        Arrays.sort(values, 0, count);
         double result = 0d;
-        if (list.size() % 2 == 1) {
-            result = list.get((list.size() + 1) / 2 - 1);
+        if (count % 2 == 1) {
+            result = values[(count + 1) / 2 - 1];
         }
         else {
-            double low = list.get(list.size() / 2 - 1);
-            double high = list.get(list.size() / 2);
+            double low = values[count / 2 - 1];
+            double high = values[count / 2];
             result = (low + high) / 2.0;
         }
         
