@@ -41,6 +41,8 @@ public abstract class Analyzer<T> {
     /** Label for analyzed values */
     public static final String ARITHMETIC_MEAN    = "Arithmetic Mean";
     /** Label for analyzed values */
+    public static final String MEDIAN             = "Median";
+    /** Label for analyzed values */
     public static final String PERCENTILE(double percentile) {
         return percentile + " - Percentile";
     }
