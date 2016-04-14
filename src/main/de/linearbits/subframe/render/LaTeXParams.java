@@ -34,9 +34,9 @@ public class LaTeXParams {
         LETTER
     }
 
-    /** Margin in inches*/
-    public int        margin     = 1;
+    /** Margin in inches */
+    public double     margin     = 0.5d;
 
-    /** Page format*/
+    /** Page format */
     public PageFormat pageFormat = PageFormat.LETTER;
 }
