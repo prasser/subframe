@@ -89,12 +89,25 @@ public class CSVFile {
         }
     }
     
+    /**
+     * Returns a default selector
+     * @return
+     */
+    static Selector<String[]> getDefaultSelector() {
+        return new Selector<String[]> (null){
+            @Override
+            public boolean isSelected(String[] arg0) {
+                return true;
+            }
+        };
+    }
     /** The lines in the file */
     private List<CSVLine>                     lines     = new ArrayList<CSVLine>();
     /** Mapping labels to indices */
     private Map<String, Map<String, Integer>> headermap = new HashMap<String, Map<String, Integer>>();
     /** The first header */
     private String[]                          header1   = null;
+    
     /** The second header */
     private String[]                          header2   = null;
     
@@ -134,7 +147,7 @@ public class CSVFile {
     public void addLine(String[] line) {
         this.lines.add(new CSVLine(line, headermap));
     }
-    
+
     /**
      * Appends a second file
      * @param other
@@ -146,23 +159,6 @@ public class CSVFile {
         for (CSVLine line : other.lines) {
             this.lines.add(line);
         }
-    }
-
-    /**
-     * Creates a new csv file containing bucketized values of this file.
-     * 
-     * @param x1 header 1 of x-values
-     * @param x2 header 2 of x-values
-     * @param y1 header 1 of y-values
-     * @param y2 header 2 of y-values
-     * @param interval size of buckets
-     * @param precision
-     * @return
-     * @throws IOException
-     */
-    public CSVFile getBucketizedFile(String x1, String x2, 
-                                     String y1, String y2, double interval, int precision) throws IOException {
-        return getBucketizedFile(getDefaultSelector(), x1, x2, y1, y2, interval, precision);
     }
         
     /**
@@ -288,16 +284,20 @@ public class CSVFile {
     }
 
     /**
-     * Returns a default selector
+     * Creates a new csv file containing bucketized values of this file.
+     * 
+     * @param x1 header 1 of x-values
+     * @param x2 header 2 of x-values
+     * @param y1 header 1 of y-values
+     * @param y2 header 2 of y-values
+     * @param interval size of buckets
+     * @param precision
      * @return
+     * @throws IOException
      */
-    static Selector<String[]> getDefaultSelector() {
-        return new Selector<String[]> (null){
-            @Override
-            public boolean isSelected(String[] arg0) {
-                return true;
-            }
-        };
+    public CSVFile getBucketizedFile(String x1, String x2, 
+                                     String y1, String y2, double interval, int precision) throws IOException {
+        return getBucketizedFile(getDefaultSelector(), x1, x2, y1, y2, interval, precision);
     }
     /**
      * Returns a new selector builder
