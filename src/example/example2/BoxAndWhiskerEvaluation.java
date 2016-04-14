@@ -81,6 +81,8 @@ public class BoxAndWhiskerEvaluation {
         params.rotateXTicks = -90;
         params.keypos = KeyPos.TOP_RIGHT;
         params.size = 0.6d;
-        return new PlotGroup("Memory consumption of arrays", plots, params, 1.0d);
+        params.minY = 0d;
+        params.maxY = 1d;
+        return new PlotGroup("Accuracy vs. information loss for Non-Uniform Entropy", plots, params, 1.0d);
     }
 }
