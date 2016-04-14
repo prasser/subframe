@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import de.linearbits.objectselector.Selector;
 import de.linearbits.objectselector.SelectorBuilder;
 import de.linearbits.objectselector.datatypes.DataType;
 import de.linearbits.objectselector.util.ArrayAccessor;
@@ -44,6 +45,7 @@ import de.linearbits.subframe.analyzer.buffered.BufferedGeometricMeanAnalyzer;
 import de.linearbits.subframe.analyzer.buffered.BufferedMaxAnalyzer;
 import de.linearbits.subframe.analyzer.buffered.BufferedMedianAnalyzer;
 import de.linearbits.subframe.analyzer.buffered.BufferedMinAnalyzer;
+import de.linearbits.subframe.analyzer.buffered.BufferedPercentileAnalyzer;
 import de.linearbits.subframe.analyzer.buffered.BufferedStandardDeviationAnalyzer;
 import de.linearbits.subframe.analyzer.buffered.BufferedSumAnalyzer;
 
@@ -115,74 +117,6 @@ public class CSVFile {
     }
     
     /**
-     * Creates a new csv file containing bucketized values of this file.
-     * 
-     * @param x1 header 1 of x-values
-     * @param x2 header 2 of x-values
-     * @param y1 header 1 of y-values
-     * @param y2 header 2 of y-values
-     * @param interval size of buckets
-     * @param precision
-     * @return
-     * @throws IOException
-     */
-    public CSVFile getBucketizedFile(String x1, String x2, String y1, String y2, double interval, int precision) throws IOException {
-        
-        // Collect values for buckets
-        Map<String, Set<Double>> bucket2Values = new HashMap<String, Set<Double>>();
-        Iterator<CSVLine> iter = this.iterator();
-        List<String> buckets = new ArrayList<String>();
-        while (iter.hasNext()) {
-            CSVLine line = iter.next();
-            double x = Double.valueOf(line.get(x1, x2));
-            double y = Double.valueOf(line.get(y1, y2));
-            
-            double low = x - (x % interval);
-            double high = low + interval;
-            low = Math.floor(low * precision) / precision;
-            high = Math.floor(high * precision) / precision;
-            String bucket = "[" + low + "," + high + "[";
-            if (!bucket2Values.containsKey(bucket)) {
-                buckets.add(bucket);
-                bucket2Values.put(bucket, new HashSet<Double>());
-            }
-            bucket2Values.get(bucket).add(y);
-        }
-        
-        String[] header1 = new String[] { x1, y1, y1, y1, y1, y1, y1, y1, y1 };
-        String[] header2 = new String[] { Analyzer.VALUE, Analyzer.MINIMUM, Analyzer.MAXIMUM, Analyzer.COUNT, Analyzer.SUM, Analyzer.GEOMETRIC_MEAN, Analyzer.ARITHMETIC_MEAN, Analyzer.MEDIAN, Analyzer.STANDARD_DEVIATION };
-        CSVFile result = new CSVFile(header1, header2);
-        
-        // Calculate aggregates for each bucket
-        Collections.sort(buckets);
-        for (String bucket : buckets) {
-            
-            BufferedMinAnalyzer min = new BufferedMinAnalyzer();
-            BufferedMaxAnalyzer max = new BufferedMaxAnalyzer();
-            BufferedCountAnalyzer count = new BufferedCountAnalyzer();
-            BufferedSumAnalyzer sum = new BufferedSumAnalyzer();
-            BufferedGeometricMeanAnalyzer gm = new BufferedGeometricMeanAnalyzer();
-            BufferedArithmeticMeanAnalyzer am = new BufferedArithmeticMeanAnalyzer();
-            BufferedMedianAnalyzer me = new BufferedMedianAnalyzer();
-            BufferedStandardDeviationAnalyzer dev = new BufferedStandardDeviationAnalyzer();
-            
-            for (double value : bucket2Values.get(bucket)) {
-                min.add(value);
-                max.add(value);
-                count.add(value);
-                sum.add(value);
-                gm.add(value);
-                am.add(value);
-                me.add(value);
-                dev.add(value);
-            }
-            result.addLine(new String[] { bucket, min.getValue(), max.getValue(), count.getValue(), sum.getValue(), gm.getValue(), am.getValue(), me.getValue(), dev.getValue() });
-        }
-        
-        return result;
-    }
-    
-    /**
      * Creates a new empty file with the given headers
      * @param header1
      * @param header2
@@ -213,7 +147,158 @@ public class CSVFile {
             this.lines.add(line);
         }
     }
-    
+
+    /**
+     * Creates a new csv file containing bucketized values of this file.
+     * 
+     * @param x1 header 1 of x-values
+     * @param x2 header 2 of x-values
+     * @param y1 header 1 of y-values
+     * @param y2 header 2 of y-values
+     * @param interval size of buckets
+     * @param precision
+     * @return
+     * @throws IOException
+     */
+    public CSVFile getBucketizedFile(String x1, String x2, 
+                                     String y1, String y2, double interval, int precision) throws IOException {
+        return getBucketizedFile(getDefaultSelector(), x1, x2, y1, y2, interval, precision);
+    }
+        
+    /**
+     * Creates a new csv file containing bucketized values of this file.
+     * 
+     * @param selector a selector
+     * @param x1 header 1 of x-values
+     * @param x2 header 2 of x-values
+     * @param y1 header 1 of y-values
+     * @param y2 header 2 of y-values
+     * @param interval size of buckets
+     * @param precision
+     * @return
+     * @throws IOException
+     */
+    public CSVFile getBucketizedFile(Selector<String[]> selector,
+                                     String x1, String x2, 
+                                     String y1, String y2, double interval, int precision) throws IOException {
+        
+        // Collect values for buckets
+        Map<String, Set<Double>> bucket2Values = new HashMap<String, Set<Double>>();
+        Iterator<CSVLine> iter = this.iterator();
+        List<String> buckets = new ArrayList<String>();
+        while (iter.hasNext()) {
+            
+            CSVLine line = iter.next();
+            if (selector.isSelected(line.getData())) {
+                double x = Double.valueOf(line.get(x1, x2));
+                double y = Double.valueOf(line.get(y1, y2));
+                double low = x - (x % interval);
+                double high = low + interval;
+                low = Math.floor(low * precision) / precision;
+                high = Math.floor(high * precision) / precision;
+                String bucket = "[" + low + "," + high + "[";
+                if (!bucket2Values.containsKey(bucket)) {
+                    buckets.add(bucket);
+                    bucket2Values.put(bucket, new HashSet<Double>());
+                }
+                bucket2Values.get(bucket).add(y);
+            }
+        }
+        
+        String[] header1 = new String[] { x1, y1, y1, y1, y1, y1, y1, y1, y1 };
+        String[] header2 = new String[] { Analyzer.VALUE, 
+                                          Analyzer.MINIMUM, 
+                                          Analyzer.MAXIMUM, 
+                                          Analyzer.COUNT, 
+                                          Analyzer.SUM, 
+                                          Analyzer.GEOMETRIC_MEAN, 
+                                          Analyzer.ARITHMETIC_MEAN, 
+                                          Analyzer.MEDIAN, 
+                                          Analyzer.STANDARD_DEVIATION,
+                                          Analyzer.PERCENTILE(0.25d),
+                                          Analyzer.PERCENTILE(0.50d),
+                                          Analyzer.PERCENTILE(0.75d),
+                                          Analyzer.PERCENTILE(0.80d),
+                                          Analyzer.PERCENTILE(0.90d),
+                                          Analyzer.PERCENTILE(0.95d),
+                                          Analyzer.PERCENTILE(0.97d),
+                                          Analyzer.PERCENTILE(0.99d)};
+        CSVFile result = new CSVFile(header1, header2);
+        
+        // Calculate aggregates for each bucket
+        Collections.sort(buckets);
+        for (String bucket : buckets) {
+            
+            BufferedMinAnalyzer min = new BufferedMinAnalyzer();
+            BufferedMaxAnalyzer max = new BufferedMaxAnalyzer();
+            BufferedCountAnalyzer count = new BufferedCountAnalyzer();
+            BufferedSumAnalyzer sum = new BufferedSumAnalyzer();
+            BufferedGeometricMeanAnalyzer gm = new BufferedGeometricMeanAnalyzer();
+            BufferedArithmeticMeanAnalyzer am = new BufferedArithmeticMeanAnalyzer();
+            BufferedMedianAnalyzer me = new BufferedMedianAnalyzer();
+            BufferedStandardDeviationAnalyzer dev = new BufferedStandardDeviationAnalyzer();
+            BufferedPercentileAnalyzer perc25 = new BufferedPercentileAnalyzer(0.25d);
+            BufferedPercentileAnalyzer perc50 = new BufferedPercentileAnalyzer(0.50d);
+            BufferedPercentileAnalyzer perc75 = new BufferedPercentileAnalyzer(0.75d);
+            BufferedPercentileAnalyzer perc80 = new BufferedPercentileAnalyzer(0.80d);
+            BufferedPercentileAnalyzer perc90 = new BufferedPercentileAnalyzer(0.90d);
+            BufferedPercentileAnalyzer perc95 = new BufferedPercentileAnalyzer(0.95d);
+            BufferedPercentileAnalyzer perc97 = new BufferedPercentileAnalyzer(0.97d);
+            BufferedPercentileAnalyzer perc99 = new BufferedPercentileAnalyzer(0.99d);
+            
+            for (double value : bucket2Values.get(bucket)) {
+                min.add(value);
+                max.add(value);
+                count.add(value);
+                sum.add(value);
+                gm.add(value);
+                am.add(value);
+                me.add(value);
+                dev.add(value);
+                perc25.add(value);
+                perc50.add(value);
+                perc75.add(value);
+                perc80.add(value);
+                perc90.add(value);
+                perc95.add(value);
+                perc97.add(value);
+                perc99.add(value);
+            }
+            result.addLine(new String[] { bucket, 
+                                          min.getValue(), 
+                                          max.getValue(), 
+                                          count.getValue(), 
+                                          sum.getValue(), 
+                                          gm.getValue(), 
+                                          am.getValue(), 
+                                          me.getValue(), 
+                                          dev.getValue(),
+                                          perc25.getValue(),
+                                          perc50.getValue(),
+                                          perc75.getValue(),
+                                          perc80.getValue(),
+                                          perc90.getValue(),
+                                          perc95.getValue(),
+                                          perc97.getValue(),
+                                          perc99.getValue(),
+            });
+        }
+        
+        return result;
+    }
+
+    /**
+     * Returns a default selector
+     * @return
+     */
+    static Selector<String[]> getDefaultSelector() {
+        return new Selector<String[]> (null){
+            @Override
+            public boolean isSelected(String[] arg0) {
+                return true;
+            }
+        };
+    }
     /**
      * Returns a new selector builder
      * 
