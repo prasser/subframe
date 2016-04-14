@@ -27,6 +27,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -181,7 +182,8 @@ public class CSVFile {
         // Collect values for buckets
         Map<String, Set<Double>> bucket2Values = new HashMap<String, Set<Double>>();
         Iterator<CSVLine> iter = this.iterator();
-        List<String> buckets = new ArrayList<String>();
+        List<String> buckets = new ArrayList<>();
+        final Map<String, Double> position = new HashMap<>();
         while (iter.hasNext()) {
             
             CSVLine line = iter.next();
@@ -196,6 +198,7 @@ public class CSVFile {
                 if (!bucket2Values.containsKey(bucket)) {
                     buckets.add(bucket);
                     bucket2Values.put(bucket, new HashSet<Double>());
+                    position.put(bucket, low);
                 }
                 bucket2Values.get(bucket).add(y);
             }
@@ -222,7 +225,12 @@ public class CSVFile {
         CSVFile result = new CSVFile(header1, header2);
         
         // Calculate aggregates for each bucket
-        Collections.sort(buckets);
+        Collections.sort(buckets, new Comparator<String>(){
+            @Override
+            public int compare(String o1, String o2) {
+                return position.get(o1).compareTo(position.get(o2));
+            }
+        });
         for (String bucket : buckets) {
             
             BufferedMinAnalyzer min = new BufferedMinAnalyzer();
