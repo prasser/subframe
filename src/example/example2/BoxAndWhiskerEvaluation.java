@@ -45,7 +45,7 @@ import de.linearbits.subframe.render.PlotGroup;
 public class BoxAndWhiskerEvaluation {
 
 	/**
-	 * 	 * @param args
+	 * @param args
 	 * @throws IOException
 	 * @throws ParseException
 	 */
@@ -72,13 +72,13 @@ public class BoxAndWhiskerEvaluation {
 
         List<Plot<?>> plots = new ArrayList<Plot<?>>();
         
-        SeriesBoxAndWhisker series = new SeriesBoxAndWhisker(file,  new Field("C4.5.acc1", Analyzer.VALUE),
-                                                                    new Field("NUEntropy", Analyzer.VALUE),
+        SeriesBoxAndWhisker series = new SeriesBoxAndWhisker(file,  new Field("A", Analyzer.VALUE),
+                                                                    new Field("B", Analyzer.VALUE),
                                                                     0.05d,
                                                                     100);
         
-        plots.add(new PlotBoxAndWhisker("Accuracy vs. information loss", 
-                                         new Labels("Accuracy", "Information loss"),
+        plots.add(new PlotBoxAndWhisker("Bucketized A vs. V", 
+                                         new Labels("A", "B"),
                                          series));
         
         GnuPlotParams params = new GnuPlotParams();
@@ -87,6 +87,6 @@ public class BoxAndWhiskerEvaluation {
         params.size = 0.6d;
         params.minY = 0d;
         params.maxY = 1d;
-        return new PlotGroup("Accuracy vs. information loss for Non-Uniform Entropy", plots, params, 1.0d);
+        return new PlotGroup("Bucketized A vs. V", plots, params, 1.0d);
     }
 }
