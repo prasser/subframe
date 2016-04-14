@@ -78,6 +78,18 @@ public abstract class Plot<T extends Series<?>> {
     }
 
     /**
+     * Returns the series as a SeriesBoxAndWhisker. Null if its not an instance of SeriesBoxAndWhisker
+     * @return
+     */
+    public SeriesBoxAndWhisker getSeriesBoxAndWhisker() {
+        if (series instanceof SeriesBoxAndWhisker) {
+            return (SeriesBoxAndWhisker) series;
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Returns the title
      * @return
      */

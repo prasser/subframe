@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.linearbits.subframe.graph.Plot;
+import de.linearbits.subframe.graph.PlotBoxAndWhisker;
 import de.linearbits.subframe.graph.PlotHistogram;
 import de.linearbits.subframe.graph.PlotHistogramClustered;
 import de.linearbits.subframe.graph.PlotHistogramStacked;
@@ -96,6 +97,8 @@ public abstract class GnuPlot<T extends Plot<?>> {
             gPlot = new GnuPlotLinesClustered((PlotLinesClustered) plot, params);
         } else if (plot instanceof PlotHistogramStacked) {
             gPlot = new GnuPlotHistogramStacked((PlotHistogramStacked) plot, params);
+        } else if (plot instanceof PlotBoxAndWhisker) {
+            gPlot = new GnuPlotBoxAndWhisker((PlotBoxAndWhisker) plot, params);
         } else {
             throw new RuntimeException("Invalid type of plot");
         }

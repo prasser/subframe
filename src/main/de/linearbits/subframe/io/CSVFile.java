@@ -177,7 +177,7 @@ public class CSVFile {
      */
     public CSVFile getBucketizedFile(Selector<String[]> selector,
                                      String x1, String x2, 
-                                     String y1, String y2, double interval, int precision) throws IOException {
+                                     String y1, String y2, double interval, int precision) {
         
         // Collect values for buckets
         Map<String, Set<Double>> bucket2Values = new HashMap<String, Set<Double>>();
@@ -204,7 +204,7 @@ public class CSVFile {
             }
         }
         
-        String[] header1 = new String[] { x1, y1, y1, y1, y1, y1, y1, y1, y1 };
+        String[] header1 = new String[] { x1, y1, y1, y1, y1, y1, y1, y1, y1, y1, y1, y1, y1, y1, y1, y1, y1};
         String[] header2 = new String[] { Analyzer.VALUE, 
                                           Analyzer.MINIMUM, 
                                           Analyzer.MAXIMUM, 
@@ -304,7 +304,7 @@ public class CSVFile {
      * @throws IOException
      */
     public CSVFile getBucketizedFile(String x1, String x2, 
-                                     String y1, String y2, double interval, int precision) throws IOException {
+                                     String y1, String y2, double interval, int precision) {
         return getBucketizedFile(getDefaultSelector(), x1, x2, y1, y2, interval, precision);
     }
     /**
