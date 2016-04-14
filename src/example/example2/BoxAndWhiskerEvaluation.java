@@ -32,7 +32,9 @@ import de.linearbits.subframe.graph.SeriesBoxAndWhisker;
 import de.linearbits.subframe.io.CSVFile;
 import de.linearbits.subframe.render.GnuPlotParams;
 import de.linearbits.subframe.render.GnuPlotParams.KeyPos;
+import de.linearbits.subframe.render.LaTeXParams.PageFormat;
 import de.linearbits.subframe.render.LaTeX;
+import de.linearbits.subframe.render.LaTeXParams;
 import de.linearbits.subframe.render.PlotGroup;
 
 /**
@@ -54,8 +56,10 @@ public class BoxAndWhiskerEvaluation {
         List<PlotGroup> groups = new ArrayList<PlotGroup>();
         groups.add(getGroup1(file));
 
-        LaTeX.plot(groups, "src/example/example2/output");
-        
+        LaTeXParams params = new LaTeXParams();
+        params.pageFormat = PageFormat.LETTER;
+        params.margin = 1;
+        LaTeX.plot(groups, "src/example/example2/output", params);
     }
     
     /**

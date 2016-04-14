@@ -54,6 +54,31 @@ public class LaTeX {
      * @throws IOException
      */
     public static void plot(List<PlotGroup> groups, String filename, boolean keepFiles) throws IOException {
+        plot(groups, filename, new LaTeXParams(), keepFiles);
+    }
+    
+    /**
+     * Render the given list of plots. Allows keeping the source files.
+     * 
+     * @param groups
+     * @param filename
+     * @param keepFiles
+     * @throws IOException
+     */
+    public static void plot(List<PlotGroup> groups, String filename, LaTeXParams params) throws IOException {
+        plot(groups, filename, params, false);
+    }
+    
+    /**
+     * Render the given list of plots. Allows keeping the source files.
+     * 
+     * @param groups
+     * @param filename
+     * @param params
+     * @param keepFiles
+     * @throws IOException
+     */
+    public static void plot(List<PlotGroup> groups, String filename, LaTeXParams params, boolean keepFiles) throws IOException {
 
         String outputFolder = new File(new File(".").getAbsolutePath() + "/" +
                                        new File("./" + filename + ".tex").getParent()).getAbsolutePath();
@@ -61,7 +86,7 @@ public class LaTeX {
         Map<Plot<?>, String> filenames = new HashMap<Plot<?>, String>();
 
         try {
-            plot(groups, filename, keepFiles, filenames, outputFolder);
+            plot(groups, filename, keepFiles, params, filenames, outputFolder);
         } catch (IOException e) {
             if (!keepFiles) {
                 deleteFile(filename + ".tex");
@@ -96,11 +121,17 @@ public class LaTeX {
      * @param groups
      * @param filename
      * @param keepFiles
+     * @param params
      * @param filenames
      * @param outputFolder
      * @throws IOException
      */
-    private static void plot(List<PlotGroup> groups, String filename, boolean keepFiles, Map<Plot<?>, String> filenames, String outputFolder) throws IOException {
+    private static void plot(List<PlotGroup> groups,
+                             String filename,
+                             boolean keepFiles,
+                             LaTeXParams params,
+                             Map<Plot<?>, String> filenames,
+                             String outputFolder) throws IOException {
 
         new File(outputFolder + "/img/").mkdir();
 
@@ -119,6 +150,23 @@ public class LaTeX {
         w.write("\\documentclass{article}\n");
         w.write("\\usepackage{graphicx}\n");
         w.write("\\pagestyle{empty}\n");
+        w.write("\\usepackage{geometry}\n");
+        w.write("\\geometry{");
+        switch (params.pageFormat) {
+        case A4:
+            w.write("a4paper");
+            break;
+        case LETTER:
+            w.write("letterpaper");
+            break;
+        default:
+            w.close();
+            throw new IllegalArgumentException("Unknown page format: " + params.pageFormat);
+        }
+        
+        w.write(", margin=");
+        w.write(String.valueOf(params.margin));
+        w.write("in}\n");
         w.write("\\begin{document}\n");
 
         for (int i = 0; i < groups.size(); i++) {
