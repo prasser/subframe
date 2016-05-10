@@ -58,7 +58,7 @@ public class BoxAndWhiskerEvaluation {
 
         LaTeXParams params = new LaTeXParams();
         params.pageFormat = PageFormat.LETTER;
-        params.margin = 1;
+        params.margin = 0.5;
         LaTeX.plot(groups, "src/example/example2/output", params);
     }
     

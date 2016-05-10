@@ -53,7 +53,9 @@ import de.linearbits.subframe.analyzer.buffered.BufferedSumAnalyzer;
 /**
  * This class represents the output of a benchmark as a csv file.
  * 
- * @author Fabian Prasser, Florian Kohlmayer
+ * @author Fabian Prasser
+ * @author Florian Kohlmayer
+ * @author Johanna Eicher
  */
 public class CSVFile {
     
@@ -182,8 +184,8 @@ public class CSVFile {
         // Collect values for buckets
         Map<String, Set<Double>> bucket2Values = new HashMap<String, Set<Double>>();
         Iterator<CSVLine> iter = this.iterator();
-        List<String> buckets = new ArrayList<>();
-        final Map<String, Double> position = new HashMap<>();
+        List<String> buckets = new ArrayList<String>();
+        final Map<String, Double> position = new HashMap<String, Double>();
         while (iter.hasNext()) {
             
             CSVLine line = iter.next();
