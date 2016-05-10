@@ -38,10 +38,10 @@ import de.linearbits.subframe.render.GnuPlotParams.KeyPos;
  * @author Prasser, Kohlmayer
  */
 public abstract class GnuPlot<T extends Plot<?>> {
-
+    
     /** Counter for random plot names */
     private static int counter = 0;
-
+    
     /**
      * Renders the given plot
      * @param plot
@@ -50,7 +50,7 @@ public abstract class GnuPlot<T extends Plot<?>> {
     public static void plot(Plot<?> plot) throws IOException {
         plot(plot, "plot" + (counter++), false);
     }
-
+    
     /**
      * Renders the given plot, taking into account the given parameters
      * @param plot
@@ -60,7 +60,7 @@ public abstract class GnuPlot<T extends Plot<?>> {
     public static void plot(Plot<?> plot, GnuPlotParams params) throws IOException {
         plot(plot, params, "plot" + (counter++), false);
     }
-
+    
     /**
      * Renders the given plot, taking into account the given parameters,
      * writing to the given file
@@ -72,7 +72,7 @@ public abstract class GnuPlot<T extends Plot<?>> {
     public static void plot(Plot<?> plot, GnuPlotParams params, String filename) throws IOException {
         plot(plot, params, filename, false);
     }
-
+    
     /**
      * Renders the given plot, taking into account the given parameters,
      * writing to the given file. Allows keeping the GnuPlot sources.
@@ -83,8 +83,8 @@ public abstract class GnuPlot<T extends Plot<?>> {
      * @throws IOException
      */
     public static void
-    plot(Plot<?> plot, GnuPlotParams params, String filename, boolean keepSources) throws IOException {
-
+            plot(Plot<?> plot, GnuPlotParams params, String filename, boolean keepSources) throws IOException {
+        
         // Create gnuplot
         GnuPlot<?> gPlot = null;
         if (plot instanceof PlotHistogram) {
@@ -102,7 +102,7 @@ public abstract class GnuPlot<T extends Plot<?>> {
         } else {
             throw new RuntimeException("Invalid type of plot");
         }
-
+        
         // Write gnuplot file
         String gpFilename = "." + System.getProperty("file.separator") + new File(filename).getName();
         if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
@@ -112,18 +112,18 @@ public abstract class GnuPlot<T extends Plot<?>> {
         FileWriter writer = new FileWriter(file);
         writer.write(gPlot.getSource(gpFilename));
         writer.close();
-
+        
         // Write data file
         file = new File(filename + ".dat");
         writer = new FileWriter(file);
         writer.write(gPlot.getData());
         writer.close();
-
+        
         // Execute
         try {
             plot(filename);
         } catch (IOException e) {
-            if (!keepSources){
+            if (!keepSources) {
                 new File(filename + ".gp").delete();
                 new File(filename + ".dat").delete();
             }
@@ -131,7 +131,7 @@ public abstract class GnuPlot<T extends Plot<?>> {
             new File(filename + ".pdf").delete();
             throw (e);
         }
-
+        
         // Delete files
         if (!keepSources) {
             new File(filename + ".gp").delete();
@@ -139,7 +139,7 @@ public abstract class GnuPlot<T extends Plot<?>> {
             new File(filename + ".eps").delete();
         }
     }
-
+    
     /**
      * Renders the given plot, writing to the given file
      * @param plot
@@ -149,7 +149,7 @@ public abstract class GnuPlot<T extends Plot<?>> {
     public static void plot(Plot<?> plot, String filename) throws IOException {
         plot(plot, filename, false);
     }
-
+    
     /**
      * Renders the given plot, writing to the given file. Allows keeping the GnuPlot sources.
      * @param plot
@@ -160,7 +160,7 @@ public abstract class GnuPlot<T extends Plot<?>> {
     public static void plot(Plot<?> plot, String filename, boolean keepSources) throws IOException {
         plot(plot, new GnuPlotParams(), filename, keepSources);
     }
-
+    
     /**
      * Runs gnuplot.
      * 
@@ -169,7 +169,7 @@ public abstract class GnuPlot<T extends Plot<?>> {
      * @throws IOException Signals that an I/O exception has occurred.
      */
     private static void plot(final String file) throws IOException {
-
+        
         // Run gnuplot
         ProcessBuilder b = new ProcessBuilder();
         b.directory(new File(file).getParentFile());
@@ -184,7 +184,7 @@ public abstract class GnuPlot<T extends Plot<?>> {
         } catch (final InterruptedException e) {
             throw new IOException(e);
         }
-
+        
         // Check messages
         File eps = new File(file + ".eps");
         String errorMsg = error.getString();
@@ -192,16 +192,16 @@ public abstract class GnuPlot<T extends Plot<?>> {
             if (eps.exists()) eps.delete();
             throw new IOException("Error executing gnuplot. Please check the provided series. Error: " + errorMsg);
         }
-
+        
         // Check file
         if (!eps.exists() || eps.length() == 0) {
             if (eps.exists()) eps.delete();
             throw new IOException("Error executing gnuplot. Please check the provided series. Error: " + errorMsg);
         }
-
+        
         // Run ps2pdf
         if (new File(file + ".eps").exists()) {
-
+            
             b = new ProcessBuilder();
             if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
                 b.command("ps2pdf",
@@ -213,7 +213,7 @@ public abstract class GnuPlot<T extends Plot<?>> {
             } else {
                 b.command("pstopdf", file + ".eps", file + ".pdf");
             }
-
+            
             p = b.start();
             in = new StreamReader(p.getInputStream());
             error = new StreamReader(p.getErrorStream());
@@ -224,21 +224,21 @@ public abstract class GnuPlot<T extends Plot<?>> {
             } catch (final InterruptedException e) {
                 throw new IOException(e);
             }
-
+            
             if (p.exitValue() != 0) {
                 new File(file + ".eps").delete();
                 throw new IOException("Error running psd2pdf: " + error.getString());
             }
         }
-
+        
         // Run pdfcrop
         if (new File(file + ".pdf").exists()) {
-
+            
             b = new ProcessBuilder();
             b.command("pdfcrop", file + ".pdf", file + ".pdf");
-
+            
             p = b.start();
-
+            
             in = new StreamReader(p.getInputStream());
             error = new StreamReader(p.getErrorStream());
             new Thread(in).start();
@@ -248,17 +248,17 @@ public abstract class GnuPlot<T extends Plot<?>> {
             } catch (final InterruptedException e) {
                 throw new IOException(e);
             }
-
+            
             if (p.exitValue() != 0) {
                 new File(file + ".pdf").delete();
                 throw new IOException("Error running pdfcrop: " + error.getString());
             }
         }
     }
-
-    /** The plot to render*/
+    
+    /** The plot to render */
     protected T             plot;
-    /** The parameters to use*/
+    /** The parameters to use */
     protected GnuPlotParams params;
     
     /**
@@ -270,11 +270,11 @@ public abstract class GnuPlot<T extends Plot<?>> {
         this.plot = plot;
         this.params = params;
     }
-
-    /** Returns the data*/
+    
+    /** Returns the data */
     protected abstract String getData();
-
-    /** Returns the GnuPlot source code*/
+    
+    /** Returns the GnuPlot source code */
     protected abstract String getSource(String filename);
     
     /**
@@ -287,10 +287,10 @@ public abstract class GnuPlot<T extends Plot<?>> {
         
         List<String> gpCommands = new ArrayList<String>();
         
-        gpCommands.add("set terminal postscript eps enhanced "+
+        gpCommands.add("set terminal postscript eps enhanced " +
                        (params.colorize ? "color" : "monochrome") +
-                       " size " + params.width + "," + params.height +  
-                       (params.font != null ? " font '" +params.font + "'" : ""));
+                       " size " + params.width + "," + params.height +
+                       (params.font != null ? " font '" + params.font + "'" : ""));
         gpCommands.add("set output \"" + filename + ".eps\"");
         
         if (params.size != null) {
@@ -302,17 +302,17 @@ public abstract class GnuPlot<T extends Plot<?>> {
         }
         
         gpCommands.add("set offsets " + params.offsetLeft + " , " + params.offsetRight + ", " + params.offsetTop + ", " + params.offsetBottom + " ");
-
+        
         gpCommands.add("set title \"" + plot.getTitle() + "\"");
-        gpCommands.add("set xlabel \"" + plot.getLabels().x + "\"");
-        gpCommands.add("set ylabel \"" + plot.getLabels().y + "\"");
-
+        gpCommands.add("set xlabel \"" + plot.getLabels().x + "\"" + params.offsetXlabel);
+        gpCommands.add("set ylabel \"" + plot.getLabels().y + "\"" + params.offsetYlabel);
+        
         if (params.keypos == KeyPos.NONE) {
             gpCommands.add("unset key");
         } else {
             gpCommands.add("set key " + params.keypos.toString());
         }
-
+        
         if (params.minY != null && params.maxY != null) {
             gpCommands.add("set yrange[" + params.minY + ":" + params.maxY + "]");
         }
@@ -332,7 +332,7 @@ public abstract class GnuPlot<T extends Plot<?>> {
         if (params.minZ != null && params.maxZ == null) {
             gpCommands.add("set zrange[" + params.minZ + ":]");
         }
-
+        
         if (params.logX) {
             gpCommands.add("set logscale x");
         }
@@ -342,16 +342,16 @@ public abstract class GnuPlot<T extends Plot<?>> {
         if (params.logZ) {
             gpCommands.add("set logscale z");
         }
-
+        
         if (params.grid) {
             gpCommands.add("set grid");
         }
-
+        
         if (params.rotateXTicks != null) {
             gpCommands.add("set xtics rotate by " + params.rotateXTicks);
         }
         gpCommands.add("set xtic scale 0");
-
+        
         return gpCommands;
     }
 }
