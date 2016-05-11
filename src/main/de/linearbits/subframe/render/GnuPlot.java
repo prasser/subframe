@@ -304,8 +304,8 @@ public abstract class GnuPlot<T extends Plot<?>> {
         gpCommands.add("set offsets " + params.offsetLeft + " , " + params.offsetRight + ", " + params.offsetTop + ", " + params.offsetBottom + " ");
         
         gpCommands.add("set title \"" + plot.getTitle() + "\"");
-        gpCommands.add("set xlabel \"" + plot.getLabels().x + "\"" + params.offsetXlabel);
-        gpCommands.add("set ylabel \"" + plot.getLabels().y + "\"" + params.offsetYlabel);
+        gpCommands.add("set xlabel \"" + plot.getLabels().x + "\" offset " + params.offsetXlabel);
+        gpCommands.add("set ylabel \"" + plot.getLabels().y + "\" offset " + params.offsetYlabel);
         
         if (params.keypos == KeyPos.NONE) {
             gpCommands.add("unset key");
