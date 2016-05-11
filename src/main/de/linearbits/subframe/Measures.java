@@ -261,7 +261,6 @@ public class Measures {
      * Get JVM CPU time with MX Management
      * @return time in nanoseconds
      */
-    @SuppressWarnings("restriction")
     public long getJVMCpuTime() {
         OperatingSystemMXBean bean = ManagementFactory.getOperatingSystemMXBean();
         if (!(bean instanceof com.sun.management.OperatingSystemMXBean)) return 0L;
