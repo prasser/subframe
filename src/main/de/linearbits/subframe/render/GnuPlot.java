@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.linearbits.subframe.graph.Plot;
+import de.linearbits.subframe.graph.Plot3D;
 import de.linearbits.subframe.graph.PlotBoxAndWhisker;
 import de.linearbits.subframe.graph.PlotHistogram;
 import de.linearbits.subframe.graph.PlotHistogramClustered;
@@ -99,6 +100,8 @@ public abstract class GnuPlot<T extends Plot<?>> {
             gPlot = new GnuPlotHistogramStacked((PlotHistogramStacked) plot, params);
         } else if (plot instanceof PlotBoxAndWhisker) {
             gPlot = new GnuPlotBoxAndWhisker((PlotBoxAndWhisker) plot, params);
+        } else if (plot instanceof Plot3D) {
+            gPlot = new GnuPlot3D((Plot3D) plot, params);
         } else {
             throw new RuntimeException("Invalid type of plot");
         }
@@ -306,6 +309,9 @@ public abstract class GnuPlot<T extends Plot<?>> {
         gpCommands.add("set title \"" + plot.getTitle() + "\"");
         gpCommands.add("set xlabel \"" + plot.getLabels().x + "\" offset " + params.offsetXlabel);
         gpCommands.add("set ylabel \"" + plot.getLabels().y + "\" offset " + params.offsetYlabel);
+        if (plot.getLabels().z != null) {
+            gpCommands.add("set zlabel \"" + plot.getLabels().z + "\" offset " + params.offsetZlabel);
+        }
         
         if (params.keypos == KeyPos.NONE) {
             gpCommands.add("unset key");
@@ -333,6 +339,16 @@ public abstract class GnuPlot<T extends Plot<?>> {
             gpCommands.add("set zrange[" + params.minZ + ":]");
         }
         
+        if (params.xTics != null) {
+            gpCommands.add("set xtics " + params.xTics);
+        }
+        if (params.yTics != null) {
+            gpCommands.add("set ytics " + params.yTics);
+        }
+        if (params.zTics != null) {
+            gpCommands.add("set ztics " + params.zTics);
+        }
+        
         if (params.logX) {
             gpCommands.add("set logscale x");
         }
@@ -349,6 +365,12 @@ public abstract class GnuPlot<T extends Plot<?>> {
         
         if (params.rotateXTicks != null) {
             gpCommands.add("set xtics rotate by " + params.rotateXTicks);
+        }
+        if (params.rotateYTicks != null) {
+            gpCommands.add("set ytics rotate by " + params.rotateYTicks);
+        }
+        if (params.rotateZTicks != null) {
+            gpCommands.add("set ztics rotate by " + params.rotateZTicks);
         }
         gpCommands.add("set xtic scale 0");
         

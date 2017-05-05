@@ -93,6 +93,13 @@ public class GnuPlotParams {
     /** Maximum value on the z axis */
     public Double   maxZ                    = null;
     
+    /** X-Tics */
+    public Double   xTics                    = null;
+    /** Y-Tics */
+    public Double   yTics                    = null;
+    /** T-Tics */
+    public Double   zTics                    = null;
+    
     /** The size */
     public Double   size                    = 0.6d;
     /** The width/height ratio of the plot */
@@ -114,11 +121,17 @@ public class GnuPlotParams {
     public double   offsetXlabel            = 0;
     /** Offset ylabel */
     public double   offsetYlabel            = 0;
+    /** Offset zlabel */
+    public double   offsetZlabel            = 0;
     
     /** The width of the box */
     public Double   boxwidth                = 0.75d;
     /** Rotation of the xtics in degrees */
     public Integer  rotateXTicks            = null;
+    /** Rotation of the ytics in degrees */
+    public Integer  rotateYTicks            = null;
+    /** Rotation of the ztics in degrees */
+    public Integer  rotateZTicks            = null;
     /** X-ticks are categorical */
     public Boolean  categorialX             = false;
     /** Grid */
@@ -132,6 +145,14 @@ public class GnuPlotParams {
     /** Offset for labels in the plot */
     public double   printValuesOffset       = +0.5d;
     
+    /** Make the data a grid*/
+    public Integer  grid3dResolution = null;
+    /** Make the data a grid*/
+    public Integer  grid3dInterpolation = null;
+    /** Make the data a grid*/
+    public Integer xyPlaneAt = null;
+    
     /** Font specification */
     public String   font                    = null;
+
 }
