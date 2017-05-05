@@ -49,9 +49,19 @@ class GnuPlot3D extends GnuPlot<Plot3D> {
         Collections.sort(data, new Comparator<Point3D>() {
             @Override
             public int compare(Point3D o1, Point3D o2) {
-                return Double.valueOf(o1.x).compareTo(Double.valueOf(o2.x));
+                int cmp1 = Double.valueOf(o1.x).compareTo(Double.valueOf(o2.x));
+                int cmp2 = Double.valueOf(o1.y).compareTo(Double.valueOf(o2.y));
+                int cmp3 = Double.valueOf(o1.z).compareTo(Double.valueOf(o2.z));
+                if (cmp1 != 0) {
+                    return cmp1;
+                } else if (cmp2 != 0) {
+                    return cmp2;
+                } else {
+                    return cmp3;
+                }
             }
         });
+        
         // Insert blank line when x changes
         List<Integer> insertion = new ArrayList<Integer>();
         for (int i = 1; i < data.size(); i++) {
