@@ -174,17 +174,37 @@ public class CSVFile {
      * @param y2 header 2 of y-values
      * @param interval size of buckets
      * @param precision
+     * @param omitEmptyBuckets
      * @return
      * @throws IOException
      */
     public CSVFile getBucketizedFile(Selector<String[]> selector,
                                      String x1, String x2, 
-                                     String y1, String y2, double interval, int precision) {
+                                     String y1, String y2, double interval, int precision, boolean omitEmptyBuckets) {
         
         // Collect values for buckets
         Map<String, Set<Double>> bucket2Values = new HashMap<String, Set<Double>>();
         Iterator<CSVLine> iter = this.iterator();
         List<String> buckets = new ArrayList<String>();
+        
+        // Create buckets for all intervals
+        if (!omitEmptyBuckets) {
+            int tmp = 0;
+            while (tmp < (int) (1d / interval)) {
+                double low;
+                if (tmp == 0) {
+                    low = 0d;
+                } else {
+                    low = Math.floor(tmp * interval * precision) / precision;
+                }
+                tmp++;
+                double high = Math.floor(tmp * interval * precision) / precision;
+                String bucket = "[" + low + "," + high + "[";
+                buckets.add(bucket);
+                bucket2Values.put(bucket, new HashSet<Double>());
+            }
+        }
+        
         final Map<String, Double> position = new HashMap<String, Double>();
         while (iter.hasNext()) {
             
@@ -197,12 +217,22 @@ public class CSVFile {
                 low = Math.floor(low * precision) / precision;
                 high = Math.floor(high * precision) / precision;
                 String bucket = "[" + low + "," + high + "[";
-                if (!bucket2Values.containsKey(bucket)) {
+                if (omitEmptyBuckets && !bucket2Values.containsKey(bucket)) {
                     buckets.add(bucket);
                     bucket2Values.put(bucket, new HashSet<Double>());
                     position.put(bucket, low);
                 }
                 bucket2Values.get(bucket).add(y);
+            }
+        }
+        
+        // Fill empty buckets with a dummy value
+        if (!omitEmptyBuckets) {
+            for (String bucket : bucket2Values.keySet()) {
+                Set<Double> values = bucket2Values.get(bucket);
+                if (values.isEmpty()) {
+                    values.add(0d);
+                }
             }
         }
         
@@ -226,13 +256,16 @@ public class CSVFile {
                                           Analyzer.PERCENTILE(0.99d)};
         CSVFile result = new CSVFile(header1, header2);
         
-        // Calculate aggregates for each bucket
-        Collections.sort(buckets, new Comparator<String>(){
-            @Override
-            public int compare(String o1, String o2) {
-                return position.get(o1).compareTo(position.get(o2));
-            }
-        });
+        // Sort buckets
+        if (omitEmptyBuckets) {
+            // Calculate aggregates for each bucket
+            Collections.sort(buckets, new Comparator<String>() {
+                @Override
+                public int compare(String o1, String o2) {
+                    return position.get(o1).compareTo(position.get(o2));
+                }
+            });
+        }
         for (String bucket : buckets) {
             
             BufferedMinAnalyzer min = new BufferedMinAnalyzer();
@@ -306,8 +339,8 @@ public class CSVFile {
      * @throws IOException
      */
     public CSVFile getBucketizedFile(String x1, String x2, 
-                                     String y1, String y2, double interval, int precision) {
-        return getBucketizedFile(getDefaultSelector(), x1, x2, y1, y2, interval, precision);
+                                     String y1, String y2, double interval, int precision, boolean omitEmptyBuckets) {
+        return getBucketizedFile(getDefaultSelector(), x1, x2, y1, y2, interval, precision, omitEmptyBuckets);
     }
     /**
      * Returns a new selector builder
