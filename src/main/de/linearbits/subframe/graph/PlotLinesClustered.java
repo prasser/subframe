@@ -24,7 +24,7 @@ package de.linearbits.subframe.graph;
 public class PlotLinesClustered extends Plot<Series3D> {
 
     /**
-     * Will plot a clustered lines plot
+     * Will plot a clustered lines plot. Y determines the label of the series.
      * 
      * @param title
      * @param labels

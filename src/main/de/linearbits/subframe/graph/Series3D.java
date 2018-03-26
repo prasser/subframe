@@ -34,7 +34,10 @@ import de.linearbits.subframe.io.CSVLine;
  * @author Fabian Prasser
  */
 public class Series3D extends Series<Point3D>{
-
+    
+    /** Whether multiple values must not be specified for the same x-value*/
+    private boolean strict = true;
+    
     /**
      * Creates an empty series
      */
@@ -61,7 +64,7 @@ public class Series3D extends Series<Point3D>{
         
         this(file, getDefaultSelector(), xField, yField, yAnalyzer, zAnalyzer);
     }
-    
+
     /**
      * Creates a series by selecting rows and taking three values
      * 
@@ -78,7 +81,6 @@ public class Series3D extends Series<Point3D>{
         this(file, getDefaultSelector(), xField, yField, zField);
     }
     
-
     /**
      * Creates a series by selecting rows, 
      * grouping by x and y and applying the analyzer to z 
@@ -98,7 +100,6 @@ public class Series3D extends Series<Point3D>{
         this(file, getDefaultSelector(), xField, yField, zField, analyzer);
     }
     
-
     /**
      * Creates a series by selecting rows and taking two values plus a constant y-value
      * 
@@ -164,6 +165,7 @@ public class Series3D extends Series<Point3D>{
         }
     }
     
+
     /**
      * Creates a series by selecting rows and taking three values
      * 
@@ -236,30 +238,6 @@ public class Series3D extends Series<Point3D>{
         }
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
     /**
      * Creates a series by selecting rows and taking two values plus a constant y-value
      * 
@@ -288,6 +266,7 @@ public class Series3D extends Series<Point3D>{
         }
     }
     
+
     /**
      * Creates a series by selecting rows, 
      * grouping by a constant x and applying two analyzers to y,
@@ -336,6 +315,29 @@ public class Series3D extends Series<Point3D>{
         }
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     /**
      * Creates a series by selecting rows and taking a constant and two values
@@ -364,7 +366,6 @@ public class Series3D extends Series<Point3D>{
         }
     }
     
-
     /**
      * Creates a series by selecting rows, taking a constant x 
      * grouping by y and applying the analyzer to z 
@@ -429,6 +430,7 @@ public class Series3D extends Series<Point3D>{
         this(file, getDefaultSelector(), xLabel, yField, yAnalyzer, zAnalyzer);
     }
     
+
     /**
      * Creates a series by selecting rows and taking a constant and two values
      * 
@@ -464,4 +466,21 @@ public class Series3D extends Series<Point3D>{
 
         this(file, getDefaultSelector(), xLabel, yField, zField, analyzer);
     }
-}
+    
+    /**
+     * Returns whether multiple values must not be specified for the same x-value.
+     * @return
+     */
+    public boolean isStrict() {
+        return this.strict;
+    }
+    
+
+    /**
+     * Sets whether multiple values must not be specified for the same x-value.
+     * @param strict
+     */
+    public void setStrict(boolean strict) {
+        this.strict = strict;
+    }
+ }
