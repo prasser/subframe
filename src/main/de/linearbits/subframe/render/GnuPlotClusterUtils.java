@@ -18,11 +18,14 @@
 package de.linearbits.subframe.render;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import de.linearbits.subframe.graph.Plot;
 import de.linearbits.subframe.graph.Point3D;
@@ -55,17 +58,18 @@ class GnuPlotClusterUtils {
     protected static String getData(Plot<Series3D> plot) {
 
         // Transform
-        Map<String, Map<String, String>> map = getTransformedData(plot);
+        // y->x->list(z)
+        Map<String, Map<String, List<String>>> map = getTransformedData(plot);
 
         // Obtain first entry and build header
         List<String> header = new ArrayList<String>();
-        Map<String, Integer> indexes = new HashMap<String, Integer>();
-        Entry<String, Map<String, String>> first = map.entrySet().iterator().next();
+        List<String> bars = getBars(plot);
         header.add(plot.getLabels().x);
+        header.addAll(bars);
+        Map<String, Integer> indexes = new HashMap<String, Integer>();
         int index = 0;
-        for (String key : first.getValue().keySet()) {
-            indexes.put(key, index++);
-            header.add(key);
+        for (String bar : bars) {
+            indexes.put(bar, index++);
         }
 
         // Build data
@@ -75,21 +79,29 @@ class GnuPlotClusterUtils {
             if (i < header.size() - 1) buffer.append(" ");
             else buffer.append("\n");
         }
-        for (Entry<String, Map<String, String>> entry : map.entrySet()) {
-            buffer.append(entry.getKey()).append(" ");
-            String[] data = new String[indexes.size()];
-            for (Entry<String, String> value : entry.getValue().entrySet()) {
-                Integer i = indexes.get(value.getKey());
-                if (i == null) {
-                    throw new IllegalArgumentException("No index found for value: " + value.getKey() + ". Some data needed for clustering seems to be missing.");
+        
+        // For each bar
+        for (String bar : bars) {
+            
+            // Obtain data
+            Map<String, List<String>> data = map.get(bar);
+            index = indexes.get(bar);
+            
+            // For each point
+            for (Entry<String, List<String>> points : data.entrySet()) {
+                
+                // Print
+                for (String z : points.getValue()) {
+                    String[] row = new String[indexes.size()];
+                    Arrays.fill(row, "NaN");
+                    row[index] = z;
+                    buffer.append(points.getKey()).append(" ");
+                    for (int i = 0; i < row.length; i++) {
+                      buffer.append(row[i]);
+                      if (i < row.length - 1) buffer.append(" ");
+                      else buffer.append("\n");
+                  }
                 }
-                data[i] = value.getValue();
-            }
-            for (int i = 0; i < data.length; i++) {
-                if (data[i] == null) { throw new RuntimeException("Missing value for (" + entry.getKey() + ")"); }
-                buffer.append(data[i]);
-                if (i < data.length - 1) buffer.append(" ");
-                else buffer.append("\n");
             }
         }
 
@@ -102,28 +114,52 @@ class GnuPlotClusterUtils {
      * @return
      */
     protected static int getNumBars(Plot<Series3D> plot) {
-
-        return getTransformedData(plot).entrySet().iterator().next().getValue().keySet().size();
+        return getBars(plot).size();
     }
 
     /**
-     * Creates a clustered data representation for the given plot
+     * Returns all bars
      * @param plot
      * @return
      */
-    protected static Map<String, Map<String, String>> getTransformedData(Plot<Series3D> plot) {
-
-        Map<String, Map<String, String>> map = new LinkedHashMap<String, Map<String, String>>();
+    private static List<String> getBars(Plot<Series3D> plot) {
+        Set<String> bars = new HashSet<>();
+        List<String> list = new ArrayList<String>();
         for (Point3D point : plot.getSeries3D().getData()) {
-            if (!map.containsKey(point.x)) {
-                map.put(point.x, new LinkedHashMap<String, String>());
+            if (!bars.contains(point.y)) {
+                bars.add(point.y);
+                list.add(point.y);
             }
-            if (map.get(point.x).containsKey(point.y)) { 
+        }
+        return list;
+    }
+
+    /**
+     * Creates a clustered data representation for the given plot: y->x->list(z)
+     * @param plot
+     * @return
+     */
+    private static Map<String, Map<String, List<String>>> getTransformedData(Plot<Series3D> plot) {
+        Map<String, Map<String, List<String>>> map = new HashMap<String, Map<String, List<String>>>();
+        for (Point3D point : plot.getSeries3D().getData()) {
+            
+            // Obtain series
+            Map<String, List<String>> points = map.get(point.y);
+            if (points == null) {
+                points = new LinkedHashMap<String, List<String>>();
+                map.put(point.y, points);
+            }
+            // Obtain z-values for x
+            List<String> values = points.get(point.x);
+            if (values == null) {
+                values = new ArrayList<String>();
+                points.put(point.x, values);
+            }
+            values.add(point.z);
+            if (plot.getSeries3D().isStrict() && values.size() > 1) { 
                 throw new RuntimeException("Duplicate value for (" + point.x + ", " + point.y + ")"); 
             }
-            map.get(point.x).put(point.y, point.z);
         }
-
         return map;
     }
 }
