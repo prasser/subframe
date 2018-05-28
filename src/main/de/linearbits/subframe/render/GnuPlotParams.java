@@ -185,4 +185,6 @@ public class GnuPlotParams {
 
     /** The line type */
     public LineType lineType                = LineType.LINESPOINTS;
+    /** The line width */
+    public double   lineWidth               = 1d;
 }
