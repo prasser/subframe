@@ -34,7 +34,10 @@ import de.linearbits.subframe.io.CSVLine;
  * @author Fabian Prasser
  */
 public class Series3D extends Series<Point3D>{
-
+    
+    /** Whether multiple values must not be specified for the same x-value*/
+    private boolean strict = true;
+    
     /**
      * Creates an empty series
      */
@@ -464,4 +467,21 @@ public class Series3D extends Series<Point3D>{
 
         this(file, getDefaultSelector(), xLabel, yField, zField, analyzer);
     }
-}
+    
+    /**
+     * Returns whether multiple values must not be specified for the same x-value.
+     * @return
+     */
+    public boolean isStrict() {
+        return this.strict;
+    }
+    
+
+    /**
+     * Sets whether multiple values must not be specified for the same x-value.
+     * @param strict
+     */
+    public void setStrict(boolean strict) {
+        this.strict = strict;
+    }
+ }

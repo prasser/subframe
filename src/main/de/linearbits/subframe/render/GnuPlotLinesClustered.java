@@ -56,18 +56,18 @@ class GnuPlotLinesClustered extends GnuPlot<PlotLinesClustered> {
             String color = params.colorize ? "linecolor rgb \"#" + params.colors[i % params.colors.length] + "\" " : "";
             if (i == 0) {
                 if (params.categorialX) {
-                    command = "plot '" + filename + ".dat' using 2:xtic(1) with linespoints "+color+"title col";
+                    command = "plot '" + filename + ".dat' using 2:xtic(1)";
                 } else {
-                    command = "plot '" + filename + ".dat' using 1:2 with linespoints "+color+"title col";
+                    command = "plot '" + filename + ".dat' using 1:2";
                 }
             } else {
                 if (params.categorialX) {
-                    command = "     '' using " + (i + 2) + ":xtic(1) with linespoints "+color+"title col";
+                    command = "     '' using " + (i + 2) + ":xtic(1)";
                 } else {
-                    command = "     '' using 1:" + (i + 2) + " with linespoints "+color+"title col";
+                    command = "     '' using 1:" + (i + 2);
                 }
             }
-
+            command += " with " + params.lineType + " lw " + params.lineWidth + " " + color + "title col";
             if (i < size - 1) command += ",\\";
             gpCommands.add(command);
         }

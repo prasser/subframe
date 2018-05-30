@@ -24,7 +24,7 @@ package de.linearbits.subframe.graph;
 public class PlotHistogramClustered extends Plot<Series3D> {
 
     /**
-     * Will plot a clustered histogram
+     * Will plot a clustered histogram. Y determines the label of the series.
      * 
      * @param title
      * @param labels

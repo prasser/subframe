@@ -63,6 +63,34 @@ public class GnuPlotParams {
         }
     }
     
+    /**
+     * Class for line types
+     * @author Johanna Eicher
+     * @author Fabian Prasser
+     */
+    public static class LineType {
+
+        /** The position string */
+        private final String label;
+        
+        /**
+         * Creates a new instance
+         * @param label
+         */
+        private LineType(String label) {
+            this.label = label;
+        }
+        
+        @Override
+        public String toString() {
+            return this.label;
+        }
+        
+        public static final LineType LINESPOINTS = new LineType("linespoints");
+        public static final LineType LINES       = new LineType("lines");
+        public static final LineType STEPS       = new LineType("steps");
+    }
+    
     /** colourValues. */
     public String[] colors                  = new String[] { "1D4599", "11AD34", "E62B17",
                                             "E69F17", "2F3F60", "2F6C3D", "8F463F", "8F743F", "031A49",
@@ -144,15 +172,19 @@ public class GnuPlotParams {
     public String   printValuesFormatString = "%.2f";
     /** Offset for labels in the plot */
     public double   printValuesOffset       = +0.5d;
-    
-    /** Make the data a grid*/
-    public Integer  grid3dResolution = null;
-    /** Make the data a grid*/
-    public Integer  grid3dInterpolation = null;
-    /** Make the data a grid*/
-    public Integer xyPlaneAt = null;
-    
+
+    /** Make the data a grid */
+    public Integer  grid3dResolution        = null;
+    /** Make the data a grid */
+    public Integer  grid3dInterpolation     = null;
+    /** Make the data a grid */
+    public Integer  xyPlaneAt               = null;
+
     /** Font specification */
     public String   font                    = null;
 
+    /** The line type */
+    public LineType lineType                = LineType.LINESPOINTS;
+    /** The line width */
+    public double   lineWidth               = 1d;
 }
